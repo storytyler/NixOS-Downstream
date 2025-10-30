@@ -24,6 +24,7 @@ in
     ./core/users.nix
     # ./core/flatpak.nix
     # ./core/virtualisation.nix
+    ./core/docker.nix
     # ./core/dlna.nix
 
     # Optional
@@ -39,6 +40,7 @@ in
     ./programs/cli/lazygit
     ./programs/cli/cava
     ./programs/cli/btop
+    ./programs/cli/spec-kit
     ./programs/media/discord
     # ./programs/media/spicetify
     ./programs/media/youtube-music

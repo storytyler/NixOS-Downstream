@@ -58,6 +58,10 @@
     claude-code = {
       url = "github:sadjow/claude-code-nix";
     };
+    compose2nix = {
+      url = "github:aksiksi/compose2nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
