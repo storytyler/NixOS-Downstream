@@ -14,7 +14,7 @@
 
   # Hardware Configuration
   videoDriver = "intel"; # CRITICAL: Choose your GPU driver (nvidia, amdgpu, intel)
-  hostname = "Station-00"; # Your system hostname
+  hostname = "Subrelay-01"; # Your system hostname
 
   # Localization
   clock24h = true; # 24H or 12H clock in waybar
