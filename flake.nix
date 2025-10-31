@@ -103,6 +103,7 @@
       nixosConfigurations = {
         Default = mkHost "Default";
         Subrelay-01 = mkHost "Subrelay-01";
+        Scout-02 = mkHost "Scout-02";
       };
     };
 }

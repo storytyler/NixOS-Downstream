@@ -68,6 +68,16 @@ in
     '';
   };
 
+  # WiFi Bridge Credentials (Centralized Configuration)
+  networking.wifiBridge = {
+    ssid = "CXNK0161E6FB-5G";
+    password = "Unluckyunicorn";
+    wifiInterface = "wlp3s0";
+    ethernetInterface = "enp2s0";
+    bridgeNetwork = "192.168.200.0/24";
+    bridgeIP = "192.168.200.1";
+  };
+
   environment.systemPackages = with pkgs; [
     networkmanagerapplet
     iproute2

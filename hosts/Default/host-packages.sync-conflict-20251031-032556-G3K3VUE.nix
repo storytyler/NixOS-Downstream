@@ -2,7 +2,7 @@
 {
   environment.systemPackages = with pkgs; [
     protonvpn-gui # VPN
-    # github-desktop
+    github-desktop
     kdePackages.kate
     # kdePackages.kdeconnect-kde
     pkgs.claude-code
@@ -12,6 +12,9 @@
     gemini-cli
     nurl
     nix-init
+    python314
     nixd
+    gearlever
+    deploy-rs
   ];
 }

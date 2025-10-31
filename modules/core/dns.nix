@@ -2,10 +2,12 @@
 {
   networking.firewall = {
     allowedTCPPorts = [
+      52
       53
       5335
     ];
     allowedUDPPorts = [
+      52
       53
       5335
     ];
@@ -81,7 +83,7 @@
         };
         dns = {
           bind_host = "0.0.0.0";
-          bind_port = 53;
+          bind_port = 52;
           upstream_dns = [ "127.0.0.1:5335" ];
           bootstrap_dns = [ "127.0.0.1:5335" ];
         };

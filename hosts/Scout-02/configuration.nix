@@ -31,10 +31,6 @@ in
     # ../../modules/core/virtualisation.nix
     # ../../modules/core/dlna.nix
 
-    # WiFi Bridge Modules
-    ../../modules/core/wifi-client
-    ../../modules/core/internet-share
-
     # Optional
     # ../../modules/hardware/drives # Automatically mount extra external/internal drives
     ../../modules/hardware/video/${vars.videoDriver}.nix # Enable gpu drivers defined in variables.nix
@@ -61,20 +57,4 @@ in
     # ../../modules/programs/misc/lact # GPU fan, clock and power configuration
   ]
   ++ lib.optional (vars.games == false) ../../modules/core/games.nix;
-
-  # WiFi Bridge Configuration (uses centralized credentials from network.nix)
-  services.wifi-client = {
-    enable = true;
-    ssid = config.networking.wifiBridge.ssid;
-    password = config.networking.wifiBridge.password;
-    interface = config.networking.wifiBridge.wifiInterface;
-  };
-
-  services.internet-share = {
-    enable = true;
-    externalInterface = config.networking.wifiBridge.wifiInterface;
-    internalInterface = config.networking.wifiBridge.ethernetInterface;
-    internalIP = config.networking.wifiBridge.bridgeIP;
-    internalNetwork = config.networking.wifiBridge.bridgeNetwork;
-  };
 }

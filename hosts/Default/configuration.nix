@@ -31,6 +31,9 @@ in
     # ../../modules/core/virtualisation.nix
     # ../../modules/core/dlna.nix
 
+    # WiFi Bridge Modules
+    ../../modules/core/internet-client
+
     # Optional
     # ../../modules/hardware/drives # Automatically mount extra external/internal drives
     ../../modules/hardware/video/${vars.videoDriver}.nix # Enable gpu drivers defined in variables.nix
@@ -57,4 +60,13 @@ in
     # ../../modules/programs/misc/lact # GPU fan, clock and power configuration
   ]
   ++ lib.optional (vars.games == false) ../../modules/core/games.nix;
+
+  # Internet Client Configuration - receives internet from Subrelay-01
+  services.internet-client = {
+    enable = true;
+    interface = "enp2s0"; # Ethernet interface
+    ipAddress = "192.168.200.100";
+    prefixLength = 24;
+    gateway = "192.168.200.1";
+  };
 }
