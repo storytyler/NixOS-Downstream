@@ -1,0 +1,11 @@
+# Ignore all hidden directories and files
+.*
+
+# But allow specific files we DO want to sync
+!.stignore
+!.stfolder
+!README.md
+!CLAUDE.md
+
+# Ignore git directory entirely (includes objects, refs, logs, etc.)
+.git/

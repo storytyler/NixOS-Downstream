@@ -71,5 +71,12 @@
     # devenv
     # devbox
     # shellify
+    nmap
+    wireshark-cli
+    iftop
+    btop
+    htop
+    file # Program that shows the type of files
+    tree # Command to produce a depth indented directory listing
   ];
 }

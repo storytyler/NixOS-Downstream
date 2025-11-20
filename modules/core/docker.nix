@@ -1,26 +1,26 @@
-{ pkgs, lib, config, ... }:
+  {
+    pkgs,
+    lib,
+    config,
+    ...
+  }:
 
-{
-
-    virtualisation.docker.rootless = {
+  {
+    virtualisation.docker = {
       enable = true;
-      setSocketVariable = true;
-    };
-    
-    #Disable Docker Daemon For Rootless
-    virtualisation.docker.enable = false;
-
-    virtualisation.docker.daemon.settings = {
-      data-root = "/home/player00/.Docker-Data";
-      exec-opts = [ "native.cgroupdriver=systemd" ];
-      cgroup-parent = "system.slice";
-      dns = ["8.8.8.8" "1.1.1.1"];
+      daemon.settings = {
+        data-root = "/home/player00/.Docker-Data";
+        exec-opts = [ "native.cgroupdriver=systemd" ];
+        cgroup-parent = "system.slice";
+        dns = [ "192.168.1.122" ];
       };
+    };
 
-    systemd.services."user@".serviceConfig.Delegate = "cpu cpuset io memory pids";
+    # Add user to docker group for sudo-less access
+    users.users.player00.extraGroups = [ "docker" ];
 
     environment.systemPackages = with pkgs; [
       compose2nix
       lazydocker
     ];
-}
+  }

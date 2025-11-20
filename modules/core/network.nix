@@ -12,21 +12,7 @@ in
     #   noProxy = "127.0.0.1,localhost,internal.domain";
     # };
 
-    firewall = {
-      enable = true;
-      allowedTCPPorts = [
-        22 # SSH (Secure Shell) - remote access
-        80 # HTTP - web traffic
-        443 # HTTPS - encrypted web traffic
-        59010 # Custom application port
-        59011 # Custom application port
-        8080 # Alternative HTTP/web server port
-      ];
-      allowedUDPPorts = [
-        59010 # Custom application port
-        59011 # Custom application port
-      ];
-    };
+    
     localCommands = ''
       WANIF="eno1"
 
@@ -68,18 +54,8 @@ in
     '';
   };
 
-  # WiFi Bridge Credentials (Centralized Configuration)
-  networking.wifiBridge = {
-    ssid = "CXNK0161E6FB-5G";
-    password = "Unluckyunicorn";
-    wifiInterface = "wlp3s0";
-    ethernetInterface = "enp2s0";
-    bridgeNetwork = "192.168.200.0/24";
-    bridgeIP = "192.168.200.1";
-  };
-
   environment.systemPackages = with pkgs; [
     networkmanagerapplet
     iproute2
   ];
-}
+ }

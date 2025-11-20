@@ -26,14 +26,13 @@ in
     ../../modules/core/syncthing.nix
     ../../modules/core/system.nix
     ../../modules/core/users.nix
-    # ../../modules/core/docker.nix
+    ../../modules/core/docker.nix
     # ../../modules/core/flatpak.nix
     # ../../modules/core/virtualisation.nix
     # ../../modules/core/dlna.nix
 
-    # WiFi Bridge Modules
-    ../../modules/core/wifi-client
-    ../../modules/core/internet-share
+    # Internet Sharing Module
+    # ../../modules/core/internet-share.nix
 
     # Optional
     # ../../modules/hardware/drives # Automatically mount extra external/internal drives
@@ -61,20 +60,4 @@ in
     # ../../modules/programs/misc/lact # GPU fan, clock and power configuration
   ]
   ++ lib.optional (vars.games == false) ../../modules/core/games.nix;
-
-  # WiFi Bridge Configuration (uses centralized credentials from network.nix)
-  services.wifi-client = {
-    enable = true;
-    ssid = config.networking.wifiBridge.ssid;
-    password = config.networking.wifiBridge.password;
-    interface = config.networking.wifiBridge.wifiInterface;
-  };
-
-  services.internet-share = {
-    enable = true;
-    externalInterface = config.networking.wifiBridge.wifiInterface;
-    internalInterface = config.networking.wifiBridge.ethernetInterface;
-    internalIP = config.networking.wifiBridge.bridgeIP;
-    internalNetwork = config.networking.wifiBridge.bridgeNetwork;
-  };
 }

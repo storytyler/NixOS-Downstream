@@ -1,17 +1,17 @@
 { pkgs, ... }:
 {
   environment.systemPackages = with pkgs; [
-    protonvpn-gui # VPN
+    # protonvpn-gui # VPN
     # github-desktop
-    kdePackages.kate
+    # kdePackages.kate
     # kdePackages.kdeconnect-kde
     pkgs.claude-code
-    nodejs
-    uv
+    # nodejs
+    # uv
     nix-tree
-    gemini-cli
-    nurl
-    nix-init
+    # gemini-cli
+    # nurl
+    # nix-init
     nixd
   ];
 }

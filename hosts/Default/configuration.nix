@@ -26,13 +26,12 @@ in
     ../../modules/core/syncthing.nix
     ../../modules/core/system.nix
     ../../modules/core/users.nix
-    ../../modules/core/docker.nix
     # ../../modules/core/flatpak.nix
     # ../../modules/core/virtualisation.nix
     # ../../modules/core/dlna.nix
 
-    # WiFi Bridge Modules
-    ../../modules/core/internet-client
+    # Docker Module in place of virtualisation.nix
+    ../../modules/core/docker.nix
 
     # Optional
     # ../../modules/hardware/drives # Automatically mount extra external/internal drives
@@ -53,20 +52,11 @@ in
     # ../../modules/programs/media/spicetify
     ../../modules/programs/media/youtube-music
     # ../../modules/programs/media/thunderbird
-    # ../../modules/programs/media/obs-studio
+    ../../modules/programs/media/obs-studio
     ../../modules/programs/media/mpv
     # ../../modules/programs/misc/tlp
     ../../modules/programs/misc/thunar
     # ../../modules/programs/misc/lact # GPU fan, clock and power configuration
   ]
   ++ lib.optional (vars.games == false) ../../modules/core/games.nix;
-
-  # Internet Client Configuration - receives internet from Subrelay-01
-  services.internet-client = {
-    enable = true;
-    interface = "enp2s0"; # Ethernet interface
-    ipAddress = "192.168.200.100";
-    prefixLength = 24;
-    gateway = "192.168.200.1";
-  };
 }
