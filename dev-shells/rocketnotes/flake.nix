@@ -1,8 +1,6 @@
 {
   description = "RocketNotes dev shell";
 
-  inputs.nixpkgs.follows = "nixpkgs";
-
   outputs =
     { self, nixpkgs, ... }:
     let

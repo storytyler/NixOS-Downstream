@@ -1,0 +1,13 @@
+MESA-INTEL: warning: Haswell Vulkan support is incomplete
+[63782:63782:1122/230748.955376:ERROR:ui/ozone/platform/wayland/host/wayland_wp_image_description.cc:219] Incomplete image description info from compositor.
+[63782:63782:1122/230748.998602:ERROR:dbus/object_proxy.cc:573] Failed to call method: org.freedesktop.DBus.Properties.GetAll: object_path= /org/freedesktop/UPower/devices/DisplayDevice: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.UPower was not provided by any .service files
+libva error: /run/opengl-driver/lib/dri/iHD_drv_video.so init failed
+[63905:63905:1122/230749.072434:ERROR:media/gpu/vaapi/vaapi_wrapper.cc:1631] vaInitialize failed: operation failed
+[63782:63782:1122/230749.326266:ERROR:ui/ozone/platform/wayland/host/wayland_wp_image_description.cc:219] Incomplete image description info from compositor.
+[63782:63858:1122/230753.261254:ERROR:google_apis/gcm/engine/registration_request.cc:292] Registration response error message: DEPRECATED_ENDPOINT
+[63782:63858:1122/230818.896661:ERROR:google_apis/gcm/engine/registration_request.cc:292] Registration response error message: DEPRECATED_ENDPOINT
+[63782:63858:1122/230918.456732:ERROR:google_apis/gcm/engine/registration_request.cc:292] Registration response error message: DEPRECATED_ENDPOINT
+MESA-INTEL: warning: Haswell Vulkan support is incomplete
+Warning: maxDynamicUniformBuffersPerPipelineLayout artificially reduced from 500000 to 16 to fit dynamic offset allocation limit.
+Warning: maxDynamicStorageBuffersPerPipelineLayout artificially reduced from 500000 to 16 to fit dynamic offset allocation limit.
+[63782:63858:1122/231059.552252:ERROR:google_apis/gcm/engine/registration_request.cc:292] Registration response error message: DEPRECATED_ENDPOINT

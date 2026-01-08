@@ -216,19 +216,19 @@ in
                 "col.border_locked_active" = "rgba(ca9ee6ff) rgba(f2d5cfff) 45deg";
                 "col.border_locked_inactive" = "rgba(b4befecc) rgba(6c7086cc) 45deg";
               };
-              layerrule = [
-                "blur, rofi"
-                "ignorezero, rofi"
-                "ignorealpha 0.7, rofi"
+              # layerrule = [
+              #  "blur, rofi"
+              #  "ignorezero, rofi"
+              #  "ignorealpha 0.7, rofi"
 
-                "blur, swaync-control-center"
-                "blur, swaync-notification-window"
-                "ignorezero, swaync-control-center"
-                "ignorezero, swaync-notification-window"
-                "ignorealpha 0.7, swaync-control-center"
-                # "ignorealpha 0.8, swaync-notification-window"
-                # "dimaround, swaync-control-center"
-              ];
+              #  "blur, swaync-control-center"
+              #  "blur, swaync-notification-window"
+              #  "ignorezero, swaync-control-center"
+              #  "ignorezero, swaync-notification-window"
+              #  "ignorealpha 0.7, swaync-control-center"
+              # "ignorealpha 0.8, swaync-notification-window"
+              # "dimaround, swaync-control-center"
+              # ];
               animations = {
                 enabled = true;
                 bezier = [
@@ -283,103 +283,103 @@ in
                 new_on_top = true;
                 mfact = 0.5;
               };
-              windowrule = [
-                #"noanim, class:^(Rofi)$
-                "tile,title:(.*)(Godot)(.*)$"
-                # "workspace 1, class:^(kitty|Alacritty|org.wezfurlong.wezterm)$"
-                # "workspace 2, class:^(code|VSCodium|code-url-handler|codium-url-handler)$"
-                # "workspace 3, class:^(krita)$"
-                # "workspace 3, title:(.*)(Godot)(.*)$"
-                # "workspace 3, title:(GNU Image Manipulation Program)(.*)$"
-                # "workspace 3, class:^(factorio)$"
-                # "workspace 3, class:^(steam)$"
-                # "workspace 5, class:^(firefox|floorp|zen|zen-beta)$"
-                # "workspace 6, class:^(Spotify)$"
-                # "workspace 6, title:(.*)(Spotify)(.*)$"
+              # windowrule = [
+              #"noanim, class:^(Rofi)$
+              # "tile,title:(.*)(Godot)(.*)$"
+              # "workspace 1, class:^(kitty|Alacritty|org.wezfurlong.wezterm)$"
+              # "workspace 2, class:^(code|VSCodium|code-url-handler|codium-url-handler)$"
+              # "workspace 3, class:^(krita)$"
+              # "workspace 3, title:(.*)(Godot)(.*)$"
+              # "workspace 3, title:(GNU Image Manipulation Program)(.*)$"
+              # "workspace 3, class:^(factorio)$"
+              # "workspace 3, class:^(steam)$"
+              # "workspace 5, class:^(firefox|floorp|zen|zen-beta)$"
+              # "workspace 6, class:^(Spotify)$"
+              # "workspace 6, title:(.*)(Spotify)(.*)$"
 
-                # Can use FLOAT FLOAT for active and inactive or just FLOAT
-                "opacity 1.00 1.00,class:^(firefox|Brave-browser|floorp|zen|zen-beta)$"
-                "opacity 0.90 0.80,class:^(Emacs)$"
-                "opacity 0.90 0.80,class:^(gcr-prompter)$" # keyring prompt
-                "opacity 0.90 0.80,title:^(Hyprland Polkit Agent)$" # polkit prompt
-                "opacity 0.90 0.80,class:^(obsidian)$"
-                "opacity 0.90 0.80,class:^(Lutris|lutris|net.lutris.Lutris)$"
-                "opacity 0.80 0.70,class:^(kitty|alacritty|Alacritty|org.wezfurlong.wezterm)$"
-                "opacity 0.80 0.70,class:^(nvim-wrapper)$"
-                "opacity 0.80 0.70,class:^(gnome-disks)$"
-                "opacity 0.80 0.70,class:^(org.gnome.Nautilus|Thunar|thunar|pcmanfm)$"
-                "opacity 0.80 0.70,class:^(thunar-volman-settings)$"
-                "opacity 0.80 0.70,class:^(org.gnome.FileRoller)$"
-                "opacity 0.80 0.70,class:^(io.github.ilya_zlobintsev.LACT)$"
-                "opacity 0.80 0.70,class:^(Steam|steam|steamwebhelper)$"
-                "opacity 0.80 0.70,class:^(Spotify|spotify)$"
-                "opacity 0.80 0.70,title:(.*)(Spotify)(.*)$"
-                "opacity 0.80 0.70,title:^(Kvantum Manager)$"
-                "opacity 0.80 0.70,class:^(VSCodium|codium-url-handler)$"
-                "opacity 0.80 0.70,class:^(code|code-url-handler)$"
-                "opacity 0.80 0.70,class:^(tuiFileManager)$"
-                "opacity 0.80 0.70,class:^(org.kde.dolphin)$"
-                "opacity 0.80 0.70,class:^(org.kde.ark)$"
-                "opacity 0.80 0.70,class:^(nwg-look)$"
-                # "opacity 0.80 0.70,class:^(qt5ct|qt6ct)$"
-                "opacity 0.80 0.70,class:^(yad)$"
+              # Can use FLOAT FLOAT for active and inactive or just FLOAT
+              # "opacity 1.00 1.00,class:^(firefox|Brave-browser|floorp|zen|zen-beta)$"
+              # "opacity 0.90 0.80,class:^(Emacs)$"
+              # "opacity 0.90 0.80,class:^(gcr-prompter)$" # keyring prompt
+              # "opacity 0.90 0.80,title:^(Hyprland Polkit Agent)$" # polkit prompt
+              # "opacity 0.90 0.80,class:^(obsidian)$"
+              # "opacity 0.90 0.80,class:^(Lutris|lutris|net.lutris.Lutris)$"
+              # "opacity 0.80 0.70,class:^(kitty|alacritty|Alacritty|org.wezfurlong.wezterm)$"
+              # "opacity 0.80 0.70,class:^(nvim-wrapper)$"
+              # "opacity 0.80 0.70,class:^(gnome-disks)$"
+              # "opacity 0.80 0.70,class:^(org.gnome.Nautilus|Thunar|thunar|pcmanfm)$"
+              # "opacity 0.80 0.70,class:^(thunar-volman-settings)$"
+              # "opacity 0.80 0.70,class:^(org.gnome.FileRoller)$"
+              # "opacity 0.80 0.70,class:^(io.github.ilya_zlobintsev.LACT)$"
+              # "opacity 0.80 0.70,class:^(Steam|steam|steamwebhelper)$"
+              # "opacity 0.80 0.70,class:^(Spotify|spotify)$"
+              # "opacity 0.80 0.70,title:(.*)(Spotify)(.*)$"
+              # "opacity 0.80 0.70,title:^(Kvantum Manager)$"
+              # "opacity 0.80 0.70,class:^(VSCodium|codium-url-handler)$"
+              # "opacity 0.80 0.70,class:^(code|code-url-handler)$"
+              # "opacity 0.80 0.70,class:^(tuiFileManager)$"
+              # "opacity 0.80 0.70,class:^(org.kde.dolphin)$"
+              # "opacity 0.80 0.70,class:^(org.kde.ark)$"
+              # "opacity 0.80 0.70,class:^(nwg-look)$"
+              # "opacity 0.80 0.70,class:^(qt5ct|qt6ct)$"
+              # "opacity 0.80 0.70,class:^(yad)$"
 
-                "opacity 0.90 0.80,class:^(discord)$" # Discord-Electron
-                "opacity 0.90 0.80,class:^(WebCord)$" # WebCord-Electron
-                "opacity 0.90 0.80,class:^(com.github.rafostar.Clapper)$" # Clapper-Gtk
-                "opacity 0.80 0.70,class:^(com.github.tchx84.Flatseal)$" # Flatseal-Gtk
-                "opacity 0.80 0.70,class:^(hu.kramo.Cartridges)$" # Cartridges-Gtk
-                "opacity 0.80 0.70,class:^(com.obsproject.Studio)$" # Obs-Qt
-                "opacity 0.80 0.70,class:^(gnome-boxes)$" # Boxes-Gtk
-                "opacity 0.80 0.70,class:^(app.drey.Warp)$" # Warp-Gtk
-                "opacity 0.80 0.70,class:^(net.davidotek.pupgui2)$" # ProtonUp-Qt
-                "opacity 0.80 0.70,class:^(Signal)$" # Signal-Gtk
-                "opacity 0.80 0.70,class:^(io.gitlab.theevilskeleton.Upscaler)$" # Upscaler-Gtk
+              # "opacity 0.90 0.80,class:^(discord)$" # Discord-Electron
+              # "opacity 0.90 0.80,class:^(WebCord)$" # WebCord-Electron
+              # "opacity 0.90 0.80,class:^(com.github.rafostar.Clapper)$" # Clapper-Gtk
+              # "opacity 0.80 0.70,class:^(com.github.tchx84.Flatseal)$" # Flatseal-Gtk
+              # "opacity 0.80 0.70,class:^(hu.kramo.Cartridges)$" # Cartridges-Gtk
+              # "opacity 0.80 0.70,class:^(com.obsproject.Studio)$" # Obs-Qt
+              # "opacity 0.80 0.70,class:^(gnome-boxes)$" # Boxes-Gtk
+              # "opacity 0.80 0.70,class:^(app.drey.Warp)$" # Warp-Gtk
+              # "opacity 0.80 0.70,class:^(net.davidotek.pupgui2)$" # ProtonUp-Qt
+              # "opacity 0.80 0.70,class:^(Signal)$" # Signal-Gtk
+              # "opacity 0.80 0.70,class:^(io.gitlab.theevilskeleton.Upscaler)$" # Upscaler-Gtk
 
-                "opacity 0.80 0.70,class:^(pavucontrol)$"
-                "opacity 0.80 0.70,class:^(org.pulseaudio.pavucontrol)$"
-                "opacity 0.80 0.70,class:^(blueman-manager)$"
-                "opacity 0.80 0.70,class:^(.blueman-manager-wrapped)$"
-                "opacity 0.80 0.70,class:^(nm-applet)$"
-                "opacity 0.80 0.70,class:^(nm-connection-editor)$"
-                "opacity 0.80 0.70,class:^(org.kde.polkit-kde-authentication-agent-1)$"
+              # "opacity 0.80 0.70,class:^(pavucontrol)$"
+              # "opacity 0.80 0.70,class:^(org.pulseaudio.pavucontrol)$"
+              # "opacity 0.80 0.70,class:^(blueman-manager)$"
+              # "opacity 0.80 0.70,class:^(.blueman-manager-wrapped)$"
+              # "opacity 0.80 0.70,class:^(nm-applet)$"
+              # "opacity 0.80 0.70,class:^(nm-connection-editor)$"
+              # "opacity 0.80 0.70,class:^(org.kde.polkit-kde-authentication-agent-1)$"
 
-                "content game, tag:games"
-                "tag +games, content:game"
-                "tag +games, class:^(steam_app.*|steam_app_\d+)$"
-                "tag +games, class:^(gamescope)$"
-                "tag +games, class:(Waydroid)"
-                "tag +games, class:(osu!)"
+              # "content game, tag:games"
+              # "tag +games, content:game"
+              # "tag +games, class:^(steam_app.*|steam_app_\d+)$"
+              # "tag +games, class:^(gamescope)$"
+              # "tag +games, class:(Waydroid)"
+              # "tag +games, class:(osu!)"
 
-                # Games
-                "syncfullscreen,tag:games"
-                "fullscreen,tag:games"
-                "noborder 1,tag:games"
-                "noshadow,tag:games"
-                "noblur,tag:games"
-                "noanim,tag:games"
+              # Games
+              # "syncfullscreen,tag:games"
+              # "fullscreen,tag:games"
+              # "noborder 1,tag:games"
+              # "noshadow,tag:games"
+              # "noblur,tag:games"
+              # "noanim,tag:games"
 
-                # Float and pin Picture-in-Picture in browsers
-                "float,title:^(Picture-in-Picture)$,class:^(zen|zen-beta|floorp|firefox)$"
-                "pin,title:^(Picture-in-Picture)$,class:^(zen|zen-beta|floorp|firefox)$"
+              # Float and pin Picture-in-Picture in browsers
+              # "float,title:^(Picture-in-Picture)$,class:^(zen|zen-beta|floorp|firefox)$"
+              # "pin,title:^(Picture-in-Picture)$,class:^(zen|zen-beta|floorp|firefox)$"
 
-                "float,class:^(qt5ct)$"
-                "float,class:^(nwg-look)$"
-                "float,class:^(org.kde.ark)$"
-                "float,class:^(Signal)$" # Signal-Gtk
-                "float,class:^(com.github.rafostar.Clapper)$" # Clapper-Gtk
-                "float,class:^(app.drey.Warp)$" # Warp-Gtk
-                "float,class:^(net.davidotek.pupgui2)$" # ProtonUp-Qt
-                "float,class:^(eog)$" # Imageviewer-Gtk
-                "float,class:^(io.gitlab.theevilskeleton.Upscaler)$" # Upscaler-Gtk
-                "float,class:^(yad)$"
-                "float,class:^(pavucontrol)$"
-                "float,class:^(blueman-manager)$"
-                "float,class:^(.blueman-manager-wrapped)$"
-                "float,class:^(nm-applet)$"
-                "float,class:^(nm-connection-editor)$"
-                "float,class:^(org.kde.polkit-kde-authentication-agent-1)$"
-              ];
+              # "float,class:^(qt5ct)$"
+              # "float,class:^(nwg-look)$"
+              # "float,class:^(org.kde.ark)$"
+              # "float,class:^(Signal)$" # Signal-Gtk
+              # "float,class:^(com.github.rafostar.Clapper)$" # Clapper-Gtk
+              # "float,class:^(app.drey.Warp)$" # Warp-Gtk
+              # "float,class:^(net.davidotek.pupgui2)$" # ProtonUp-Qt
+              # "float,class:^(eog)$" # Imageviewer-Gtk
+              # "float,class:^(io.gitlab.theevilskeleton.Upscaler)$" # Upscaler-Gtk
+              # "float,class:^(yad)$"
+              # "float,class:^(pavucontrol)$"
+              # "float,class:^(blueman-manager)$"
+              # "float,class:^(.blueman-manager-wrapped)$"
+              # "float,class:^(nm-applet)$"
+              # "float,class:^(nm-connection-editor)$"
+              # "float,class:^(org.kde.polkit-kde-authentication-agent-1)$"
+              # ];
               binde = [
                 # Resize windows
                 "$mainMod SHIFT, right, resizeactive, 30 0"
@@ -569,23 +569,23 @@ in
                 ",preferred,auto,1"
 
                 # My Monitors (Fine to leave these since i used the serial numbers)
-                "desc:BNQ BenQ EW277HDR 99J01861SL0,preferred,-1920x0,1"
-                "desc:BNQ BenQ EL2870U PCK00489SL0,preferred,0x0,2"
-                "desc:BNQ BenQ xl2420t 99D06760SL0,preferred,1920x-420,1,transform,1" # 5 for fipped
+                "desc:Dell Inc. XPS 2720 HH117829111S,preferred,0 x1080,1" # Position Dell at LG TV's right edge
+                "desc:LG Electronics LG TV SSCR2 0x01010101,preferred,-3840 x0,1" # Keep LG TV at origin
+                # "desc:BNQ BenQ xl2420t 99D06760SL0,preferred,1920x-420,1,transform,1" # 5 for fipped
               ];
 
               workspace = [
                 # Binds workspaces to my monitors (find desc with: hyprctl monitors)
-                "1,monitor:desc:BNQ BenQ EL2870U PCK00489SL0,default:true"
-                "2,monitor:desc:BNQ BenQ EL2870U PCK00489SL0"
-                "3,monitor:desc:BNQ BenQ EL2870U PCK00489SL0"
-                "4,monitor:desc:BNQ BenQ EL2870U PCK00489SL0"
-                "5,monitor:desc:BNQ BenQ EW277HDR 99J01861SL0,default:true"
-                "6,monitor:desc:BNQ BenQ EW277HDR 99J01861SL0"
-                "7,monitor:desc:BNQ BenQ EW277HDR 99J01861SL0"
-                "8,monitor:desc:BNQ BenQ xl2420t 99D06760SL0,default:true"
-                "9,monitor:desc:BNQ BenQ xl2420t 99D06760SL0"
-                "10,monitor:desc:BNQ BenQ EL2870U PCK00489SL0"
+                "1,monitor:desc:Dell Inc.XPS 2720 HH1178,default:true"
+                "2,monitor:desc:Dell Inc.XPS 2720 HH1178"
+                "3,monitor:desc:Dell Inc.XPS 2720 HH1178"
+                "4,monitor:desc:Dell Inc.XPS 2720 HH1178"
+                "5,monitor:desc:LG Electronics LG TV SSCR2 0 x01010101,default:true"
+                "6,monitor:desc:LG Electronics LG TV SSCR2 0 x01010101"
+                "7,monitor:desc:LG Electronics LG TV SSCR2 0 x01010101"
+                # "8,monitor:desc:BNQ BenQ xl2420t 99D06760SL0,default:true"
+                # "9,monitor:desc:BNQ BenQ xl2420t 99D06760SL0"
+                # "10,monitor:desc:BNQ BenQ EL2870U PCK00489SL0"
               ];
             };
           };

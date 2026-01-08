@@ -36,11 +36,12 @@ in
     ./programs/editor/${vars.editor} # Set editor defined in variables.nix
     ./programs/cli/${vars.tuiFileManager} # Set file-manager defined in variables.nix
     ./programs/cli/tmux
+
     ./programs/cli/direnv
     ./programs/cli/lazygit
     ./programs/cli/cava
     ./programs/cli/btop
-    ./programs/cli/spec-kit
+    # ./programs/cli/spec-kit
     ./programs/media/discord
     # ./programs/media/spicetify
     ./programs/media/youtube-music
@@ -50,6 +51,7 @@ in
     ./programs/misc/tlp
     ./programs/misc/thunar
     ./programs/misc/lact # GPU fan, clock and power configuration
+
   ]
   ++ lib.optional (vars.games == false) ./core/games.nix;
 }

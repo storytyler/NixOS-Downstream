@@ -5,13 +5,21 @@
       52
       53
       67
+      5555
       5335
+      2377
+      7946
+      9898
     ];
     allowedUDPPorts = [
       52
       53
       67
       5335
+      5555
+      7946
+      4789
+      9898
     ];
   };
   # Disable systemd dns resolver

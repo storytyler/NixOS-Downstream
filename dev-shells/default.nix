@@ -163,6 +163,10 @@ rec {
     path = ./zig;
     description = "Zig development environment";
   };
+  rocketnotes = {
+    path = ./rocketnotes;
+    description = "Rocketnotes dependency shell";
+  };
 
   # Aliases
   c = c-cpp;

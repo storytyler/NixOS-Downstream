@@ -74,15 +74,16 @@
             packages = with python.pkgs; [
               venvShellHook
               pip
+              uv
 
               # Add whatever else you'd like here.
-              # pkgs.basedpyright
+              pkgs.basedpyright
 
-              # pkgs.black
+              pkgs.black
               # or
               # python.pkgs.black
 
-              # pkgs.ruff
+              pkgs.ruff
               # or
               # python.pkgs.ruff
             ];

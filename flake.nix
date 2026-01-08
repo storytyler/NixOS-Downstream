@@ -34,10 +34,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
-    spicetify-nix = {
-      url = "github:Gerg-L/spicetify-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nur.url = "github:nix-community/NUR";
     betterfox = {
       url = "github:yokoffing/Betterfox";
@@ -46,10 +42,6 @@
     thunderbird-catppuccin = {
       url = "github:catppuccin/thunderbird";
       flake = false;
-    };
-    zen-browser = {
-      url = "github:0xc000022070/zen-browser-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     nvchad4nix = {
       url = "github:nix-community/nix4nvchad";
@@ -62,10 +54,14 @@
       url = "github:aksiksi/compose2nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    opencode = {
+      url = "github:sst/opencode";
+    };
   };
 
   outputs =
     {
+      opencode,
       claude-code,
       self,
       nixpkgs,

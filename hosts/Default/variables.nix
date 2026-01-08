@@ -4,7 +4,7 @@
   desktop = "hyprland"; # Options: hyprland, i3-gaps, gnome, plasma6
   terminal = "alacritty"; # Options: kitty, alacritty
   editor = "vscode"; # Options: nixvim, vscode, helix, doom-emacs, nvchad, neovim
-  browser = "browseros"; # Options: firefox, floorp, zen
+  browser = "firefox"; # Options: firefox, floorp, zen
   tuiFileManager = "yazi"; # Options: yazi, lf
   sddmTheme = "black_hole"; # Options: astronaut, black_hole, purple_leaves, jake_the_dog, hyprland_kath
   defaultWallpaper = "kurzgesagt.webp"; # to change wallpaper: SUPER + SHIFT + W

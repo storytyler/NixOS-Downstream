@@ -57,6 +57,7 @@ in
     # ../../modules/programs/misc/tlp
     ../../modules/programs/misc/thunar
     # ../../modules/programs/misc/lact # GPU fan, clock and power configuration
+    # ./../modules/programs/nixai
   ]
   ++ lib.optional (vars.games == false) ../../modules/core/games.nix;
 }

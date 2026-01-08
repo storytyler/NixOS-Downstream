@@ -1,0 +1,26 @@
+services:
+  hindsight:
+    image: ghcr.io/vectorize-io/hindsight:0.1.15
+    container_name: hindsight
+    pull_policy: always
+    ports:
+      - "8888:8888"  # API Server
+      - "9999:9999"  # Control Plane (Web UI)
+    volumes:
+      - hindsight-data:/home/hindsight/.pg0
+    env_file:
+      - .hindsight.env
+    restart: unless-stopped
+
+  hindsight-mcp-wrapper:
+    build: .
+    container_name: hindsight-mcp-wrapper
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    restart: unless-stopped
+
+volumes:
+  hindsight-data:
+    driver: local
