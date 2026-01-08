@@ -3,3 +3,7 @@
     - retain
     - recall
     - reflect
+
+
+    REVOKED
+    git clone https://github.com/storytyler/NixOS.git ~/NixOS

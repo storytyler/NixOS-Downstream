@@ -12,7 +12,6 @@ in
     #   noProxy = "127.0.0.1,localhost,internal.domain";
     # };
 
-    
     localCommands = ''
       WANIF="eno1"
 
@@ -58,4 +57,4 @@ in
     networkmanagerapplet
     iproute2
   ];
- }
+}
