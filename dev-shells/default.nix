@@ -119,10 +119,10 @@ rec {
     path = ./purescript;
     description = "Purescript development environment";
   };
-  python = {
-    path = ./python;
-    description = "Python development environment";
-  };
+  # python = {
+  #  path = ./python;
+  #  description = "Python development environment";
+  # };
   r = {
     path = ./r;
     description = "R development environment";
