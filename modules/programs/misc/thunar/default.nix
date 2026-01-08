@@ -3,7 +3,7 @@
   programs.thunar = {
     enable = true;
   };
-  environment.systemPackages = with pkgs.xfce; [
+  environment.systemPackages = with pkgs; [
     thunar-archive-plugin # Archive management
     thunar-volman # Volume management (automount removable devices)
     thunar-media-tags-plugin # Tagging & renaming feature for media files

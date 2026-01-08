@@ -36,7 +36,7 @@ in
   nix = {
     # Nix Package Manager Settings
     settings = {
-      download-buffer-size = 200000000;
+      download-buffer-size = 524288000;
       auto-optimise-store = true; # May make rebuilds longer but less size
       substituters = [
         "https://cache.nixos.org/"
