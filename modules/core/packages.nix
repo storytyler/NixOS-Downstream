@@ -4,7 +4,6 @@
   programs = {
     fuse.userAllowOther = true;
     mtr.enable = true;
-    adb.enable = true;
     hyprlock.enable = true;
     gnupg.agent = {
       enable = true;
@@ -16,6 +15,7 @@
 
   environment.systemPackages = with pkgs; [
     appimage-run # Needed For AppImage Support
+    # android-tools # Needed for working with android os
     killall # For Killing All Instances Of Programs
     lm_sensors # Used For Getting Hardware Temps
     gnome-disk-utility # Disk Partitioning and Mounting Utility

@@ -38,6 +38,7 @@
     tsx
     zip
     unzip
+    anytype
 
     # Built By Nurl and Nix-Init
     (callPackage ../../pkgs/code-machine.nix { })
