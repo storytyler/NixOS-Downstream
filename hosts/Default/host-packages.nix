@@ -2,7 +2,7 @@
 {
   environment.systemPackages = with pkgs; [
     # protonvpn-gui # VPN
-    github-desktop
+    # github-desktop
 
     # Backup Browser
     chromium

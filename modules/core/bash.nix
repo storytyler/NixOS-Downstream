@@ -122,6 +122,12 @@
             # javadir = "cd /mnt/work/dev/Java/";
             # luadir = "cd /mnt/work/dev/lua/";
             # webdir = "cd /mnt/work/dev/Website/";
+
+            # ChunkHound aliases
+            ch = "ch"; # Points to Nix-managed binary
+            chindex = "ch index";
+            chsearch = "ch search";
+            chmcp = "ch mcp";
           };
         };
       }

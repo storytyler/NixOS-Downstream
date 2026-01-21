@@ -39,6 +39,9 @@
     # zip
     # unzip
 
+    # Disk Install Method for btrfs on hosts with SSD
+    disko
+
     # Built By Nurl and Nix-Init
     # (callPackage ../../pkgs/code-machine.nix { })
 
