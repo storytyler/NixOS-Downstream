@@ -18,8 +18,8 @@
 
         # Dictionary packages
         dictionaries = with pkgs.hunspellDictsChromium; [
-          en-GB
-          en-US
+          en-gb
+          en-us
         ];
 
         # Command line arguments for Chromium
