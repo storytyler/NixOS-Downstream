@@ -11,18 +11,19 @@
 
   networking.nftables.enable = true;
 
+  # Configure firewall to properly allow Tailscale traffic
+  # Reference: https://wiki.nixos.org/wiki/Tailscale#Native_nftables_Support_(Modern_Setup)
+  networking.firewall = {
+    # Always allow traffic from your Tailscale network
+    trustedInterfaces = [ "tailscale0" ];
+    # Allow Tailscale UDP port through firewall
+    allowedUDPPorts = [ 41641 ];
+  };
+
   services.tailscale = {
     enable = true;
     # Enable routing features for exit nodes and subnet routers
     useRoutingFeatures = "both";
-  };
-
-  networking.firewall = {
-    # Allow Tailscale traffic through firewall
-    trustedInterfaces = [ "tailscale0" ];
-    allowedUDPPorts = [ 41641 ]; # Tailscale default port
-    # Critical for exit node functionality - prevents reverse path filter dropping traffic
-    checkReversePath = "loose";
   };
 
   # Force tailscaled to use nftables (avoids iptables-compat issues)
