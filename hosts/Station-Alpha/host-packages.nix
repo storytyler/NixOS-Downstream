@@ -4,35 +4,44 @@
     # protonvpn-gui # VPN
     # github-desktop
 
-    # Backup Browser
-    # chromium
+    # Needed for AI/ML GPU Processing
+    nvidia-container-toolkit
+
+    # LLM Platforms
+    lmstudio
+
+    # Notation
+    anytype
 
     # kdePackages.kate
-    # kdePackages.kdeconnect-kde
+    kdePackages.kdeconnect-kde
 
-    # CLI Tools
+    # CLI Agent TUIs
     # pkgs.claude-code
     # gemini-cli
-    # pkgs.opencode
+    pkgs.opencode
 
-    # uv
+    # Web Terminal
+    ttyd
+
+    uv
     # nix-tree
-    # bun
+    bun
 
     # Package Building
     # nurl
     # nix-init
 
     # Dev Shell Config
-    # nix-direnv
-    # direnv
+    nix-direnv
+    direnv
 
     # Translation
     # pandoc # file to Markdown
 
     # Misc
     # watchdog
-    # nixd
+    nixd
     # gearlever
     # deploy-rs
     # tsx
@@ -40,7 +49,7 @@
     # unzip
 
     # Disk Install Method for btrfs on hosts with SSD
-    disko
+    # disko
 
     # Built By Nurl and Nix-Init
     # (callPackage ../../pkgs/code-machine.nix { })

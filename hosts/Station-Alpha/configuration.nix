@@ -11,27 +11,32 @@ in
     ../../modules/scripts
     ../../modules/core/boot.nix
     ../../modules/core/bash.nix
-    # ../../modules/core/zsh.nix
-    # ../../modules/core/starship.nix
+    ../../modules/core/zsh.nix
+    ../../modules/core/starship.nix
     ../../modules/core/fonts.nix
     ../../modules/core/hardware.nix
     ../../modules/core/network.nix
     ../../modules/core/dns.nix
     ../../modules/core/nh.nix
-    # ../../modules/core/packages.nix
-    # ../../modules/core/printing.nix
+    ../../modules/core/packages.nix
+    ../../modules/core/printing.nix
     ../../modules/core/sddm.nix
     ../../modules/core/security.nix
     ../../modules/core/services.nix
-    # ../../modules/core/syncthing.nix
+    ../../modules/core/syncthing.nix
     ../../modules/core/system.nix
     ../../modules/core/users.nix
+    ../../modules/core/chunkhound.nix
     # ../../modules/core/flatpak.nix
     # ../../modules/core/virtualisation.nix
-    # ../../modules/core/dlna.nix
+    ../../modules/core/dlna.nix
 
     # Docker Module in place of virtualisation.nix
-    # ../../modules/core/docker.nix
+    ../../modules/core/docker.nix
+
+    #NetSec and TTYD
+    ../../modules/core/tailscale.nix
+    ../../modules/core/ttyd.nix
 
     # Optional
     # ../../modules/hardware/drives # Automatically mount extra external/internal drives
@@ -42,11 +47,11 @@ in
     ../../modules/programs/editor/${vars.editor} # Set editor defined in variables.nix
     ../../modules/programs/cli/${vars.tuiFileManager} # Set file-manager defined in variables.nix
     ../../modules/programs/cli/tmux
-    # ../../modules/programs/cli/direnv
-    # ../../modules/programs/cli/lazygit
+    ../../modules/programs/cli/direnv
+    ../../modules/programs/cli/lazygit
     ../../modules/programs/cli/cava
-    # ../../modules/programs/cli/fastfetch
-    # ../../modules/programs/cli/btop
+    ../../modules/programs/cli/fastfetch
+    ../../modules/programs/cli/btop
     # ../../modules/programs/cli/spec-kit
     # ../../modules/programs/media/discord
     # ../../modules/programs/media/spicetify
@@ -54,10 +59,10 @@ in
     # ../../modules/programs/media/thunderbird
     # ../../modules/programs/media/obs-studio
     # ../../modules/programs/media/mpv
-    # ../../modules/programs/misc/tlp
-    # ../../modules/programs/misc/thunar
-    # ../../modules/programs/misc/lact # GPU fan, clock and power configuration
-    # ./../modules/programs/nixai
+    ../../modules/programs/misc/tlp
+    ../../modules/programs/misc/thunar
+    ../../modules/programs/misc/lact # GPU fan, clock and power configuration
+    # ../../modules/programs/nixai
   ];
   #++ lib.optional (vars.games == false) ../../modules/core/games.nix;
 }
