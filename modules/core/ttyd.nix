@@ -10,19 +10,15 @@
   services.ttyd = {
     enable = lib.mkDefault true;
     port = 7681;
-    command = "${pkgs.bash}/bin/bash"; # systemd handles persistence
-    username = "admin";
-    passwordFile = pkgs.writeText "ttyd-password" "your-password";
+    entrypoint = [ "${pkgs.bash}/bin/bash" ]; # systemd handles persistence
+    username = "player00";
+    passwordFile = pkgs.writeText "ttyd-password" "unicorn";
     writeable = true;
     maxClients = 5;
     checkOrigin = true;
     clientOptions = {
       fontSize = "18";
-      disableLeaveAlert = true;
-      theme = {
-        background = "#1a1a1a";
-        foreground = "#ffffff";
-      };
+      disableLeaveAlert = "true";
     };
     user = "ttyd";
   };
@@ -38,14 +34,6 @@
         advertised = true;
       };
     };
-  };
-
-  # === Firewall Configuration ===
-  networking.firewall = {
-    allowedTCPPorts = lib.mkMerge [
-      config.networking.firewall.allowedTCPPorts or [ ]
-      [ 7681 ]
-    ];
   };
 
   # === Dedicated User ===
