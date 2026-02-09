@@ -10,6 +10,7 @@
       2377
       7946
       9898
+      7681
     ];
     allowedUDPPorts = [
       52
@@ -25,13 +26,17 @@
   # Disable systemd dns resolver
   services.resolved = {
     enable = false;
-    domains = [ "~." ];
-    fallbackDns = [ ]; # Empty to prevent bypass
-    dnsovertls = "true";
+    settings = {
+      Resolve = {
+        Domains = [ "~." ];
+        FallbackDNS = [ ]; # Empty to prevent bypass
+        DNSOverTLS = "true";
 
-    # github.com/systemd/systemd/issues/10579
-    # dnssec = "allow-downgrade";
-    dnssec = "false";
+        # github.com/systemd/systemd/issues/10579
+        # DNSSEC = "allow-downgrade";
+        DNSSEC = "false";
+      };
+    };
   };
   systemd.services = {
     unbound.stopIfChanged = false;

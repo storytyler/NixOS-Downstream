@@ -5,6 +5,7 @@
     ./fonts.nix
     ./hardware.nix
     ./network.nix
+    ./tailscale.nix
     ./nh.nix
     ./packages.nix
     ./printing.nix

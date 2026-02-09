@@ -12,8 +12,9 @@
       data-root = "/home/player00/.Docker-Data";
       exec-opts = [ "native.cgroupdriver=systemd" ];
       cgroup-parent = "system.slice";
-      dns = [ "192.168.1.122" ];
+      # dns = [ "192.168.1.122" ];
       live-restore = false;
+      features.cdi = true;
     };
   };
 
