@@ -5,10 +5,10 @@
   ...
 }:
 {
-  # environment.systemPackages = with pkgs; [inputs.zen-browser.packages.${system}.default];
+  # environment.systemPackages = with pkgs; [inputs.zen-browser.packages.${stdenv.hostPlatform.system}.default];
   home-manager.sharedModules = [
     (_: {
-      imports = [ inputs.zen-browser.homeModules ];
+      imports = [ inputs.zen-browser.homeModules.beta ];
 
       programs.zen-browser = {
         enable = true;
@@ -19,7 +19,7 @@
         ];
         profiles = {
           default = {
-            id = "isDefault"; # 0 is the default profile; see also option "isDefault"
+            id = 0; # 0 is the default profile; see also option "isDefault"
             name = "default"; # name as listed in about:profiles
             isDefault = true; # can be omitted; true if profile ID is 0
             settings = import ./settings.nix;

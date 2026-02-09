@@ -6,13 +6,14 @@ This directory contains configurations for terminal emulators and terminal-relat
 
 - **kitty/** - Modern, feature-rich terminal emulator with GPU acceleration
 - **alacritty/** - Fast, cross-platform terminal emulator written in Rust
+- **ghostty/** - Fast, feature-rich, cross-platform terminal emulator with native UI and GPU acceleration
 
 ## Terminal Selection
 
 The terminal emulator is selected based on:
 ```nix
 # In hosts/Default/variables.nix
-terminal = "kitty";  # Options: "kitty", "alacritty"
+terminal = "kitty";  # Options: "kitty", "alacritty", "ghostty"
 ```
 
 ## Configuration Features
@@ -30,6 +31,17 @@ terminal = "kitty";  # Options: "kitty", "alacritty"
 - **Configuration**: YAML-based configuration
 - **Rendering**: Software rendering with optional GPU
 - **Integration**: Good shell and font support
+
+### Ghostty Terminal
+- **Performance**: GPU-accelerated with native platform UI
+- **Cross-Platform**: Native on macOS, Linux, Windows
+- **Configuration**: INI-based configuration with Home Manager module
+- **Rendering**: Hardware-accelerated with GPU optimization
+- **Integration**: Full shell integration, systemd support, and modern features
+- **Shell Integration**: Automatic for bash, fish, zsh
+- **Systemd Support**: Faster startup and additional features on Linux
+- **Themes**: Built-in Catppuccin support, custom theme support
+- **Editor Integration**: Vim and bat syntax highlighting
 
 ## Common Terminal Features
 
@@ -150,6 +162,11 @@ Terminal emulators depend on:
 **Pros**: Lightweight, fast startup, simple configuration
 **Cons**: Fewer built-in features, limited customization
 
+### Ghostty Terminal
+**Best for**: Users who want a modern, fast terminal with native UI and excellent GPU acceleration
+**Pros**: Fast startup, modern UI, systemd integration, cross-platform, good shell integration, Vim/bat support
+**Cons**: Newer project, smaller community than kitty/alacritty
+
 ## Terminal-Specific Configuration
 
 ### Kitty Features
@@ -165,6 +182,18 @@ Terminal emulators depend on:
 - Simple YAML configuration
 - Good cross-platform consistency
 - Stable performance
+
+### Ghostty Features
+- Fast startup and rendering
+- Native platform UI (macOS, Linux, Windows)
+- Hardware-accelerated GPU rendering
+- Systemd integration for better performance
+- Full shell integration (bash, fish, zsh)
+- Built-in Catppuccin themes
+- Custom theme support
+- Vim and bat syntax highlighting
+- Modern keybinding system
+- Configurable scrollback and history
 
 ## Customization Examples
 
