@@ -569,8 +569,8 @@ in
                 ",preferred,auto,1"
 
                 # My Monitors (Fine to leave these since i used the serial numbers)
-                "desc:Dell Inc. XPS 2720 HH117829111S,preferred,0 x1080,1" # Position Dell at LG TV's right edge
-                "desc:LG Electronics LG TV SSCR2 0x01010101,preferred,-3840 x0,1" # Keep LG TV at origin
+                # "desc:Dell Inc. XPS 2720 HH117829111S,preferred,0 x1080,1" # Position Dell at LG TV's right edge
+                "desc:LG Electronics LG TV SSCR2 0x01010101,preferred,auto,1" # Keep LG TV at origin
                 # "desc:BNQ BenQ xl2420t 99D06760SL0,preferred,1920x-420,1,transform,1" # 5 for fipped
               ];
 

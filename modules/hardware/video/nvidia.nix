@@ -25,17 +25,16 @@ in
   boot.kernelParams = lib.optionals (lib.elem "nvidia" config.services.xserver.videoDrivers) [
     "nvidia-drm.modeset=1"
     "nvidia_drm.fbdev=1"
-    "nvidia.NVreg_TemporaryFilePath=/var/tmp"
 
-    # "nvidia.NVreg_RegistryDwords=RmEnableAggressiveVblank=1" # Experimental: reduce latency
+    "nvidia.NVreg_RegistryDwords=RmEnableAggressiveVblank=1" # Experimental: reduce latency
   ];
   hardware = {
+    nvidia-container-toolkit.enable = true;
     nvidia = {
       open = true;
-      nvidiaPersistenced = true;
+      # nvidiaPersistenced = true;
       nvidiaSettings = false;
       powerManagement.enable = true; # Fixes sleep/suspend
-
       modesetting.enable = true; # Modesetting is required.
 
       package = nvidiaDriverChannel;
@@ -53,7 +52,7 @@ in
   };
   nixpkgs.config = {
     nvidia.acceptLicense = true;
-    cudaSupport = false;
+    cudaSupport = true;
     allowUnfreePredicate =
       pkg:
       builtins.elem (lib.getName pkg) [
@@ -62,11 +61,5 @@ in
         "nvidia-settings"
         "nvidia-x11"
       ];
-  };
-  nix.settings = {
-    # substituters = [ "https://cache.nixos-cuda.org" ];
-    # trusted-public-keys = [
-    #   "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
-    # ];
   };
 }
