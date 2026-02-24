@@ -45,21 +45,14 @@
     # zip
     # unzip
 
-    # Disk Install Method for btrfs on hosts with SSD
+    # Disk Install Method for btrfs on SSD
     # disko
 
     # VS Code in Browser
     code-server
 
-    # RGB Control
-    openrgb-with-all-plugins
-    xcb-util-cursor # Qt xcb platform plugin dependency
-
     # Built By Nurl and Nix-Init
     # (callPackage ../../pkgs/code-machine.nix { })
 
   ];
-
-  # Allow OpenRGB to run without sudo
-  services.udev.packages = [ pkgs.openrgb ];
 }

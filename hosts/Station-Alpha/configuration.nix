@@ -34,9 +34,10 @@ in
     # Docker Module in place of virtualisation.nix
     ../../modules/core/docker.nix
 
-    #NetSec and TTYD
+    # RGB Control
+    ../../modules/core/openrgb.nix
+    #NetSec
     ../../modules/core/tailscale.nix
-    ../../modules/core/ttyd.nix
 
     # Optional
     # ../../modules/hardware/drives # Automatically mount extra external/internal drives
@@ -53,16 +54,16 @@ in
     ../../modules/programs/cli/fastfetch
     ../../modules/programs/cli/btop
     # ../../modules/programs/cli/spec-kit
-    # ../../modules/programs/media/discord
+    ../../modules/programs/media/discord
     # ../../modules/programs/media/spicetify
     # ../../modules/programs/media/youtube-music
     # ../../modules/programs/media/thunderbird
-    # ../../modules/programs/media/obs-studio
+    ../../modules/programs/media/obs-studio
     # ../../modules/programs/media/mpv
     ../../modules/programs/misc/tlp
     ../../modules/programs/misc/thunar
     ../../modules/programs/misc/lact # GPU fan, clock and power configuration
     # ../../modules/programs/nixai
-  ];
-  #++ lib.optional (vars.games == false) ../../modules/core/games.nix;
+  ]
+  ++ lib.optional (vars.games == false) ../../modules/core/games.nix;
 }
