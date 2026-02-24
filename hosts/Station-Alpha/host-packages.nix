@@ -21,9 +21,6 @@
     # gemini-cli
     pkgs.opencode
 
-    # Web Terminal
-    ttyd
-
     uv
     # nix-tree
     bun
@@ -50,6 +47,12 @@
 
     # Disk Install Method for btrfs on hosts with SSD
     # disko
+
+    # VS Code in Browser
+    code-server
+
+    # RGB Control
+    openrgb-with-all-plugins
 
     # Built By Nurl and Nix-Init
     # (callPackage ../../pkgs/code-machine.nix { })
