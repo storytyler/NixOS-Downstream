@@ -14,7 +14,7 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
-    appimage-run # Needed For AppImage Support
+    # appimage-run # Needed For AppImage Support
     # android-tools # Needed for working with android os
     killall # For Killing All Instances Of Programs
     lm_sensors # Used For Getting Hardware Temps
@@ -36,7 +36,6 @@
     tldr # Improved Man
     unrar # Tool For Handling .rar Files
     unzip # Tool For Handling .zip Files
-    # aider-chat # AI in terminal (Optional: Client only)
     # cmatrix # Matrix Movie Effect In Terminal
     # cowsay # Great Fun Terminal Program
     # duf # Utility For Viewing Disk Usage In Terminal
@@ -63,7 +62,6 @@
     usbutils # Good Tools For USB Devices
     # uwsm # Universal Wayland Session Manager (optional must be enabled)
     # v4l-utils # Used For Things Like OBS Virtual Camera
-    # warp-terminal # Terminal with AI support build in
     # waypaper # Change wallpaper
     wget # Tool For Fetching Files With Links
     # ytmdl # Tool For Downloading Audio From YouTube
@@ -78,5 +76,9 @@
     htop
     file # Program that shows the type of files
     tree # Command to produce a depth indented directory listing
+    openclaw # Desktop Assistant with multi-host capability
+  ];
+  nixpkgs.config.permittedInsecurePackages = [
+    "openclaw-2026.3.12"
   ];
 }

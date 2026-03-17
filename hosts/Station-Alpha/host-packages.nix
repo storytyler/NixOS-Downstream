@@ -15,13 +15,9 @@
 
     # Speech-to-Text
     whisper-cpp
-    # openai-whisper  # Temporarily disabled - requires PyTorch build
 
     # Notation
     anytype
-
-    # kdePackages.kate
-    kdePackages.kdeconnect-kde
 
     # CLI Agent TUIs
     # pkgs.claude-code
@@ -37,7 +33,7 @@
     pnpm
 
     # Containers (for running non-Nix packages like OpenWork desktop)
-    distrobox
+    # distrobox
 
     # Package Building
     # nurl
@@ -61,9 +57,6 @@
 
     # Disk Install Method for btrfs on SSD
     # disko
-
-    # VS Code in Browser
-    code-server
 
     # Built By Nurl and Nix-Init
     # (callPackage ../../pkgs/code-machine.nix { })

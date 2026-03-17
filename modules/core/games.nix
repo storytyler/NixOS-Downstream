@@ -40,7 +40,7 @@
   };
   environment.systemPackages = with pkgs; [
     lutris
-    heroic
+    # heroic  # Temporarily disabled - electron build failure
     # bottles
     # ryujinx
     # prismlauncher
