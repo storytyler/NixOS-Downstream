@@ -7,12 +7,9 @@
     # Backup Browser
     chromium
 
-    kdePackages.kate
-    # kdePackages.kdeconnect-kde
-
     # CLI Tools
-    pkgs.claude-code
-    gemini-cli
+    # pkgs.claude-code
+    # gemini-cli
     pkgs.opencode
 
     uv
@@ -20,28 +17,28 @@
     bun
 
     # Package Building
-    nurl
-    nix-init
+    # nurl
+    # nix-init
 
     # Dev Shell Config
-    nix-direnv
-    direnv
+    # nix-direnv
+    # direnv
 
     # Translation
-    pandoc # file to Markdown
+    # pandoc # file to Markdown
 
     # Misc
     watchdog
-    nixd
-    gearlever
-    deploy-rs
-    tsx
-    zip
-    unzip
+    # nixd
+    # gearlever
+    # deploy-rs
+    # tsx
+    # zip
+    # unzip
     anytype
 
     # Built By Nurl and Nix-Init
-    (callPackage ../../pkgs/code-machine.nix { })
+    # (callPackage ../../pkgs/code-machine.nix { })
 
   ];
 }

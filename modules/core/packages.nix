@@ -18,19 +18,19 @@
     # android-tools # Needed for working with android os
     killall # For Killing All Instances Of Programs
     lm_sensors # Used For Getting Hardware Temps
-    gnome-disk-utility # Disk Partitioning and Mounting Utility
+    # gnome-disk-utility # Disk Partitioning and Mounting Utility
     jq # Json Formatting Utility
     bibata-cursors
     sddm-astronaut # Sddm Theme (Overlayed)
     kdePackages.qtsvg # Sddm Dependency
     kdePackages.qtmultimedia # Sddm Dependency
     kdePackages.qtvirtualkeyboard # Sddm Dependency
-    fzf # Fuzzy Finder
-    fd # Better Find
+    # fzf # Fuzzy Finder
+    # fd # Better Find
     git # Git
     gh # Github Authentication Client
-    libjxl # Support for JXL Images
-    microfetch # Small fetch (Blazingly fast)
+    # libjxl # Support for JXL Images
+    # microfetch # Small fetch (Blazingly fast)
     nix-prefetch-scripts # Find Hashes/Revisions of Nix Packages
     ripgrep # Improved Grep
     tldr # Improved Man
@@ -41,7 +41,6 @@
     # duf # Utility For Viewing Disk Usage In Terminal
     # dysk # Disk space util nice formattting
     # ffmpeg # Terminal Video / Audio Editing
-    gemini-cli # CLI AI client ONLY (optional)
     # glxinfo # needed for inxi diag util
     # inxi # CLI System Information Tool
     # libsForQt5.qt5.qtgraphicaleffects # Sddm Dependency (Old)

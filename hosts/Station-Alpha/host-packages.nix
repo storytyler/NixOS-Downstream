@@ -30,7 +30,7 @@
     uv
     # nix-tree
     bun
-    pnpm
+    # pnpm
 
     # Containers (for running non-Nix packages like OpenWork desktop)
     # distrobox
