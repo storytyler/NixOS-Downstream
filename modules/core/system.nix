@@ -25,7 +25,7 @@ in
     };
   };
   services.xserver = {
-    enable = false;
+    enable = true; # Required for display manager (SDDM) to render login UI
     excludePackages = with pkgs; [ xterm ];
     exportConfiguration = true; # Make sure /etc/X11/xkb is populated so localectl works correctly
     xkb = {
@@ -36,7 +36,10 @@ in
   nix = {
     # Nix Package Manager Settings
     settings = {
-      trusted-users = [ "root" "@wheel" ]; # Required by Cachix to be used as non-root user
+      trusted-users = [
+        "root"
+        "@wheel"
+      ]; # Required by Cachix to be used as non-root user
       accept-flake-config = true;
       builders-use-substitutes = true;
       download-buffer-size = 200000000;

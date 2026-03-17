@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   lib,
   ...
@@ -15,6 +16,28 @@
     enable = true;
     enable32Bit = true;
   };
+  hardware.xpadneo.enable = true; # Xbox wireless controller support
+  hardware.steam-hardware.enable = true; # Steam controller recognition
+
+  # Bluetooth: disable ERTM for Xbox controller input to work
+  boot.extraModprobeConfig = ''
+    options bluetooth disable_ertm=Y
+  '';
+
+  # Ensure xpadneo kernel module is available
+  boot.extraModulePackages = with config.boot.kernelPackages; [ xpadneo ];
+
+  # Udev rules for game controller permissions
+  services.udev.packages = with pkgs; [ game-devices-udev-rules ];
+
+  # Enable uinput for Steam Input virtual devices
+  hardware.uinput.enable = true;
+
+  # SDL: Disable HIDAPI to prevent conflict with xpadneo
+  # Forces SDL to use kernel event interface instead of direct HID access
+  environment.sessionVariables = {
+    SDL_JOYSTICK_HIDAPI = "0";
+  };
   environment.systemPackages = with pkgs; [
     lutris
     heroic
@@ -23,7 +46,7 @@
     # prismlauncher
 
     steam-run
-    wineWowPackages.staging
+    wineWow64Packages.staging
   ];
   programs = {
     gamemode.enable = true;

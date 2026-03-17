@@ -48,7 +48,7 @@ in
 
   programs.hyprland = {
     enable = true;
-    # withUWSM = true;
+    withUWSM = false;
   };
 
   home-manager.sharedModules =

@@ -10,7 +10,7 @@
       "btrfs"
     ];
     tmp.cleanOnBoot = true;
-    kernelPackages = pkgs.linuxPackages_latest; # _latest, _zen, _xanmod_latest, _hardened, _rt, _OTHER_CHANNEL, etc.
+    kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [
       "preempt=full" # lower latency but less throughput
     ];
@@ -23,8 +23,8 @@
         device = "nodev";
         efiSupport = true;
         useOSProber = true;
-        gfxmodeEfi = "2715x1527"; # for 4k: 3840x2160
-        gfxmodeBios = "2715x1527"; # for 4k: 3840x2160
+        gfxmodeEfi = "auto";
+        gfxmodeBios = "auto";
         theme = pkgs.stdenv.mkDerivation {
           pname = "distro-grub-themes";
           version = "3.1";

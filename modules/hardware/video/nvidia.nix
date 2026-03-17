@@ -5,7 +5,7 @@
   ...
 }:
 let
-  nvidiaDriverChannel = config.boot.kernelPackages.nvidiaPackages.stable; # stable, latest, beta, etc.
+  nvidiaDriverChannel = config.boot.kernelPackages.nvidiaPackages.stable; # stable, production, or beta
 in
 {
   environment.sessionVariables = lib.optionalAttrs config.programs.hyprland.enable {
@@ -28,9 +28,17 @@ in
 
     "nvidia.NVreg_RegistryDwords=RmEnableAggressiveVblank=1" # Experimental: reduce latency
   ];
+  # Early loading of NVIDIA modules for SDDM Wayland compatibility
+  boot.initrd.kernelModules = [
+    "nvidia"
+    "nvidia_modeset"
+    "nvidia_drm"
+    "nvidia_uvm"
+  ];
   hardware = {
     nvidia-container-toolkit.enable = true;
     nvidia = {
+      # 5060 TI on station alpha requires open drivers
       open = true;
       # nvidiaPersistenced = true;
       nvidiaSettings = false;

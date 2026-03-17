@@ -12,4 +12,7 @@
     package = pkgs.openrgb-with-all-plugins;
     motherboard = "intel";
   };
+
+  # Add user to i2c group for SMBus access (required for RAM RGB detection)
+  users.users.player00.extraGroups = [ "i2c" ];
 }

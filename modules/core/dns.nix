@@ -76,6 +76,12 @@
         };
         forward-zone = [
           {
+            # Forward Tailscale MagicDNS queries to Tailscale's MagicDNS resolver
+            # 100.100.100.100 is the Tailscale DNS resolver that resolves MagicDNS names
+            name = "ts.net.";
+            forward-addr = [ "100.100.100.100" ];
+          }
+          {
             name = ".";
             forward-tls-upstream = "yes";
             forward-addr = [

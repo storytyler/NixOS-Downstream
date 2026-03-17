@@ -77,9 +77,8 @@
       mkHost =
         host:
         nixpkgs.lib.nixosSystem {
-          # inherit system;
-          system = forAllSystems (system: system);
           modules = [
+            { nixpkgs.hostPlatform = "x86_64-linux"; }
             ./hosts/${host}/configuration.nix
           ];
           specialArgs = {

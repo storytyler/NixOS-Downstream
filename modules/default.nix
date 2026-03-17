@@ -41,6 +41,7 @@ in
     ./programs/cli/lazygit
     ./programs/cli/cava
     ./programs/cli/btop
+    ./programs/cli/voicemode
     # ./programs/cli/spec-kit
     ./programs/media/discord
     # ./programs/media/spicetify
@@ -53,5 +54,5 @@ in
     ./programs/misc/lact # GPU fan, clock and power configuration
 
   ]
-  ++ lib.optional (vars.games == false) ./core/games.nix;
+  ++ lib.optional (vars.games == true) ./core/games.nix;
 }

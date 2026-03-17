@@ -53,6 +53,7 @@ in
     ../../modules/programs/cli/cava
     ../../modules/programs/cli/fastfetch
     ../../modules/programs/cli/btop
+    ../../modules/programs/cli/voicemode
     # ../../modules/programs/cli/spec-kit
     ../../modules/programs/media/discord
     # ../../modules/programs/media/spicetify
@@ -60,10 +61,10 @@ in
     # ../../modules/programs/media/thunderbird
     ../../modules/programs/media/obs-studio
     # ../../modules/programs/media/mpv
-    ../../modules/programs/misc/tlp
+    # ../../modules/programs/misc/tlp
     ../../modules/programs/misc/thunar
-    ../../modules/programs/misc/lact # GPU fan, clock and power configuration
+    # ../../modules/programs/misc/lact # GPU fan, clock and power configuration - disabled due to boot hang with kernel 6.19
     # ../../modules/programs/nixai
   ]
-  ++ lib.optional (vars.games == false) ../../modules/core/games.nix;
+  ++ lib.optional (vars.games == true) ../../modules/core/games.nix;
 }

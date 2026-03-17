@@ -10,7 +10,7 @@
   defaultWallpaper = "moon.webp"; # to change wallpaper: SUPER + SHIFT + W
   hyprlockWallpaper = "dark-forest.jpg"; # See modules/themes/wallpapers for options
   shell = "bash"; # Options: zsh, bash
-  games = false; # Whether to enable the gaming module
+  games = true; # Whether to enable the gaming module
 
   # Hardware Configuration
   videoDriver = "nvidia"; # CRITICAL: Choose your GPU driver (nvidia, amdgpu, intel)
@@ -19,7 +19,7 @@
   # Localization
   clock24h = true; # 24H or 12H clock in waybar
   locale = "en_GB.UTF-8"; # System locale
-  timezone = "Chicago/US"; # Your timezone
+  timezone = "America/Chicago"; # Your timezone
   kbdLayout = "us"; # Keyboard layout
   kbdVariant = ""; # Keyboard variant (can be empty)
   consoleKeymap = "us"; # TTY keymap

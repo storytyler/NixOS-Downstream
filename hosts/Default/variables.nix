@@ -13,7 +13,7 @@
   games = false; # Whether to enable the gaming module
 
   # Hardware Configuration
-  videoDriver = "intel"; # CRITICAL: Choose your GPU driver (nvidia, amdgpu, intel)
+  videoDriver = "nvidia"; # CRITICAL: Choose your GPU driver (nvidia, amdgpu, intel)
   hostname = "Station-00"; # Your system hostname
 
   # Localization

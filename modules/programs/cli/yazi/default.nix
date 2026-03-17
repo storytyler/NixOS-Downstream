@@ -6,6 +6,7 @@
         enable = true;
         enableBashIntegration = true;
         enableZshIntegration = true;
+        shellWrapperName = "y"; # Use new default wrapper name
         settings = {
           mgr = {
             show_hidden = true;
