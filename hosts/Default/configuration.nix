@@ -34,6 +34,9 @@ in
     # Docker Module in place of virtualisation.nix
     ../../modules/core/docker.nix
 
+    # Home Assistant (local, no cloud)
+    ../../modules/core/home-assistant.nix
+
     # Optional
     # ../../modules/hardware/drives # Automatically mount extra external/internal drives
     ../../modules/hardware/video/${vars.videoDriver}.nix # Enable gpu drivers defined in variables.nix

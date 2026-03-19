@@ -15,7 +15,7 @@
 
     # Speech-to-Text
     whisper-cpp
-
+    # openai-whisper
     # Notation
     anytype
 
@@ -54,6 +54,7 @@
     # tsx
     # zip
     # unzip
+    gogcli
 
     # Disk Install Method for btrfs on SSD
     # disko

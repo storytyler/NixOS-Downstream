@@ -78,6 +78,6 @@
     openclaw # Desktop Assistant with multi-host capability
   ];
   nixpkgs.config.permittedInsecurePackages = [
-    "openclaw-2026.3.12"
+    "openclaw-${pkgs.openclaw.version}"
   ];
 }
