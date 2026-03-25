@@ -20,6 +20,7 @@ in
     ./core/security.nix
     ./core/services.nix
     ./core/syncthing.nix
+    ./core/backup.nix
     ./core/system.nix
     ./core/users.nix
     # ./core/flatpak.nix

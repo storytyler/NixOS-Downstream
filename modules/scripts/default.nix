@@ -28,6 +28,7 @@ let
     (import ./extract.nix scriptArgs)
     (import ./driverinfo.nix scriptArgs)
     (import ./underwatt.nix scriptArgs)
+    (import ./hindsight-backup.nix scriptArgs)
     # Add new scripts here as you create them
   ];
 in

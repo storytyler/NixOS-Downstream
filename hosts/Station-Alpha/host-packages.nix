@@ -36,8 +36,12 @@
     # distrobox
 
     # Package Building
-    # nurl
+    nurl
     # nix-init
+
+    # Nix Analysis & Documentation
+    manix
+    flake-checker
 
     # Dev Shell Config
     nix-direnv
@@ -54,6 +58,9 @@
     # tsx
     # zip
     # unzip
+
+    google-chrome
+    # Packages added for openclaw skills
     gogcli
 
     # Disk Install Method for btrfs on SSD
