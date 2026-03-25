@@ -16,6 +16,7 @@
     # Speech-to-Text
     whisper-cpp
     # openai-whisper
+    
     # Notation
     anytype
 
@@ -32,9 +33,6 @@
     bun
     # pnpm
 
-    # Containers (for running non-Nix packages like OpenWork desktop)
-    # distrobox
-
     # Package Building
     nurl
     # nix-init
@@ -46,9 +44,6 @@
     # Dev Shell Config
     nix-direnv
     direnv
-
-    # Translation
-    # pandoc # file to Markdown
 
     # Misc
     # watchdog

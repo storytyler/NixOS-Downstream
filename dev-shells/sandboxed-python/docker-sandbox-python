@@ -1,0 +1,137 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+IMAGE_NAME="sandboxed-python"
+IMAGE_TAG="3.13"
+WORKSPACE="$(pwd)"
+INTERACTIVE="-it"
+GPU_FLAG=""
+CACHE_DIR=""
+
+print_usage() {
+    cat << EOF
+Usage: docker-sandbox-python [OPTIONS] [DIRECTORY]
+
+Run a sandboxed Python development environment in Docker.
+
+Options:
+    -p, --python VERSION    Python version to use (default: 3.13)
+    -g, --gpu               Enable GPU support (NVIDIA)
+    -c, --cache DIR         Mount cache directory for pip/packages
+    -n, --name NAME         Container name (default: auto-generated)
+    --rm                    Remove container after exit (default)
+    --keep                  Keep container after exit
+    -h, --help              Show this help message
+
+Examples:
+    docker-sandbox-python                    # Run in current directory
+    docker-sandbox-python /path/to/project   # Run in specific directory
+    docker-sandbox-python --python=3.11      # Use Python 3.11
+    docker-sandbox-python --gpu              # Enable GPU support
+EOF
+}
+
+parse_args() {
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            -p|--python)
+                IMAGE_TAG="$2"
+                shift 2
+                ;;
+            --python=*)
+                IMAGE_TAG="${1#*=}"
+                shift
+                ;;
+            -g|--gpu)
+                GPU_FLAG="--gpus all"
+                shift
+                ;;
+            -c|--cache)
+                CACHE_DIR="$2"
+                shift 2
+                ;;
+            --cache=*)
+                CACHE_DIR="${1#*=}"
+                shift
+                ;;
+            -n|--name)
+                CONTAINER_NAME="$2"
+                shift 2
+                ;;
+            --name=*)
+                CONTAINER_NAME="${1#*=}"
+                shift
+                ;;
+            --keep)
+                RM_FLAG=""
+                shift
+                ;;
+            --rm)
+                shift
+                ;;
+            -h|--help)
+                print_usage
+                exit 0
+                ;;
+            -*)
+                echo "Unknown option: $1" >&2
+                print_usage
+                exit 1
+                ;;
+            *)
+                WORKSPACE="$(realpath "$1")"
+                shift
+                ;;
+        esac
+    done
+}
+
+build_image() {
+    local dockerfile_dir
+    dockerfile_dir="$(dirname "$(realpath "$0")")"
+    
+    if ! docker image inspect "${IMAGE_NAME}:${IMAGE_TAG}" &> /dev/null; then
+        echo "Building ${IMAGE_NAME}:${IMAGE_TAG}..."
+        docker build \
+            --build-arg PYTHON_VERSION="${IMAGE_TAG}" \
+            -t "${IMAGE_NAME}:${IMAGE_TAG}" \
+            "${dockerfile_dir}"
+    fi
+}
+
+run_container() {
+    local mounts=()
+    local env_vars=()
+    
+    mounts+=(-v "${WORKSPACE}:/workspace")
+    mounts+=(-w /workspace)
+    
+    if [[ -n "${CACHE_DIR}" ]]; then
+        mkdir -p "${CACHE_DIR}"
+        mounts+=(-v "${CACHE_DIR}:/home/developer/.cache")
+    fi
+    
+    env_vars+=(-e "HOST_UID=$(id -u)")
+    env_vars+=(-e "HOST_GID=$(id -g)")
+    
+    if [[ -n "${CONTAINER_NAME:-}" ]]; then
+        env_vars+=(--name "${CONTAINER_NAME}")
+    fi
+    
+    docker run \
+        ${RM_FLAG:---rm} \
+        ${INTERACTIVE} \
+        ${GPU_FLAG} \
+        "${mounts[@]}" \
+        "${env_vars[@]}" \
+        "${IMAGE_NAME}:${IMAGE_TAG}" \
+        "$@"
+}
+
+main() {
+    parse_args "$@"
+    build_image
+    run_container "$@"
+}
+
+main "$@"

@@ -13,27 +13,6 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-doom-emacs-unstraightened = {
-      url = "github:marienz/nix-doom-emacs-unstraightened";
-      inputs.nixpkgs.follows = ""; # Doesn't use nixpkgs
-    };
-    doom-config = {
-      url = "github:Sly-Harvey/doom";
-      flake = false;
-    };
-    nixvim = {
-      url = "github:Sly-Harvey/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    neovim = {
-      url = "github:Sly-Harvey/nvim";
-      flake = false;
-    };
-    plasma-manager = {
-      url = "github:nix-community/plasma-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
-    };
     nur.url = "github:nix-community/NUR";
     betterfox = {
       url = "github:yokoffing/Betterfox";
@@ -42,10 +21,6 @@
     thunderbird-catppuccin = {
       url = "github:catppuccin/thunderbird";
       flake = false;
-    };
-    nvchad4nix = {
-      url = "github:nix-community/nix4nvchad";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     claude-code = {
       url = "github:sadjow/claude-code-nix";

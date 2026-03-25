@@ -75,9 +75,5 @@
     htop
     file # Program that shows the type of files
     tree # Command to produce a depth indented directory listing
-    openclaw # Desktop Assistant with multi-host capability
-  ];
-  nixpkgs.config.permittedInsecurePackages = [
-    "openclaw-${pkgs.openclaw.version}"
   ];
 }

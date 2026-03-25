@@ -81,7 +81,7 @@ in
             };
             "cava" = {
               hide_on_silence = false;
-              framerate = 60;
+              framerate = 0; # Disabled - high CPU usage
               bars = 10;
               format-icons = [
                 "▁"

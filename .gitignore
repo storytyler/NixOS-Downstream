@@ -9,3 +9,6 @@ result-*
 # Claude Code files
 .claude/
 .claude/*
+
+tools.yaml
+nohup.out

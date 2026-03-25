@@ -1,9 +1,9 @@
 {
   # User Configuration
   username = "player00"; # Your username (auto-set with install.sh, live-install.sh, rebuild)
-  desktop = "hyprland"; # Options: hyprland, i3-gaps, gnome, plasma6
+  desktop = "hyprland"; # Options: hyprland, i3-gaps, gnome
   terminal = "alacritty"; # Options: kitty, alacritty, ghostty
-  editor = "vscode"; # Options: nixvim, vscode, helix, doom-emacs, nvchad, neovim
+  editor = "vscode"; # Options: vscode, helix
   browser = "chromium"; # Options: firefox, floorp, zen, chromium
   tuiFileManager = "yazi"; # Options: yazi, lf
   sddmTheme = "hyprland_kath"; # Options: astronaut, black_hole, purple_leaves, jake_the_dog, hyprland_kath
