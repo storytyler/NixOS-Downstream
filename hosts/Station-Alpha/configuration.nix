@@ -30,6 +30,7 @@ in
     # ../../modules/core/flatpak.nix
     # ../../modules/core/virtualisation.nix
     ../../modules/core/dlna.nix
+    ../../modules/core/nix-ld.nix
 
     # Docker Module in place of virtualisation.nix
     ../../modules/core/docker.nix
