@@ -30,6 +30,7 @@ in
     # ../../modules/core/flatpak.nix
     # ../../modules/core/virtualisation.nix
     # ../../modules/core/dlna.nix
+    ../../modules/core/nix-ld.nix
 
     # Internet Sharing Module
     # ../../modules/core/internet-share.nix
