@@ -7,6 +7,7 @@
     # kdePackages.kdeconnect-kde
     pkgs.opencode
     nodejs
+    bun
     uv
     nix-tree
     # gemini-cli
