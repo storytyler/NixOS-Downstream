@@ -2,10 +2,10 @@
 pkgs.writeShellScriptBin "wallpaper" ''
 
   # Restore
-  swww restore &> /dev/null
+  awww restore &> /dev/null
 
   # If there is no wallpaper then set the default
-  if ! swww query | grep -q "image:" &> /dev/null; then
-    swww img "${../../../themes/wallpapers/${defaultWallpaper}}"
+  if ! awww query | grep -q "image:" &> /dev/null; then
+    awww img "${../../../themes/wallpapers/${defaultWallpaper}}"
   fi
 ''

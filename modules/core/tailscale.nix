@@ -6,7 +6,7 @@
   environment.systemPackages = with pkgs; [
     tailscale # Tailscale client and daemon
     tscli # Tailscale CLI interface
-    protonvpn-gui # Proton VPN GTK app for IP masking
+    proton-vpn # Proton VPN GTK app for IP masking
   ];
 
   networking.nftables.enable = true;

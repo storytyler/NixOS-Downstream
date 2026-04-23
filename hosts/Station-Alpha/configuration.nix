@@ -35,6 +35,9 @@ in
     # Docker Module in place of virtualisation.nix
     ../../modules/core/docker.nix
 
+    # Home Assistant (local, no cloud)
+    ../../modules/core/home-assistant.nix
+
     # RGB Control
     ../../modules/core/openrgb.nix
     #NetSec

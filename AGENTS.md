@@ -68,4 +68,3 @@ nix develop -t .#python    # Enter Python dev shell
 - `videoDriver` is CRITICAL - wrong value causes boot failure
 - `rebuild` supports both `$HOME/NixOS` and `/etc/nixos` locations
 - Subdirectory AGENTS.md: modules/{programs,core,scripts,desktop,hardware}, dev-shells/python{,/Mimir}
-- CLAUDE.md files exist for verbose docs (desktop/hyprland, themes, programs/*, scripts)

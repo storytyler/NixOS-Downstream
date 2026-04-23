@@ -18,7 +18,7 @@ if [ $HYPRGAMEMODE = 1 ]; then
         keyword decoration:fullscreen_opacity 1 ;\
         keyword layerrule noanim,waybar ;\
         keyword layerrule noanim,swaync-notification-window ;\
-        keyword layerrule noanim,swww-daemon ;\
+        keyword layerrule noanim,awww-daemon ;\
         keyword layerrule noanim,rofi"
   hyprctl 'keyword windowrule opaque,class:(.*)' # ensure all windows are opaque
   exit

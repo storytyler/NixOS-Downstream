@@ -78,7 +78,7 @@ in
           };
 
           home.packages = with pkgs; [
-            swww
+            awww
             hyprpicker
             cliphist
             wf-recorder
@@ -106,7 +106,7 @@ in
           };
 
           # Set wallpaper
-          services.swww.enable = true;
+          services.awww.enable = true;
 
           #test later systemd.user.targets.hyprland-session.Unit.Wants = [ "xdg-desktop-autostart.target" ];
           wayland.windowManager.hyprland = {

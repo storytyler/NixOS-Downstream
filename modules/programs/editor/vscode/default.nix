@@ -19,6 +19,7 @@
             eamodio.gitlens
             github.vscode-github-actions
             yzhang.markdown-all-in-one
+            streetsidesoftware.code-spell-checker
             catppuccin.catppuccin-vsc
             catppuccin.catppuccin-vsc-icons
             # asvetliakov.vscode-neovim

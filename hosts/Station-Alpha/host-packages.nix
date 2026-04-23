@@ -16,17 +16,17 @@
     # Speech-to-Text
     whisper-cpp
     # openai-whisper
-    
+
     # Notation
     anytype
 
-    # CLI Agent TUIs
+    # Coding Agents
     # pkgs.claude-code
     # gemini-cli
     pkgs.opencode
 
     # MCP Servers
-    portainer-mcp
+    # portainer-mcp
 
     uv
     # nix-tree
