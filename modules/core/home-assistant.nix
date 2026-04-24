@@ -19,6 +19,14 @@
       "isal" # Fast compression
     ];
 
+    customLovelaceModules = with pkgs.home-assistant-custom-lovelace-modules; [
+      clock-weather-card
+      card-mod
+      mushroom
+      apexcharts-card
+      bubble-card
+    ];
+
     config = {
       homeassistant = {
         name = "Home";

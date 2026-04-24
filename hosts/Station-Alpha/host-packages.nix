@@ -57,6 +57,7 @@
     google-chrome
     # Packages added for openclaw skills
     gogcli
+    python312
 
     # Disk Install Method for btrfs on SSD
     # disko

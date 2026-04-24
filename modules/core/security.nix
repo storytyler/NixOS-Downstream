@@ -1,14 +1,18 @@
-{ pkgs, ... }:
+{ ... }:
 {
   services.gnome.gnome-keyring.enable = true;
   security = {
     rtkit.enable = true;
     polkit.enable = true;
-    apparmor = {
-      enable = true;
-      killUnconfinedConfinables = true;
-      packages = [ pkgs.apparmor-profiles ];
-    };
+
+    # AppArmor disabled — nixpkgs PAM validation regression (sddm modulePath "login")
+    # See: nixpkgs pam.nix:2643, sddm.nix:379,386,393,400,529,537,545
+    # Re-enable once upstream fixes include/substack modulePath entries
+    # apparmor = {
+    #   enable = true;
+    #   killUnconfinedConfinables = true;
+    #   packages = [ pkgs.apparmor-profiles ];
+    # };
 
     # Prevent replacing the running kernel without a reboot
     protectKernelImage = true;
