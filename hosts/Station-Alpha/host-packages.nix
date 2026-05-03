@@ -14,7 +14,7 @@
     lmstudio
 
     # Speech-to-Text
-    whisper-cpp
+    # whisper-cpp
     # openai-whisper
 
     # Notation
@@ -54,7 +54,7 @@
     # zip
     # unzip
 
-    google-chrome
+    microsoft-edge
     # Packages added for openclaw skills
     gogcli
     python3

@@ -1,7 +1,7 @@
 # PROJECT KNOWLEDGE BASE
 
-**Generated:** 2026-03-13
-**Commit:** 7f5a192
+**Generated:** 2026-04-27
+**Commit:** 3febe1c
 **Branch:** main
 
 ## OVERVIEW
@@ -11,15 +11,16 @@ NixOS configuration using flakes with variables-driven architecture for flexible
 ```
 ./
 ├── modules/
-│   ├── core/       # Boot, networking, security, essential system
+│   ├── core/       # Boot, networking, security, essential system (32 modules)
 │   ├── hardware/   # GPU drivers (nvidia/amdgpu/intel/nvk), storage
-│   ├── desktop/    # Window managers (hyprland, i3-gaps, gnome, plasma6)
+│   ├── desktop/    # Window managers (hyprland, i3-gaps, gnome)
 │   ├── programs/   # Applications by category (browser, cli, editor, media, terminal)
 │   ├── scripts/    # Custom utilities (rebuild, rollback, tmux-sessionizer)
-│   └── themes/     # Wallpapers, icons, color schemes
+│   └── themes/     # Catppuccin, Dracula, rose-pine + wallpapers
 ├── hosts/          # 4 hosts: Default, Scout-02, Station-Alpha, Subrelay-01
 ├── dev-shells/    # 46 language templates + python/ (full project)
 ├── overlays/       # Custom package overlays (pokego, portainer-mcp)
+├── pkgs/           # Custom Nix package definitions
 └── flake.nix      # Central flake with mkHost function
 ```
 
@@ -32,12 +33,17 @@ NixOS configuration using flakes with variables-driven architecture for flexible
 | Add program | `modules/programs/{category}/` | Use `lib.mkIf (config.variables.X == "Y")` |
 | Add host | Copy `hosts/Default/` → add to `flake.nix` | Register in `nixosConfigurations` |
 | GPU issues | `modules/hardware/video/${vars.videoDriver}.nix` | CRITICAL for boot |
+| Custom package | `pkgs/{name}.nix` + register in `pkgs/default.nix` | Auto-overlayed into nixpkgs |
+| Dev shell template | `dev-shells/{lang}/flake.nix` | Register in `dev-shells/default.nix` |
 
 ## CONVENTIONS
 - **Variables-Driven**: `hosts/{host}/variables.nix` controls 17 options (desktop, terminal, browser, editor, videoDriver, games, etc.)
 - **Conditional Imports**: `./desktop/${vars.desktop}`, `./hardware/video/${vars.videoDriver}.nix`, `./programs/browser/${vars.browser}`
 - **Flake Structure**: `mkHost "HostName"` in `flake.nix` → `nixosConfigurations.{HostName}`
 - **Overlays**: Custom packages via `overlays/default.nix` with host-specific injection
+- **Home Manager**: Loaded as NixOS module (`home-manager.sharedModules` pattern for program configs)
+- **Script Pattern**: `pkgs.writeShellScriptBin "name" ''...''` with `${pkgs.dep}/bin/dep` for deps
+- **Browser Pattern**: Firefox derivatives share structure: `default.nix` + `settings.nix` + `bookmarks.nix` + `search.nix` + `policies.nix`
 
 ## ANTI-PATTERNS (THIS PROJECT)
 - DON'T hardcode host-specific values in modules - use variables
@@ -45,6 +51,7 @@ NixOS configuration using flakes with variables-driven architecture for flexible
 - DON'T bypass the `rebuild` script - it handles username sync and hardware detection
 - DON'T duplicate packages across core and program modules
 - DON'T use relative paths in scripts - always `${pkgs.package}/bin/name`
+- DON'T change `system.stateVersion` - it's pinned at 23.11
 
 ## UNIQUE STYLES
 - Desktop/editor/browser/terminal switching via single variable change
@@ -52,6 +59,8 @@ NixOS configuration using flakes with variables-driven architecture for flexible
 - 4 hosts sharing modules with host-specific `variables.nix`
 - 46 dev-shell templates: `nix flake init -t .#{template}`
 - Python dev-shell is full project (not template) with Mimir/LightAgent framework
+- Theme self-contained modules: GTK, icons, Kvantum, cursor, dconf in one file
+- `home-manager.sharedModules` used by program modules to inject into all HM users
 
 ## COMMANDS
 ```bash
@@ -61,10 +70,14 @@ nix flake update           # Update all flake inputs
 rebuild                    # Enhanced rebuild: username sync + hardware detection
 rollback                   # System rollback utility
 nix develop -t .#python    # Enter Python dev shell
+nix develop -t .#<lang>    # Enter any of 46 language dev shells
 ```
 
 ## NOTES
 - **KNOWN BUG**: `hosts/Default/configuration.nix` line 63 has inverted games logic (`vars.games == false` should be `== true`)
+- **TIMEZONE BUG**: Default, Scout-02, Subrelay-01 use invalid `"Chicago/US"` (should be `"America/Chicago"`)
 - `videoDriver` is CRITICAL - wrong value causes boot failure
 - `rebuild` supports both `$HOME/NixOS` and `/etc/nixos` locations
-- Subdirectory AGENTS.md: modules/{programs,core,scripts,desktop,hardware}, dev-shells/python{,/Mimir}
+- `modules/core/default.nix` exists but is unused — hosts import core modules individually
+- Repo has artifacts that should be gitignored: `repomix-output.xml`, `.chunkhound/`, `.stfolder/`
+- Subdirectory AGENTS.md: modules/{programs,core,scripts,desktop,desktop/hyprland,hardware}, dev-shells{,/python{,/Mimir}}

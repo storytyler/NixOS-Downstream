@@ -39,7 +39,7 @@
     SDL_JOYSTICK_HIDAPI = "0";
   };
   environment.systemPackages = with pkgs; [
-    lutris
+    # lutris
     # heroic  # Temporarily disabled - electron build failure
     # bottles
     # ryujinx

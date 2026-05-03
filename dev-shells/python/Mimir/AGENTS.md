@@ -16,13 +16,13 @@
 - **Tools**: Define tool_info metadata for all tool functions with proper parameter schemas
 
 ## Project Overview
-LightAgent: Production-level lightweight agentic AI framework with mem0, ACE, GAM integration. Currently in fluid development state with modular containerized architecture. Comprehensive documentation available in local markdown files covering setup, configuration, and examples.
+LightAgent: Production-level lightweight agentic AI framework with mem0, ACE, GAM integration. Currently in fluid development state with modular containerized architecture. `lightagent/` and `agentic-context-engine/` directories referenced in docs but NOT yet on disk — only `mem0/` and `containers/` are present. Comprehensive documentation available in `../documentation/`.
 
 ## Development Environment
-- Working directory /home/player00/NixOS/dev-shells/python/
-- dev-shell handled automatically
-- This environment is for building and working with python and the associated libs for the framework project
-- Intended to operate with and alongside docker services for testing modular services.
+- Working directory: `/home/player00/NixOS/dev-shells/python/`
+- Dev-shell: Python 3.13, activated via `direnv` (`use flake`)
+- Intended to operate with Docker services for testing modular services
+- Test scripts are ad-hoc smoke tests (NOT pytest) — they hit localhost:11434 (Ollama)
 
 ## First Steps
 - confirm python tools available
