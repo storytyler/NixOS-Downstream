@@ -5,7 +5,7 @@
   ...
 }:
 let
-  nvidiaDriverChannel = config.boot.kernelPackages.nvidiaPackages.stable; # stable, production, or beta
+  nvidiaDriverChannel = config.boot.kernelPackages.nvidiaPackages.latest; # stable, production, or beta
 in
 {
   environment.sessionVariables = lib.optionalAttrs config.programs.hyprland.enable {
