@@ -32,6 +32,7 @@ in
     ../../modules/core/dlna.nix
     ../../modules/core/nix-ld.nix
     ../../modules/core/optnix.nix
+    ../../modules/core/nixos-facter.nix
 
     # Docker Module in place of virtualisation.nix
     ../../modules/core/docker.nix
