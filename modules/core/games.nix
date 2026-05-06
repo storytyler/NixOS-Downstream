@@ -37,6 +37,9 @@
   # Forces SDL to use kernel event interface instead of direct HID access
   environment.sessionVariables = {
     SDL_JOYSTICK_HIDAPI = "0";
+    PROTON_NO_NGX_UPDATER = "1";
+    PROTON_VKD3D_HEAP = "1";
+
   };
   environment.systemPackages = with pkgs; [
     # lutris

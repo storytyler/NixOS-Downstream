@@ -33,21 +33,22 @@
     bun
     # pnpm
 
-    # Package Building
-    nurl
-    # nix-init
-
-    # Nix Analysis & Documentation
-    manix
-    flake-checker
-
-    # Dev Shell Config
+    # Nix CLI Tools
     nix-direnv
     direnv
+    nixd
+
+    # Nix CLI Packages for Agent Skills
+    nurl
+    nix-init
+    optnix
+    flake-checker
+    dix
+    nix-diff
+    nixos-facter
 
     # Misc
     # watchdog
-    nixd
     # gearlever
     # deploy-rs
     # tsx

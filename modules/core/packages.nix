@@ -69,7 +69,7 @@
     # devbox
     # shellify
     nmap
-    wireshark-cli
+    # wireshark-cli
     iftop
     btop
     htop

@@ -32,6 +32,9 @@
     opencode = {
       url = "github:sst/opencode";
     };
+    optnix = {
+      url = "github:water-sucks/optnix";
+    };
   };
 
   outputs =
