@@ -55,15 +55,18 @@
             setopt share_history
           '';
           envExtra = ''
+            # Autosuggestion color — visible against dark background
+            export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#6c5b4c"
+
             # Defaults
             export XMONAD_CONFIG_DIR="''${XDG_CONFIG_HOME:-$HOME/.config}/xmonad" # xmonad.hs is expected to stay here
             export XMONAD_DATA_DIR="''${XDG_DATA_HOME:-$HOME/.local/share}/xmonad"
             export XMONAD_CACHE_DIR="''${XDG_CACHE_HOME:-$HOME/.cache}/xmonad"
 
             export FZF_DEFAULT_OPTS=" \
-            --color=bg+:#363a4f,bg:#24273a,spinner:#f4dbd6,hl:#ed8796 \
-            --color=fg:#cad3f5,header:#ed8796,info:#c6a0f6,pointer:#f4dbd6 \
-            --color=marker:#f4dbd6,fg+:#cad3f5,prompt:#c6a0f6,hl+:#ed8796"
+            --color=bg+:#3A2F2B,bg:#1A1513,spinner:#ff915e,hl:#D1495B \
+            --color=fg:#D8C9B6,header:#D1495B,info:#C67E4F,pointer:#E07A5F \
+            --color=marker:#ff915e,fg+:#F4EDE4,prompt:#C67E4F,hl+:#D1495B"
           '';
           shellGlobalAliases = {
             UUID = "$(uuidgen | tr -d \\n)";

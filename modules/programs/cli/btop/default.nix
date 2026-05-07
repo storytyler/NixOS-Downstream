@@ -23,8 +23,8 @@
           io_graph_combined = false;
         };
         themes.ember-and-ash = ''
-          # Main background
-          theme[main_bg]="#1b1a17"
+          # Main background — empty for terminal transparency
+          theme[main_bg]=""
 
           # Main text color
           theme[main_fg]="#f2e3d5"

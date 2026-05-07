@@ -11,31 +11,31 @@
           directory = {
             truncate_to_repo = false;
             read_only = " ro";
-            style = "#57C7FF";
+            style = "#d9a066";
             # style = "bold italic bright-blue";
           };
           /*
                username = {
-              style_user = "green bold";
-              style_root = "red bold";
-              format = "[$user]($style)";
-              disabled = false;
-              show_always = true;
-            };
+               style_user = "green bold";
+               style_root = "red bold";
+               format = "[$user]($style)";
+               disabled = false;
+               show_always = true;
+             };
           */
           character = {
-            success_symbol = "[❯](#FF6AC1)";
-            error_symbol = "[❯](#FF5C57)";
-            vimcmd_symbol = "[❮](bright-green)";
+            success_symbol = "[❯](#E07A5F)";
+            error_symbol = "[❯](#D1495B)";
+            vimcmd_symbol = "[❮](#A3A36F)";
           };
           git_branch = {
             format = "[$branch]($style)";
             symbol = "git ";
-            style = "242";
+            style = "#6c5b4c";
           };
           git_status = {
             format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)";
-            style = "cyan";
+            style = "#a98274";
             conflicted = "​";
             untracked = "​";
             modified = "​";
@@ -46,11 +46,11 @@
           };
           git_state = {
             format = ''\([$state( $progress_current/$progress_total)]($style)\) '';
-            style = "bright-black";
+            style = "#4a3a35";
           };
           cmd_duration = {
             format = "[$duration]($style) ";
-            style = "yellow";
+            style = "#E6B566";
           };
           aws = {
             symbol = "aws ";

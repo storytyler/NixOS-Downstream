@@ -15,7 +15,7 @@
           settings = {
             colors = {
               primary = {
-                background = "#1a1a1a";
+                background = "#141414";
                 foreground = "#e5d6c6";
                 dim_foreground = "#7f6b5d";
                 bright_foreground = "#f2e6d8";
