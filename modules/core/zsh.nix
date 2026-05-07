@@ -8,6 +8,16 @@
           enable = true;
           autosuggestion.enable = true;
           syntaxHighlighting.enable = true;
+          syntaxHighlighting.styles = {
+            "command" = "fg=#E07A5F";
+            "builtin" = "fg=#E07A5F";
+            "alias" = "fg=#E07A5F";
+            "function" = "fg=#E07A5F";
+            "unknown-token" = "fg=#D1495B";
+            "path" = "fg=#d9a066";
+            "single-quoted-argument" = "fg=#e0a040";
+            "double-quoted-argument" = "fg=#e0a040";
+          };
           enableCompletion = true;
           history.size = 100000;
           history.path = "\${XDG_DATA_HOME}/zsh/history";
@@ -21,6 +31,17 @@
             ];
           };
           initContent = ''
+            # Syntax Highlighting — Ember & Ash overrides
+            typeset -A ZSH_HIGHLIGHT_STYLES
+            ZSH_HIGHLIGHT_STYLES[command]="fg=#E07A5F"
+            ZSH_HIGHLIGHT_STYLES[builtin]="fg=#E07A5F"
+            ZSH_HIGHLIGHT_STYLES[alias]="fg=#E07A5F"
+            ZSH_HIGHLIGHT_STYLES[function]="fg=#E07A5F"
+            ZSH_HIGHLIGHT_STYLES[unknown-token]="fg=#D1495B"
+            ZSH_HIGHLIGHT_STYLES[path]="fg=#d9a066"
+            ZSH_HIGHLIGHT_STYLES[single-quoted-argument]="fg=#e0a040"
+            ZSH_HIGHLIGHT_STYLES[double-quoted-argument]="fg=#e0a040"
+
             # Starship Prompt
             if command -v starship &>/dev/null; then
               eval "$(starship init zsh)"

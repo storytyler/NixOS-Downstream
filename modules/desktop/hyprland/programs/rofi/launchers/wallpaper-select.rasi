@@ -1,5 +1,5 @@
 /*****----- Global Properties -----*****/
-@import "~/.config/rofi/colors/catppuccin.rasi"
+@import "~/.config/rofi/colors/ember-and-ash.rasi"
 
 /*****----- Configuration -----*****/
 configuration {
@@ -11,29 +11,29 @@ configuration {
 
 * {
     font: "JetBrains Mono Nerd Font 10";
-    border-colour:               rgba(122, 162, 247, 80%);
-    handle-colour:               rgba(122, 162, 247, 80%);
-    background-colour:           rgba(30, 29, 47, 80%);
-    foreground-colour:           #D9E0EEFF;
-    alternate-background:        rgba(40, 40, 57, 80%);
-    normal-background:           rgba(30, 29, 47, 80%);
-    normal-foreground:           #D9E0EEFF;
-    urgent-background:           rgba(242, 143, 173, 80%);
-    urgent-foreground:           rgba(30, 29, 47, 80%);
-    active-background:           rgba(171, 233, 179, 80%);
-    active-foreground:           rgba(30, 29, 47, 80%);
-    selected-normal-background:  rgba(122, 162, 247, 80%);
-    selected-normal-foreground:  rgba(30, 29, 47, 80%);
-    selected-urgent-background:  rgba(171, 233, 179, 80%);
-    selected-urgent-foreground:  rgba(30, 29, 47, 80%);
-    selected-active-background:  rgba(242, 143, 173, 80%);
-    selected-active-foreground:  rgba(30, 29, 47, 80%);
-    alternate-normal-background: rgba(30, 29, 47, 80%);
-    alternate-normal-foreground: #D9E0EEFF;
-    alternate-urgent-background: rgba(242, 143, 173, 80%);
-    alternate-urgent-foreground: rgba(30, 29, 47, 80%);
-    alternate-active-background: rgba(171, 233, 179, 80%);
-    alternate-active-foreground: rgba(30, 29, 47, 80%);
+    border-colour:               rgba(224, 122, 95, 80%);
+    handle-colour:               rgba(224, 122, 95, 80%);
+    background-colour:           rgba(26, 21, 19, 80%);
+    foreground-colour:           #D8C9B6FF;
+    alternate-background:        rgba(58, 47, 43, 80%);
+    normal-background:           rgba(26, 21, 19, 80%);
+    normal-foreground:           #D8C9B6FF;
+    urgent-background:           rgba(209, 73, 91, 80%);
+    urgent-foreground:           rgba(26, 21, 19, 80%);
+    active-background:           rgba(163, 163, 111, 80%);
+    active-foreground:           rgba(26, 21, 19, 80%);
+    selected-normal-background:  rgba(224, 122, 95, 80%);
+    selected-normal-foreground:  rgba(26, 21, 19, 80%);
+    selected-urgent-background:  rgba(163, 163, 111, 80%);
+    selected-urgent-foreground:  rgba(26, 21, 19, 80%);
+    selected-active-background:  rgba(209, 73, 91, 80%);
+    selected-active-foreground:  rgba(26, 21, 19, 80%);
+    alternate-normal-background: rgba(26, 21, 19, 80%);
+    alternate-normal-foreground: #D8C9B6FF;
+    alternate-urgent-background: rgba(209, 73, 91, 80%);
+    alternate-urgent-foreground: rgba(26, 21, 19, 80%);
+    alternate-active-background: rgba(163, 163, 111, 80%);
+    alternate-active-foreground: rgba(26, 21, 19, 80%);
 }
 
 /*****----- Main Window -----*****/
@@ -152,8 +152,8 @@ element normal.normal {
     text-color:                  var(normal-foreground);
 }
 element selected.normal {
-    background-color:            rgba(122, 162, 247, 80%);
-    text-color:                  rgba(30, 29, 47, 80%);
+    background-color:            rgba(224, 122, 95, 80%);
+    text-color:                  rgba(26, 21, 19, 80%);
     // background-color:            var(alternate-background);
     // text-color:                  var(foreground-colour);
 }

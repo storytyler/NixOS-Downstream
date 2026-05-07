@@ -64,25 +64,25 @@
               };
 
               normal = {
-                black = "#141414";
-                red = "#d45d3c";
-                green = "#a89860";
-                yellow = "#e0a040";
-                blue = "#6c5b4c";
-                magenta = "#c07060";
-                cyan = "#b08860";
-                white = "#d8ccc0";
+                black = "#141414";   # charcoal
+                red = "#d45d3c";     # burnt orange
+                green = "#a89860";   # muted olive
+                yellow = "#e0a040";  # golden amber
+                blue = "#6c5b4c";    # smoky brown
+                magenta = "#c07060"; # warm rose
+                cyan = "#b08860";    # warm amber
+                white = "#c89870";   # warm copper
               };
 
               bright = {
-                black = "#2a2a2a";
-                red = "#f07850";
-                green = "#bca870";
-                yellow = "#f0c050";
-                blue = "#7f6b5d";
-                magenta = "#d08870";
-                cyan = "#c09878";
-                white = "#f0e0d0";
+                black = "#2a2a2a";   # dark charcoal
+                red = "#f07850";     # ember orange
+                green = "#bca870";   # khaki sand
+                yellow = "#f0c050";  # bright gold
+                blue = "#7f6b5d";    # warm taupe
+                magenta = "#d08870"; # salmon peach
+                cyan = "#c09878";    # warm tan
+                white = "#d8a878";   # amber copper
               };
 
               indexed_colors = [
@@ -103,7 +103,7 @@
               decorations = "full";
               dynamic_padding = false;
               startup_mode = "Maximized";
-              opacity = 0.8;
+              opacity = 0.9;
 
               padding.x = 0;
               padding.y = 0;

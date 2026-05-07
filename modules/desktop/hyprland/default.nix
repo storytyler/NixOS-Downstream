@@ -191,7 +191,7 @@ in
                 gaps_out = 9;
                 border_size = 2;
                 "col.active_border" = "rgba(ff6f3cff) rgba(b23a24ff) 45deg";
-                "col.inactive_border" = "rgba(2b1b18cc) rgba(4a3b36cc) 45deg";
+                "col.inactive_border" = "rgba(3a2010cc) rgba(4a2810cc) 45deg";
                 resize_on_border = true;
                 layout = "dwindle"; # dwindle or master
                 # allow_tearing = true; # Allow tearing for games (use immediate window rules for specific games or all titles)
@@ -200,8 +200,8 @@ in
                 shadow.enabled = false;
                 rounding = 10;
                 dim_special = 0.3;
-                blur = {
-                  enabled = true;
+                  blur = {
+                  enabled = false;
                   special = true;
                   size = 6; # 6
                   passes = 2; # 3
@@ -212,9 +212,9 @@ in
               };
               group = {
                 "col.border_active" = "rgba(ff6f3cff) rgba(b23a24ff) 45deg";
-                "col.border_inactive" = "rgba(2b1b18cc) rgba(4a3b36cc) 45deg";
+                "col.border_inactive" = "rgba(3a2010cc) rgba(4a2810cc) 45deg";
                 "col.border_locked_active" = "rgba(ff6f3cff) rgba(b23a24ff) 45deg";
-                "col.border_locked_inactive" = "rgba(2b1b18cc) rgba(4a3b36cc) 45deg";
+                "col.border_locked_inactive" = "rgba(3a2010cc) rgba(4a2810cc) 45deg";
               };
               # layerrule = [
               #  "blur, rofi"

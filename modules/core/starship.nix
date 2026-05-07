@@ -11,7 +11,7 @@
           directory = {
             truncate_to_repo = false;
             read_only = " ro";
-            style = "#d9a066";
+            style = "#E07A5F";
             # style = "bold italic bright-blue";
           };
           /*

@@ -34,7 +34,7 @@ in
               monitor = "";
               size = "250, 50";
               outline_thickness = 3;
-              outer_color = "rgb(198, 126, 79)";
+              outer_color = "rgb(200, 50, 10)";
               inner_color = "rgb(26, 21, 18)";
               font_color = "rgb(230, 213, 195)";
               fail_color = "rgb(166, 92, 59)";
@@ -54,10 +54,9 @@ in
           label = [
             {
               monitor = "";
-              # text = "cmd[update:1000] echo \"<b><big> $(date +\"%H:%M:%S\") </big></b>\"";
               text = "$TIME";
               font_size = 64;
-              color = "rgb(230, 213, 195)";
+              color = "rgb(200, 50, 10)";
               position = "0, 16";
               valign = "center";
               halign = "center";
@@ -65,8 +64,8 @@ in
             {
               monitor = "";
               text = "Hello <span text_transform=\"capitalize\" size=\"larger\">$USER!</span>";
-              color = "rgb(230, 213, 195)";
-              font_size = 20;
+              color = "rgb(200, 50, 10)";
+              font_size = 36;
               position = "0, 100";
               halign = "center";
               valign = "center";
@@ -74,7 +73,7 @@ in
             {
               monitor = "";
               text = "Current Layout : $LAYOUT";
-              color = "rgb(230, 213, 195)";
+              color = "rgb(200, 50, 10)";
               font_size = 14;
               position = "0, 20";
               halign = "center";
