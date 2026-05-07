@@ -1,0 +1,16 @@
+/**
+ *
+ * Ember & Ash Theme
+ * Source: github.com/Hydradevx/omarchy-ember-n-ash-theme
+ * 
+ * Colors
+ **/
+
+* {
+    background:     #1A1513FF;
+    background-alt: #3A2F2BFF;
+    foreground:     #D8C9B6FF;
+    selected:       #E07A5FFF;
+    active:         #A3A36FFF;
+    urgent:         #D1495BFF;
+}

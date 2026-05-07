@@ -15,84 +15,84 @@
           settings = {
             colors = {
               primary = {
-                background = "#1e1e2e";
-                foreground = "#cdd6f4";
-                dim_foreground = "#7f849c";
-                bright_foreground = "#cdd6f4";
+                background = "#1a1a1a";
+                foreground = "#e5d6c6";
+                dim_foreground = "#7f6b5d";
+                bright_foreground = "#f2e6d8";
               };
 
               cursor = {
-                text = "#1e1e2e";
-                cursor = "#f5e0dc";
+                text = "#1a1a1a";
+                cursor = "#ff884d";
               };
 
               vi_mode_cursor = {
-                text = "#1e1e2e";
-                cursor = "#b4befe";
+                text = "#1a1a1a";
+                cursor = "#C67E4F";
               };
 
               search = {
                 matches = {
-                  foreground = "#1e1e2e";
-                  background = "#a6adc8";
+                  foreground = "#1a1a1a";
+                  background = "#ff884d";
                 };
                 focused_match = {
-                  foreground = "#1e1e2e";
-                  background = "#a6e3a1";
+                  foreground = "#1a1a1a";
+                  background = "#ffb366";
                 };
               };
 
               footer_bar = {
-                foreground = "#1e1e2e";
-                background = "#a6adc8";
+                foreground = "#1a1a1a";
+                background = "#a98274";
               };
 
               hints = {
                 start = {
-                  foreground = "#1e1e2e";
-                  background = "#f9e2af";
+                  foreground = "#1a1a1a";
+                  background = "#d9a066";
                 };
                 end = {
-                  foreground = "#1e1e2e";
-                  background = "#a6adc8";
+                  foreground = "#1a1a1a";
+                  background = "#a98274";
                 };
               };
 
               selection = {
-                text = "#1e1e2e";
-                background = "#f5e0dc";
+                text = "#1a1a1a";
+                background = "#ffbb99";
               };
 
               normal = {
-                black = "#45475a";
-                red = "#f38ba8";
-                green = "#a6e3a1";
-                yellow = "#f9e2af";
-                blue = "#89b4fa";
-                magenta = "#f5c2e7";
-                cyan = "#94e2d5";
-                white = "#bac2de";
+                black = "#1a1a1a";
+                red = "#d45d4c";
+                green = "#9e8f70";
+                yellow = "#d9a066";
+                blue = "#6c5b4c";
+                magenta = "#b57276";
+                cyan = "#a98274";
+                white = "#d1c0b0";
               };
 
               bright = {
-                black = "#585b70";
-                red = "#f38ba8";
-                green = "#a6e3a1";
-                yellow = "#f9e2af";
-                blue = "#89b4fa";
-                magenta = "#f5c2e7";
-                cyan = "#94e2d5";
-                white = "#a6adc8";
+                black = "#2a2a2a";
+                red = "#e87461";
+                green = "#b39c7c";
+                yellow = "#e3b97f";
+                blue = "#7f6b5d";
+                magenta = "#c6898c";
+                cyan = "#ba9486";
+                white = "#f2e6d8";
               };
 
               indexed_colors = [
                 {
                   index = 16;
-                  color = "#fab387";
+                  color = "#d9a066";
                 }
                 {
                   index = 17;
-                  color = "#f5e0dc";
+                  color = "#ff884d";
                 }
               ];
             };
@@ -103,6 +103,7 @@
               decorations = "full";
               dynamic_padding = false;
               startup_mode = "Maximized";
+              opacity = 0.8;
 
               padding.x = 0;
               padding.y = 0;

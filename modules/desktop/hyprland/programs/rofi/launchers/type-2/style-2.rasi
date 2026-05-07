@@ -19,12 +19,12 @@ configuration {
 @import                          "shared/fonts.rasi"
 
 * {
-    background:                  rgba(30, 29, 47, 80%);
-    background-alt:              rgba(40, 40, 57, 80%);
-    foreground:                  #D9E0EEFF;
-    selected:                    rgba(122, 162, 247, 80%);
-    active:                      rgba(171, 233, 179, 80%);
-    urgent:                      rgba(242, 143, 173, 80%);
+    background:                  rgba(26, 21, 19, 80%);
+    background-alt:              rgba(58, 47, 43, 80%);
+    foreground:                  #D8C9B6FF;
+    selected:                    rgba(224, 122, 95, 80%);
+    active:                      rgba(163, 163, 111, 80%);
+    urgent:                      rgba(209, 73, 91, 80%);
 }
 
 /*****----- Main Window -----*****/

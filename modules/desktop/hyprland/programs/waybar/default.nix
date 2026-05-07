@@ -369,36 +369,36 @@ in
             padding: 0px;
           }
 
-          @define-color base   #1e1e2e;
-          @define-color mantle #181825;
-          @define-color crust  #11111b;
+          @define-color base   #1A1513;
+          @define-color mantle #120E0C;
+          @define-color crust  #0d0b0a;
 
-          @define-color text     #cdd6f4;
-          @define-color subtext0 #a6adc8;
-          @define-color subtext1 #bac2de;
+          @define-color text     #D8C9B6;
+          @define-color subtext0 #a8988f;
+          @define-color subtext1 #cbb9ad;
 
-          @define-color surface0 #313244;
-          @define-color surface1 #45475a;
-          @define-color surface2 #585b70;
+          @define-color surface0 #3A2F2B;
+          @define-color surface1 #4a3a35;
+          @define-color surface2 #5c4c46;
 
-          @define-color overlay0 #6c7086;
-          @define-color overlay1 #7f849c;
-          @define-color overlay2 #9399b2;
+          @define-color overlay0 #6c5b4c;
+          @define-color overlay1 #7f6b5d;
+          @define-color overlay2 #a37f74;
 
-          @define-color blue      #89b4fa;
-          @define-color lavender  #b4befe;
-          @define-color sapphire  #74c7ec;
-          @define-color sky       #89dceb;
-          @define-color teal      #94e2d5;
-          @define-color green     #a6e3a1;
-          @define-color yellow    #f9e2af;
-          @define-color peach     #fab387;
-          @define-color maroon    #eba0ac;
-          @define-color red       #f38ba8;
-          @define-color mauve     #cba6f7;
-          @define-color pink      #f5c2e7;
-          @define-color flamingo  #f2cdcd;
-          @define-color rosewater #f5e0dc;
+          @define-color blue      #E07A5F;
+          @define-color lavender  #C67E4F;
+          @define-color sapphire  #6c5b4c;
+          @define-color sky       #a98274;
+          @define-color teal      #9e8f70;
+          @define-color green     #A3A36F;
+          @define-color yellow    #E6B566;
+          @define-color peach     #d9a066;
+          @define-color maroon    #B85746;
+          @define-color red       #D1495B;
+          @define-color mauve     #C67E4F;
+          @define-color pink      #b57276;
+          @define-color flamingo  #d1bfa9;
+          @define-color rosewater #F4EDE4;
 
           window#waybar {
             transition-property: background-color;
