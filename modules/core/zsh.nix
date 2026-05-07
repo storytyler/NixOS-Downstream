@@ -55,8 +55,8 @@
             setopt share_history
           '';
           envExtra = ''
-            # Autosuggestion color — visible against dark background
-            export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#6c5b4c"
+            # Autosuggestion color — muted orange, visible against dark background
+            export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#b87a4f"
 
             # Defaults
             export XMONAD_CONFIG_DIR="''${XDG_CONFIG_HOME:-$HOME/.config}/xmonad" # xmonad.hs is expected to stay here
