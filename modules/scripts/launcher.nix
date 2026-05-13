@@ -100,6 +100,15 @@ pkgs.writeShellScriptBin "launcher" ''
 
     rofi -show games -modi games -theme "''${rofi_theme}" -theme-str "$r_override"
     ;;
+  factcheck)
+    rofi_theme="''${XDG_CONFIG_HOME:-$HOME/.config}/rofi/launchers/type-2/style-2.rasi"
+    r_override="entry{placeholder:'FactCheck query...';}listview{lines:0;}"
+
+    QUERY=$(rofi -dmenu -p 'FactCheck' -theme "''${rofi_theme}" -theme-str "$r_override")
+    [ -z "$QUERY" ] && exit 0
+
+    ${terminal} --hold -e ~/Workspace/factcheck/fc-submit.sh "$QUERY"
+    ;;
   help | --help | -h)
     echo "Usage: launcher [ACTION]"
     echo "Launch various rofi modes with custom themes and settings."
@@ -112,6 +121,7 @@ pkgs.writeShellScriptBin "launcher" ''
     echo "  wallpaper    Search and set wallpapers"
     echo "  emoji        Search and insert emojis"
     echo "  games        Launch games menu"
+    echo "  factcheck    Submit FactCheck query"
     echo "  help         Display this help message"
     echo "  --help       Same as 'help'"
     echo ""

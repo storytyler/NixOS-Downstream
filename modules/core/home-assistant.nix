@@ -21,19 +21,22 @@
       "command_line" # For GPU sensors via nvidia-smi
     ];
 
-    customLovelaceModules = with pkgs.home-assistant-custom-lovelace-modules; [
-      # === EXISTING ===
-      clock-weather-card # Weather display with animated icons
-      card-mod # CSS injection — glassmorphism, borderless, state-based styling
-      mushroom # Clean entity cards for simple readouts
-      apexcharts-card # Time-series graphs, radial gauges, color thresholds, history
-      bubble-card # Popups, navigation chips, buttons
+    customLovelaceModules =
+      with pkgs.home-assistant-custom-lovelace-modules;
+      [
+        # === EXISTING ===
+        clock-weather-card # Weather display with animated icons
+        card-mod # CSS injection — glassmorphism, borderless, state-based styling
+        mushroom # Clean entity cards for simple readouts
+        apexcharts-card # Time-series graphs, radial gauges, color thresholds, history
+        bubble-card # Popups, navigation chips, buttons
 
-      # === WALL DISPLAY ADDITIONS ===
-      kiosk-mode # Hide header/sidebar for fullscreen wall display
-      button-card # Ultra-customizable buttons/gauges with templated CSS
-      mini-graph-card # Lightweight sparklines and inline graphs
-    ];
+        # === WALL DISPLAY ADDITIONS ===
+        kiosk-mode # Hide header/sidebar for fullscreen wall display
+        button-card # Ultra-customizable buttons/gauges with templated CSS
+        mini-graph-card # Lightweight sparklines and inline graphs
+      ]
+      ++ [ pkgs.weather-forecast-extended ]; # Custom package — single card with current + hourly + daily
 
     config = {
       homeassistant = {
@@ -117,262 +120,256 @@
       background = "#0f0f0f";
       views = [
         {
-          type = "sections";
+          type = "panel";
           title = "System Overview";
           path = "overview";
-          max_columns = 1;
-          sections = [
-            # === WEATHER — full width ===
+          cards = [
             {
-              title = "Weather";
+              type = "vertical-stack";
               cards = [
+                # === WEATHER — 3-card split: current | hourly | daily (seamless) ===
                 {
-                  type = "custom:clock-weather-card";
-                  entity = "weather.forecast_home";
-                  hourly_forecast = true;
-                  hide_clock = true;
-                  hide_date = true;
-                  forecast_rows = 6;
-                  grid_options = {
-                    columns = 12;
-                    rows = 6;
-                  };
+                  type = "horizontal-stack";
+                  cards = [
+                    {
+                      type = "custom:clock-weather-card";
+                      entity = "weather.forecast_home";
+                      hide_forecast_section = true;
+                      card_mod = {
+                        style = ''
+                          ha-card {
+                            border: none !important;
+                            background-color: transparent !important;
+                            border-radius: 0 !important;
+                            margin: 0 !important;
+                          }
+                        '';
+                      };
+                    }
+                    {
+                      type = "custom:clock-weather-card";
+                      entity = "weather.forecast_home";
+                      hourly_forecast = true;
+                      hide_today_section = true;
+                      hide_clock = true;
+                      hide_date = true;
+                      forecast_rows = 6;
+                      card_mod = {
+                        style = ''
+                          ha-card {
+                            border: none !important;
+                            background-color: transparent !important;
+                            border-radius: 0 !important;
+                            margin: 0 !important;
+                          }
+                        '';
+                      };
+                    }
+                    {
+                      type = "custom:clock-weather-card";
+                      entity = "weather.forecast_home";
+                      hourly_forecast = false;
+                      hide_today_section = true;
+                      forecast_rows = 7;
+                      card_mod = {
+                        style = ''
+                          ha-card {
+                            border: none !important;
+                            background-color: transparent !important;
+                            border-radius: 0 !important;
+                            margin: 0 !important;
+                          }
+                        '';
+                      };
+                    }
+                  ];
                 }
-                {
-                  type = "custom:clock-weather-card";
-                  entity = "weather.forecast_home";
-                  hourly_forecast = false;
-                  hide_today_section = true;
-                  forecast_rows = 7;
-                  grid_options = {
-                    columns = 12;
-                    rows = 4;
-                  };
-                }
-              ];
-            }
 
-            # === SYSTEM METRICS ===
-            {
-              title = "System Metrics";
-              cards = [
+                # === SYSTEM METRICS ===
                 {
-                  type = "custom:mushroom-entity-card";
-                  entity = "sensor.system_monitor_processor_use";
-                  name = "CPU";
-                  icon = "mdi:cpu-64-bit";
-                  fill_container = true;
-                  layout = "vertical";
-                  grid_options = {
-                    columns = 3;
-                    rows = 2;
+                  type = "custom:apexcharts-card";
+                  chart_type = "radialBar";
+                  header = {
+                    show = false;
                   };
+                  apex_config = {
+                    chart = {
+                      height = 200;
+                    };
+                    plotOptions = {
+                      radialBar = {
+                        hollow = { size = "50%"; };
+                        dataLabels = {
+                          name = { show = true; fontSize = "14px"; };
+                          value = { show = true; fontSize = "18px"; };
+                          total = { show = false; };
+                        };
+                      };
+                    };
+                    stroke = { lineCap = "round"; };
+                    colors = [ "#4caf50" "#2196f3" ];
+                    legend = { show = true; position = "bottom"; floating = false; };
+                  };
+                  series = [
+                    {
+                      entity = "sensor.system_monitor_processor_use";
+                      name = "CPU";
+                      min = 0;
+                      max = 100;
+                    }
+                    {
+                      entity = "sensor.system_monitor_memory_usage";
+                      name = "RAM";
+                      min = 0;
+                      max = 100;
+                    }
+                  ];
                 }
                 {
-                  type = "custom:mushroom-entity-card";
-                  entity = "sensor.system_monitor_memory_usage";
-                  name = "Memory";
-                  icon = "mdi:memory";
-                  fill_container = true;
-                  layout = "vertical";
-                  grid_options = {
-                    columns = 3;
-                    rows = 2;
-                  };
+                  type = "horizontal-stack";
+                  cards = [
+                    {
+                      type = "custom:mushroom-entity-card";
+                      entity = "sensor.system_monitor_swap_free";
+                      name = "Swap Free";
+                      icon = "mdi:harddisk";
+                      fill_container = true;
+                      layout = "vertical";
+                    }
+                    {
+                      type = "custom:mushroom-entity-card";
+                      entity = "sensor.system_monitor_processor_temperature";
+                      name = "CPU Temp";
+                      icon = "mdi:thermometer";
+                      fill_container = true;
+                      layout = "vertical";
+                    }
+                  ];
                 }
-                {
-                  type = "custom:mushroom-entity-card";
-                  entity = "sensor.system_monitor_swap_free";
-                  name = "Swap Free";
-                  icon = "mdi:harddisk";
-                  fill_container = true;
-                  layout = "vertical";
-                  grid_options = {
-                    columns = 3;
-                    rows = 2;
-                  };
-                }
-                {
-                  type = "custom:mushroom-entity-card";
-                  entity = "sensor.system_monitor_processor_temperature";
-                  name = "CPU Temp";
-                  icon = "mdi:thermometer";
-                  fill_container = true;
-                  layout = "vertical";
-                  grid_options = {
-                    columns = 3;
-                    rows = 2;
-                  };
-                }
-              ];
-            }
 
-            # === SYSTEM PRESSURE ===
-            {
-              title = "System Pressure";
-              cards = [
+                # === LOAD & DISK ===
                 {
-                  type = "custom:mushroom-entity-card";
-                  entity = "sensor.system_monitor_cpu_pressure_some_10s_average";
-                  name = "CPU Pressure";
-                  icon = "mdi:gauge";
-                  fill_container = true;
-                  layout = "vertical";
-                  grid_options = {
-                    columns = 4;
-                    rows = 2;
-                  };
+                  type = "horizontal-stack";
+                  cards = [
+                    {
+                      type = "custom:mushroom-entity-card";
+                      entity = "sensor.system_monitor_load_1_min";
+                      name = "Load 1m";
+                      icon = "mdi:speedometer";
+                      fill_container = true;
+                      layout = "vertical";
+                    }
+                    {
+                      type = "custom:mushroom-entity-card";
+                      entity = "sensor.system_monitor_load_5_min";
+                      name = "Load 5m";
+                      icon = "mdi:speedometer";
+                      fill_container = true;
+                      layout = "vertical";
+                    }
+                    {
+                      type = "custom:mushroom-entity-card";
+                      entity = "sensor.system_monitor_load_15_min";
+                      name = "Load 15m";
+                      icon = "mdi:speedometer";
+                      fill_container = true;
+                      layout = "vertical";
+                    }
+                    {
+                      type = "custom:mushroom-entity-card";
+                      entity = "sensor.system_monitor_disk_use";
+                      name = "Disk Usage";
+                      icon = "mdi:harddisk";
+                      fill_container = true;
+                      layout = "vertical";
+                    }
+                  ];
                 }
-                {
-                  type = "custom:mushroom-entity-card";
-                  entity = "sensor.system_monitor_memory_pressure_full_10s_average";
-                  name = "Mem Pressure";
-                  icon = "mdi:gauge";
-                  fill_container = true;
-                  layout = "vertical";
-                  grid_options = {
-                    columns = 4;
-                    rows = 2;
-                  };
-                }
-                {
-                  type = "custom:mushroom-entity-card";
-                  entity = "sensor.system_monitor_io_pressure_full_10s_average";
-                  name = "IO Pressure";
-                  icon = "mdi:gauge";
-                  fill_container = true;
-                  layout = "vertical";
-                  grid_options = {
-                    columns = 4;
-                    rows = 2;
-                  };
-                }
-              ];
-            }
 
-            # === GPU ===
-            {
-              title = "GPU";
-              cards = [
+                # === GPU ===
                 {
-                  type = "custom:mushroom-entity-card";
-                  entity = "sensor.gpu_power";
-                  name = "GPU Power";
-                  icon = "mdi:flash";
-                  fill_container = true;
-                  layout = "vertical";
-                  grid_options = {
-                    columns = 3;
-                    rows = 2;
-                  };
+                  type = "horizontal-stack";
+                  cards = [
+                    {
+                      type = "custom:mushroom-entity-card";
+                      entity = "sensor.gpu_power";
+                      name = "GPU Power";
+                      icon = "mdi:flash";
+                      fill_container = true;
+                      layout = "vertical";
+                    }
+                    {
+                      type = "custom:mushroom-entity-card";
+                      entity = "sensor.gpu_temperature";
+                      name = "GPU Temp";
+                      icon = "mdi:thermometer";
+                      fill_container = true;
+                      layout = "vertical";
+                    }
+                    {
+                      type = "custom:mushroom-entity-card";
+                      entity = "sensor.gpu_utilization";
+                      name = "GPU Util";
+                      icon = "mdi:memory";
+                      fill_container = true;
+                      layout = "vertical";
+                    }
+                    {
+                      type = "custom:mushroom-entity-card";
+                      entity = "sensor.gpu_memory_used";
+                      name = "GPU Memory";
+                      icon = "mdi:chip";
+                      fill_container = true;
+                      layout = "vertical";
+                    }
+                  ];
                 }
-                {
-                  type = "custom:mushroom-entity-card";
-                  entity = "sensor.gpu_temperature";
-                  name = "GPU Temp";
-                  icon = "mdi:thermometer";
-                  fill_container = true;
-                  layout = "vertical";
-                  grid_options = {
-                    columns = 3;
-                    rows = 2;
-                  };
-                }
-                {
-                  type = "custom:mushroom-entity-card";
-                  entity = "sensor.gpu_utilization";
-                  name = "GPU Util";
-                  icon = "mdi:memory";
-                  fill_container = true;
-                  layout = "vertical";
-                  grid_options = {
-                    columns = 3;
-                    rows = 2;
-                  };
-                }
-                {
-                  type = "custom:mushroom-entity-card";
-                  entity = "sensor.gpu_memory_used";
-                  name = "GPU Memory";
-                  icon = "mdi:chip";
-                  fill_container = true;
-                  layout = "vertical";
-                  grid_options = {
-                    columns = 3;
-                    rows = 2;
-                  };
-                }
-              ];
-            }
 
-            # === NETWORK ===
-            {
-              title = "Network";
-              cards = [
+                # === NETWORK ===
                 {
-                  type = "custom:mushroom-entity-card";
-                  entity = "sensor.system_monitor_network_in_wlp5s0";
-                  name = "WiFi In";
-                  icon = "mdi:wifi";
-                  fill_container = true;
-                  layout = "vertical";
-                  grid_options = {
-                    columns = 3;
-                    rows = 2;
-                  };
+                  type = "horizontal-stack";
+                  cards = [
+                    {
+                      type = "custom:mushroom-entity-card";
+                      entity = "sensor.system_monitor_network_in_wlp5s0";
+                      name = "WiFi In";
+                      icon = "mdi:wifi";
+                      fill_container = true;
+                      layout = "vertical";
+                    }
+                    {
+                      type = "custom:mushroom-entity-card";
+                      entity = "sensor.system_monitor_network_out_wlp5s0";
+                      name = "WiFi Out";
+                      icon = "mdi:wifi";
+                      fill_container = true;
+                      layout = "vertical";
+                    }
+                    {
+                      type = "custom:mushroom-entity-card";
+                      entity = "sensor.system_monitor_network_in_tailscale0";
+                      name = "Tailscale In";
+                      icon = "mdi:vpn";
+                      fill_container = true;
+                      layout = "vertical";
+                    }
+                    {
+                      type = "custom:mushroom-entity-card";
+                      entity = "sensor.system_monitor_network_out_tailscale0";
+                      name = "Tailscale Out";
+                      icon = "mdi:vpn";
+                      fill_container = true;
+                      layout = "vertical";
+                    }
+                  ];
                 }
-                {
-                  type = "custom:mushroom-entity-card";
-                  entity = "sensor.system_monitor_network_out_wlp5s0";
-                  name = "WiFi Out";
-                  icon = "mdi:wifi";
-                  fill_container = true;
-                  layout = "vertical";
-                  grid_options = {
-                    columns = 3;
-                    rows = 2;
-                  };
-                }
-                {
-                  type = "custom:mushroom-entity-card";
-                  entity = "sensor.system_monitor_network_in_tailscale0";
-                  name = "Tailscale In";
-                  icon = "mdi:vpn";
-                  fill_container = true;
-                  layout = "vertical";
-                  grid_options = {
-                    columns = 3;
-                    rows = 2;
-                  };
-                }
-                {
-                  type = "custom:mushroom-entity-card";
-                  entity = "sensor.system_monitor_network_out_tailscale0";
-                  name = "Tailscale Out";
-                  icon = "mdi:vpn";
-                  fill_container = true;
-                  layout = "vertical";
-                  grid_options = {
-                    columns = 3;
-                    rows = 2;
-                  };
-                }
-              ];
-            }
 
-            # === SYSTEM INFO ===
-            {
-              title = "System Info";
-              cards = [
+                # === SYSTEM INFO ===
                 {
                   type = "custom:mushroom-entity-card";
                   entity = "sensor.system_monitor_last_boot";
                   name = "Last Boot";
                   icon = "mdi:clock-outline";
-                  grid_options = {
-                    columns = 6;
-                    rows = 1;
-                  };
                 }
               ];
             }

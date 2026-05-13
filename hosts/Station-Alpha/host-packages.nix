@@ -60,6 +60,8 @@
     gogcli
     python3
 
+    # Visual Art
+    gimp
     # Disk Install Method for btrfs on SSD
     # disko
 
