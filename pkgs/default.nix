@@ -6,5 +6,6 @@
 
   pokego = pkgs.callPackage ./pokego.nix { };
   portainer-mcp = pkgs.callPackage ./portainer-mcp.nix { };
-  weather-forecast-extended = pkgs.callPackage ./weather-forecast-extended.nix { };
+  bolder-weather-card = pkgs.callPackage ./bolder-weather-card.nix { };
+  weather-forecast-card = pkgs.callPackage ./weather-forecast-card.nix { };
 }

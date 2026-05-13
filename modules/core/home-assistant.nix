@@ -36,7 +36,10 @@
         button-card # Ultra-customizable buttons/gauges with templated CSS
         mini-graph-card # Lightweight sparklines and inline graphs
       ]
-      ++ [ pkgs.weather-forecast-extended ]; # Custom package — single card with current + hourly + daily
+      ++ [
+        pkgs.bolder-weather-card # Custom package — wall-mounted weather with bold images
+        pkgs.weather-forecast-card # Custom package — horizontal scrolling with chart mode
+      ];
 
     config = {
       homeassistant = {
@@ -183,6 +186,18 @@
                       };
                     }
                   ];
+                }
+
+                # === COMPARISON: Bolder Weather Card ===
+                {
+                  type = "custom:bolder-weather-card";
+                  entity = "weather.forecast_home";
+                }
+
+                # === COMPARISON: troinine Weather Forecast Card ===
+                {
+                  type = "custom:weather-forecast-card";
+                  entity = "weather.forecast_home";
                 }
 
                 # === SYSTEM METRICS ===
