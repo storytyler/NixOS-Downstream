@@ -35,7 +35,8 @@
         kiosk-mode # Hide header/sidebar for fullscreen wall display
         button-card # Ultra-customizable buttons/gauges with templated CSS
         mini-graph-card # Lightweight sparklines and inline graphs
-      ];
+      ]
+      ++ [ pkgs.layout-card ];
 
     config = {
       homeassistant = {
@@ -117,100 +118,112 @@
       title = "System Monitor";
       theme = "mushroom";
       background = "#0f0f0f";
+      kiosk_mode = {
+        hide_header = true;
+        hide_sidebar = true;
+      };
       views = [
         {
-          type = "panel";
+          type = "custom:grid-layout";
           title = "System Overview";
           path = "overview";
+          layout = {
+            grid-template-columns = "1fr 1fr 1fr";
+            grid-template-rows = "auto";
+            grid-template-areas = ''
+              "weather  hourly   daily"
+              "metrics  metrics  gpu"
+              "load     network  system"
+            '';
+            grid-gap = "8px";
+            margin = "0px";
+            padding = "16px";
+          };
           cards = [
+            # === WEATHER: CURRENT ===
+            {
+              type = "custom:clock-weather-card";
+              entity = "weather.forecast_home";
+              hide_forecast_section = true;
+              view_layout = {
+                grid-area = "weather";
+              };
+              card_mod = {
+                style = ''
+                  :host {
+                    aspect-ratio: 1/1;
+                  }
+                  ha-card {
+                    border: none !important;
+                    background-color: transparent !important;
+                    border-radius: 0 !important;
+                    margin: 0 !important;
+                    height: 100%;
+                  }
+                  clock-weather-card-today-left {
+                    width: 20% !important;
+                  }
+                  .grow-img {
+                    max-width: 70% !important;
+                    max-height: 70% !important;
+                  }
+                  clock-weather-card-today-right {
+                    width: 80% !important;
+                  }
+                '';
+              };
+            }
+            # === WEATHER: HOURLY ===
+            {
+              type = "custom:clock-weather-card";
+              entity = "weather.forecast_home";
+              hourly_forecast = true;
+              hide_today_section = true;
+              hide_clock = true;
+              hide_date = true;
+              forecast_rows = 6;
+              view_layout = {
+                grid-area = "hourly";
+              };
+              card_mod = {
+                style = ''
+                  ha-card {
+                    border: none !important;
+                    background-color: transparent !important;
+                    border-radius: 0 !important;
+                    margin: 0 !important;
+                  }
+                '';
+              };
+            }
+            # === WEATHER: DAILY ===
+            {
+              type = "custom:clock-weather-card";
+              entity = "weather.forecast_home";
+              hourly_forecast = false;
+              hide_today_section = true;
+              forecast_rows = 7;
+              view_layout = {
+                grid-area = "daily";
+              };
+              card_mod = {
+                style = ''
+                  ha-card {
+                    border: none !important;
+                    background-color: transparent !important;
+                    border-radius: 0 !important;
+                    margin: 0 !important;
+                  }
+                '';
+              };
+            }
+            # === METRICS: CPU/RAM GAUGES + SWAP/TEMP ===
             {
               type = "vertical-stack";
+              view_layout = {
+                grid-area = "metrics";
+              };
               cards = [
-                # === WEATHER — 3-card split: current | hourly | daily (seamless) ===
-                {
-                  type = "custom:mod-card";
-                  card_mod = {
-                    style = {
-                      "hui-horizontal-stack-card $" = ''
-                        #root > *:nth-child(1) {
-                          flex: 0 0 30% !important;
-                        }
-                        #root > *:nth-child(2),
-                        #root > *:nth-child(3) {
-                          flex: 1 1 0 !important;
-                        }
-                      '';
-                    };
-                  };
-                  card = {
-                    type = "horizontal-stack";
-                    cards = [
-                      {
-                        type = "custom:clock-weather-card";
-                        entity = "weather.forecast_home";
-                        hide_forecast_section = true;
-                        card_mod = {
-                          style = ''
-                            ha-card {
-                              border: none !important;
-                              background-color: transparent !important;
-                              border-radius: 0 !important;
-                              margin: 0 !important;
-                            }
-                            clock-weather-card-today-left {
-                              width: 20% !important;
-                            }
-                            .grow-img {
-                              max-width: 70% !important;
-                              max-height: 70% !important;
-                            }
-                            clock-weather-card-today-right {
-                              width: 80% !important;
-                            }
-                          '';
-                        };
-                      }
-                      {
-                        type = "custom:clock-weather-card";
-                        entity = "weather.forecast_home";
-                        hourly_forecast = true;
-                        hide_today_section = true;
-                        hide_clock = true;
-                        hide_date = true;
-                        forecast_rows = 6;
-                        card_mod = {
-                          style = ''
-                            ha-card {
-                              border: none !important;
-                              background-color: transparent !important;
-                              border-radius: 0 !important;
-                              margin: 0 !important;
-                            }
-                          '';
-                        };
-                      }
-                      {
-                        type = "custom:clock-weather-card";
-                        entity = "weather.forecast_home";
-                        hourly_forecast = false;
-                        hide_today_section = true;
-                        forecast_rows = 7;
-                        card_mod = {
-                          style = ''
-                            ha-card {
-                              border: none !important;
-                              background-color: transparent !important;
-                              border-radius: 0 !important;
-                              margin: 0 !important;
-                            }
-                          '';
-                        };
-                      }
-                    ];
-                  };
-                }
-
-                # === SYSTEM METRICS ===
                 {
                   type = "custom:apexcharts-card";
                   chart_type = "radialBar";
@@ -223,17 +236,36 @@
                     };
                     plotOptions = {
                       radialBar = {
-                        hollow = { size = "50%"; };
+                        hollow = {
+                          size = "50%";
+                        };
                         dataLabels = {
-                          name = { show = true; fontSize = "14px"; };
-                          value = { show = true; fontSize = "18px"; };
-                          total = { show = false; };
+                          name = {
+                            show = true;
+                            fontSize = "14px";
+                          };
+                          value = {
+                            show = true;
+                            fontSize = "18px";
+                          };
+                          total = {
+                            show = false;
+                          };
                         };
                       };
                     };
-                    stroke = { lineCap = "round"; };
-                    colors = [ "#4caf50" "#2196f3" ];
-                    legend = { show = true; position = "bottom"; floating = false; };
+                    stroke = {
+                      lineCap = "round";
+                    };
+                    colors = [
+                      "#4caf50"
+                      "#2196f3"
+                    ];
+                    legend = {
+                      show = true;
+                      position = "bottom";
+                      floating = false;
+                    };
                   };
                   series = [
                     {
@@ -271,47 +303,15 @@
                     }
                   ];
                 }
-
-                # === LOAD & DISK ===
-                {
-                  type = "horizontal-stack";
-                  cards = [
-                    {
-                      type = "custom:mushroom-entity-card";
-                      entity = "sensor.system_monitor_load_1_min";
-                      name = "Load 1m";
-                      icon = "mdi:speedometer";
-                      fill_container = true;
-                      layout = "vertical";
-                    }
-                    {
-                      type = "custom:mushroom-entity-card";
-                      entity = "sensor.system_monitor_load_5_min";
-                      name = "Load 5m";
-                      icon = "mdi:speedometer";
-                      fill_container = true;
-                      layout = "vertical";
-                    }
-                    {
-                      type = "custom:mushroom-entity-card";
-                      entity = "sensor.system_monitor_load_15_min";
-                      name = "Load 15m";
-                      icon = "mdi:speedometer";
-                      fill_container = true;
-                      layout = "vertical";
-                    }
-                    {
-                      type = "custom:mushroom-entity-card";
-                      entity = "sensor.system_monitor_disk_use";
-                      name = "Disk Usage";
-                      icon = "mdi:harddisk";
-                      fill_container = true;
-                      layout = "vertical";
-                    }
-                  ];
-                }
-
-                # === GPU ===
+              ];
+            }
+            # === GPU: POWER/TEMP/UTIL/MEMORY ===
+            {
+              type = "vertical-stack";
+              view_layout = {
+                grid-area = "gpu";
+              };
+              cards = [
                 {
                   type = "horizontal-stack";
                   cards = [
@@ -349,8 +349,61 @@
                     }
                   ];
                 }
-
-                # === NETWORK ===
+              ];
+            }
+            # === LOAD: 1M/5M/15M + DISK ===
+            {
+              type = "vertical-stack";
+              view_layout = {
+                grid-area = "load";
+              };
+              cards = [
+                {
+                  type = "horizontal-stack";
+                  cards = [
+                    {
+                      type = "custom:mushroom-entity-card";
+                      entity = "sensor.system_monitor_load_1_min";
+                      name = "Load 1m";
+                      icon = "mdi:speedometer";
+                      fill_container = true;
+                      layout = "vertical";
+                    }
+                    {
+                      type = "custom:mushroom-entity-card";
+                      entity = "sensor.system_monitor_load_5_min";
+                      name = "Load 5m";
+                      icon = "mdi:speedometer";
+                      fill_container = true;
+                      layout = "vertical";
+                    }
+                    {
+                      type = "custom:mushroom-entity-card";
+                      entity = "sensor.system_monitor_load_15_min";
+                      name = "Load 15m";
+                      icon = "mdi:speedometer";
+                      fill_container = true;
+                      layout = "vertical";
+                    }
+                    {
+                      type = "custom:mushroom-entity-card";
+                      entity = "sensor.system_monitor_disk_use";
+                      name = "Disk Usage";
+                      icon = "mdi:harddisk";
+                      fill_container = true;
+                      layout = "vertical";
+                    }
+                  ];
+                }
+              ];
+            }
+            # === NETWORK: WIFI IN/OUT + TAILSCALE IN/OUT ===
+            {
+              type = "vertical-stack";
+              view_layout = {
+                grid-area = "network";
+              };
+              cards = [
                 {
                   type = "horizontal-stack";
                   cards = [
@@ -388,15 +441,17 @@
                     }
                   ];
                 }
-
-                # === SYSTEM INFO ===
-                {
-                  type = "custom:mushroom-entity-card";
-                  entity = "sensor.system_monitor_last_boot";
-                  name = "Last Boot";
-                  icon = "mdi:clock-outline";
-                }
               ];
+            }
+            # === SYSTEM INFO: LAST BOOT ===
+            {
+              type = "custom:mushroom-entity-card";
+              entity = "sensor.system_monitor_last_boot";
+              name = "Last Boot";
+              icon = "mdi:clock-outline";
+              view_layout = {
+                grid-area = "system";
+              };
             }
           ];
         }

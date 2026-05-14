@@ -44,7 +44,7 @@
   environment.systemPackages = with pkgs; [
     # lutris
     # heroic  # Temporarily disabled - electron build failure
-    # bottles
+    bottles
     # ryujinx
     # prismlauncher
 

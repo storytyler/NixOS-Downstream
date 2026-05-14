@@ -201,7 +201,7 @@ in
                 shadow.enabled = false;
                 rounding = 10;
                 dim_special = 0.3;
-                  blur = {
+                blur = {
                   enabled = false;
                   special = true;
                   size = 6; # 6

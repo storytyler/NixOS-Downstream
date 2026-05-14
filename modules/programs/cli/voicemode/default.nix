@@ -12,15 +12,27 @@ let
   # Upstream uses writeShellScriptBin with PKG_CONFIG_PATH, CPATH, LIBRARY_PATH
   # which are required for simpleaudio to compile during uvx invocation
   voice-mode = pkgs.writeShellScriptBin "voice-mode" ''
-    export LD_LIBRARY_PATH="${lib.makeLibraryPath (audioLibs ++ [ pkgs.stdenv.cc.cc.lib ])}''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+    export LD_LIBRARY_PATH="${
+      lib.makeLibraryPath (audioLibs ++ [ pkgs.stdenv.cc.cc.lib ])
+    }''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 
-    export PKG_CONFIG_PATH="${lib.makeSearchPathOutput "dev" "lib/pkgconfig" audioLibs}''${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
+    export PKG_CONFIG_PATH="${
+      lib.makeSearchPathOutput "dev" "lib/pkgconfig" audioLibs
+    }''${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
 
     export CPATH="${lib.makeSearchPathOutput "dev" "include" audioLibs}''${CPATH:+:$CPATH}"
 
     export LIBRARY_PATH="${lib.makeLibraryPath audioLibs}''${LIBRARY_PATH:+:$LIBRARY_PATH}"
 
-    export PATH="${lib.makeBinPath [ pkgs.gcc pkgs.pkg-config pkgs.ffmpeg pkgs.pulseaudio pkgs.alsa-utils ]}''${PATH:+:$PATH}"
+    export PATH="${
+      lib.makeBinPath [
+        pkgs.gcc
+        pkgs.pkg-config
+        pkgs.ffmpeg
+        pkgs.pulseaudio
+        pkgs.alsa-utils
+      ]
+    }''${PATH:+:$PATH}"
 
     exec ${pkgs.uv}/bin/uvx voice-mode "$@"
   '';

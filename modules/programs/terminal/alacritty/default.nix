@@ -64,25 +64,25 @@
               };
 
               normal = {
-                black = "#141414";   # charcoal
-                red = "#d45d3c";     # burnt orange
-                green = "#a89860";   # muted olive
-                yellow = "#e0a040";  # golden amber
-                blue = "#6c5b4c";    # smoky brown
+                black = "#141414"; # charcoal
+                red = "#d45d3c"; # burnt orange
+                green = "#a89860"; # muted olive
+                yellow = "#e0a040"; # golden amber
+                blue = "#6c5b4c"; # smoky brown
                 magenta = "#c07060"; # warm rose
-                cyan = "#b08860";    # warm amber
-                white = "#c89870";   # warm copper
+                cyan = "#b08860"; # warm amber
+                white = "#c89870"; # warm copper
               };
 
               bright = {
-                black = "#2a2a2a";   # dark charcoal
-                red = "#f07850";     # ember orange
-                green = "#bca870";   # khaki sand
-                yellow = "#f0c050";  # bright gold
-                blue = "#7f6b5d";    # warm taupe
+                black = "#2a2a2a"; # dark charcoal
+                red = "#f07850"; # ember orange
+                green = "#bca870"; # khaki sand
+                yellow = "#f0c050"; # bright gold
+                blue = "#7f6b5d"; # warm taupe
                 magenta = "#d08870"; # salmon peach
-                cyan = "#c09878";    # warm tan
-                white = "#d8a878";   # amber copper
+                cyan = "#c09878"; # warm tan
+                white = "#d8a878"; # amber copper
               };
 
               indexed_colors = [
