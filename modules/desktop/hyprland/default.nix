@@ -111,6 +111,7 @@ in
           #test later systemd.user.targets.hyprland-session.Unit.Wants = [ "xdg-desktop-autostart.target" ];
           wayland.windowManager.hyprland = {
             enable = true;
+            configType = "hyprlang";
             plugins = [
               # inputs.hyprland-plugins.packages.${pkgs.system}.hyprwinwrap
               # inputs.hyprsysteminfo.packages.${pkgs.system}.default

@@ -35,10 +35,6 @@
         kiosk-mode # Hide header/sidebar for fullscreen wall display
         button-card # Ultra-customizable buttons/gauges with templated CSS
         mini-graph-card # Lightweight sparklines and inline graphs
-      ]
-      ++ [
-        pkgs.bolder-weather-card # Custom package — wall-mounted weather with bold images
-        pkgs.weather-forecast-card # Custom package — horizontal scrolling with chart mode
       ];
 
     config = {
@@ -132,72 +128,86 @@
               cards = [
                 # === WEATHER — 3-card split: current | hourly | daily (seamless) ===
                 {
-                  type = "horizontal-stack";
-                  cards = [
-                    {
-                      type = "custom:clock-weather-card";
-                      entity = "weather.forecast_home";
-                      hide_forecast_section = true;
-                      card_mod = {
-                        style = ''
-                          ha-card {
-                            border: none !important;
-                            background-color: transparent !important;
-                            border-radius: 0 !important;
-                            margin: 0 !important;
-                          }
-                        '';
-                      };
-                    }
-                    {
-                      type = "custom:clock-weather-card";
-                      entity = "weather.forecast_home";
-                      hourly_forecast = true;
-                      hide_today_section = true;
-                      hide_clock = true;
-                      hide_date = true;
-                      forecast_rows = 6;
-                      card_mod = {
-                        style = ''
-                          ha-card {
-                            border: none !important;
-                            background-color: transparent !important;
-                            border-radius: 0 !important;
-                            margin: 0 !important;
-                          }
-                        '';
-                      };
-                    }
-                    {
-                      type = "custom:clock-weather-card";
-                      entity = "weather.forecast_home";
-                      hourly_forecast = false;
-                      hide_today_section = true;
-                      forecast_rows = 7;
-                      card_mod = {
-                        style = ''
-                          ha-card {
-                            border: none !important;
-                            background-color: transparent !important;
-                            border-radius: 0 !important;
-                            margin: 0 !important;
-                          }
-                        '';
-                      };
-                    }
-                  ];
-                }
-
-                # === COMPARISON: Bolder Weather Card ===
-                {
-                  type = "custom:bolder-weather-card";
-                  entity = "weather.forecast_home";
-                }
-
-                # === COMPARISON: troinine Weather Forecast Card ===
-                {
-                  type = "custom:weather-forecast-card";
-                  entity = "weather.forecast_home";
+                  type = "custom:mod-card";
+                  card_mod = {
+                    style = {
+                      "hui-horizontal-stack-card $" = ''
+                        #root > *:nth-child(1) {
+                          flex: 0 0 30% !important;
+                        }
+                        #root > *:nth-child(2),
+                        #root > *:nth-child(3) {
+                          flex: 1 1 0 !important;
+                        }
+                      '';
+                    };
+                  };
+                  card = {
+                    type = "horizontal-stack";
+                    cards = [
+                      {
+                        type = "custom:clock-weather-card";
+                        entity = "weather.forecast_home";
+                        hide_forecast_section = true;
+                        card_mod = {
+                          style = ''
+                            ha-card {
+                              border: none !important;
+                              background-color: transparent !important;
+                              border-radius: 0 !important;
+                              margin: 0 !important;
+                            }
+                            clock-weather-card-today-left {
+                              width: 20% !important;
+                            }
+                            .grow-img {
+                              max-width: 70% !important;
+                              max-height: 70% !important;
+                            }
+                            clock-weather-card-today-right {
+                              width: 80% !important;
+                            }
+                          '';
+                        };
+                      }
+                      {
+                        type = "custom:clock-weather-card";
+                        entity = "weather.forecast_home";
+                        hourly_forecast = true;
+                        hide_today_section = true;
+                        hide_clock = true;
+                        hide_date = true;
+                        forecast_rows = 6;
+                        card_mod = {
+                          style = ''
+                            ha-card {
+                              border: none !important;
+                              background-color: transparent !important;
+                              border-radius: 0 !important;
+                              margin: 0 !important;
+                            }
+                          '';
+                        };
+                      }
+                      {
+                        type = "custom:clock-weather-card";
+                        entity = "weather.forecast_home";
+                        hourly_forecast = false;
+                        hide_today_section = true;
+                        forecast_rows = 7;
+                        card_mod = {
+                          style = ''
+                            ha-card {
+                              border: none !important;
+                              background-color: transparent !important;
+                              border-radius: 0 !important;
+                              margin: 0 !important;
+                            }
+                          '';
+                        };
+                      }
+                    ];
+                  };
                 }
 
                 # === SYSTEM METRICS ===
