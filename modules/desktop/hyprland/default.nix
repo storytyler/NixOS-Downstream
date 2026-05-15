@@ -451,6 +451,7 @@ in
                   "$mainMod SHIFT, N, exec, swaync-client -t -sw" # swayNC panel
                   "$mainMod SHIFT, Q, exec, swaync-client -t -sw" # swayNC panel
                   "$mainMod ALT, G, exec, ${./scripts/gamemode.sh}" # disable hypr effects for gamemode
+                  "$mainMod SHIFT, P, exec, wine ~/.games/InfiniteFusion.exe" # Pokémon Infinite Fusion
                   "$mainMod, V, exec, ${./scripts/ClipManager.sh}" # Clipboard Manager
                   "$mainMod, M, exec, ${./scripts/rofimusic.sh}" # online music
                   "$mainMod, B, exec, launcher factcheck"
