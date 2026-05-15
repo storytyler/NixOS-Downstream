@@ -45,6 +45,9 @@ in
     #NetSec
     ../../modules/core/tailscale.nix
 
+    # Game Streaming (Sunshine — serve games to Moonlight clients via LAN/Tailscale)
+    ../../modules/core/sunshine.nix
+
     # Optional
     # ../../modules/hardware/drives # Automatically mount extra external/internal drives
     ../../modules/hardware/video/${vars.videoDriver}.nix # Enable gpu drivers defined in variables.nix
