@@ -22,9 +22,6 @@
       url = "github:catppuccin/thunderbird";
       flake = false;
     };
-    claude-code = {
-      url = "github:sadjow/claude-code-nix";
-    };
     compose2nix = {
       url = "github:aksiksi/compose2nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -49,7 +46,6 @@
   outputs =
     {
       opencode,
-      claude-code,
       self,
       nixpkgs,
       ...
