@@ -26,6 +26,8 @@
     kdePackages.qtmultimedia # Sddm Dependency
     kdePackages.qtvirtualkeyboard # Sddm Dependency
     fzf # Fuzzy Finder
+    rclone # Sync files across cloud providers and local storage
+    zoxide # Smarter directory jumping (optional, replaces oh-my-zsh z plugin)
     # fd # Better Find
     git # Git
     gh # Github Authentication Client

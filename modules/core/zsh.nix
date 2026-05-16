@@ -27,10 +27,15 @@
             plugins = [
               "git"
               "gitignore"
-              "z"
             ];
           };
           initContent = ''
+            # Source zsh-defer for lazy-loading
+            source ${pkgs.zsh-defer}/share/zsh-defer/zsh-defer.plugin.zsh
+
+            # zoxide — smart directory jumping
+            zsh-defer -c 'eval "$(zoxide init zsh)"' 2>/dev/null
+
             # Syntax Highlighting — Ember & Ash overrides
             typeset -A ZSH_HIGHLIGHT_STYLES
             ZSH_HIGHLIGHT_STYLES[command]="fg=#E07A5F"
