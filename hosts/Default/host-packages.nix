@@ -8,7 +8,6 @@
     chromium
 
     # CLI Tools
-    # pkgs.claude-code
     # gemini-cli
     pkgs.opencode
 

@@ -21,7 +21,6 @@
     anytype
 
     # Coding Agents
-    # pkgs.claude-code
     # gemini-cli
     pkgs.opencode
 
