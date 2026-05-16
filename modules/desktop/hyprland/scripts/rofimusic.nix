@@ -49,7 +49,7 @@ pkgs.writeShellScriptBin "rofimusic" ''
   # Main function
   main() {
     r_override="entry{placeholder:'Search Music...';}listview{lines:10;}"
-    choice=$(printf "%s\n" "''${!menu_options[@]}" | ${pkgs.rofi-wayland}/bin/rofi -dmenu -theme-str "$r_override" -theme ~/.config/rofi/launchers/type-2/style-2.rasi -i -p "")
+    choice=$(printf "%s\n" "''${!menu_options[@]}" | ${pkgs.rofi}/bin/rofi -dmenu -theme-str "$r_override" -theme ~/.config/rofi/launchers/type-2/style-2.rasi -i -p "")
 
     if [ -z "$choice" ]; then
       exit 1

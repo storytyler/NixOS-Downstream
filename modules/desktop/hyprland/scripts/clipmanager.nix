@@ -11,7 +11,7 @@ pkgs.writeShellScriptBin "clipmanager" ''
 
   while true; do
     result=$(
-      ${pkgs.rofi-wayland}/bin/rofi -dmenu -i \
+      ${pkgs.rofi}/bin/rofi -dmenu -i \
         -kb-custom-1 "Control-Delete" \
         -kb-custom-2 "Alt-Delete" \
         -theme-str "$r_override" \

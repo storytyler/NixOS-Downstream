@@ -1,4 +1,7 @@
 { pkgs, ... }:
+let
+  togglepowermode = pkgs.callPackage ../../scripts/togglepowermode.nix { };
+in
 {
   #  use later
   home-manager.sharedModules = [
@@ -143,7 +146,7 @@
                 {
                   label = "🎮";
                   type = "toggle";
-                  command = "${../../../hyprland/scripts/gamemode.sh}";
+                  command = "${pkgs.callPackage ../../../hyprland/scripts/gamemode.nix { }}/bin/gamemode";
                   update-command = "hyprctl getoption animations:enabled | grep -q 'int: 1' && echo false || echo true";
                 }
 
@@ -165,7 +168,7 @@
                   label = "";
                   type = "toggle";
 
-                  command = "${../../../hyprland/scripts/TogglePowerMode.sh}";
+                  command = "${togglepowermode}/bin/togglepowermode";
                   update-command = "test -f \"$HOME/.config/hypr/power_mode\" && grep -q \"^powersave$\" \"$HOME/.config/hypr/power_mode\" && echo true || echo false";
                 }
               ];

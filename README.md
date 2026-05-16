@@ -39,7 +39,7 @@ The system uses `hosts/Default/variables.nix` as the central configuration hub:
 ```nix
 {
   username = "player00";      # Auto-updated by rebuild script
-  desktop = "hyprland";       # hyprland, i3-gaps, gnome, plasma6
+  desktop = "hyprland";       # hyprland, gnome
   terminal = "kitty";         # kitty, alacritty
   editor = "vscode";          # nixvim, vscode, helix, doom-emacs, nvchad
   browser = "zen";            # firefox, floorp, zen

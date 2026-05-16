@@ -1,1 +1,0 @@
-hosted on 11434 with official image

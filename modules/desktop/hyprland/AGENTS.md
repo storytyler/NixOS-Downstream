@@ -21,7 +21,8 @@ hyprland/
 │   └── dunst/            # Alternative notification daemon
 ├── scripts/
 │   ├── wallpaper.nix     # Wallpaper setter derivation (SUPER+SHIFT+W)
-│   └── autoclicker.nix   # Auto-clicker script derivation
+│   ├── autoclicker.nix   # Auto-clicker script derivation
+│   └── *.nix             # 18 Nix-wrapped utility scripts (gpuinfo, volumecontrol, etc.)
 └── icons/                # Notification/system icons (25+ files)
     └── notifications/vol/# Volume notification icons
 ```

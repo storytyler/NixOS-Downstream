@@ -5,7 +5,7 @@
 **Branch:** main
 
 ## OVERVIEW
-NixOS configuration using flakes with variables-driven architecture for flexible system management. 575 files across 4 hosts with 46 dev-shell templates. Core system in Nix + Python dev environment (Mimir, hindsight-mcp, general-agentic-memory).
+NixOS configuration using flakes with variables-driven architecture for flexible system management. 575 files across 4 hosts with 46 dev-shell templates. Core system in Nix + Python dev environment (hindsight-mcp).
 
 ## STRUCTURE
 ```
@@ -13,7 +13,7 @@ NixOS configuration using flakes with variables-driven architecture for flexible
 ├── modules/
 │   ├── core/       # Boot, networking, security, essential system (32 modules)
 │   ├── hardware/   # GPU drivers (nvidia/amdgpu/intel/nvk), storage
-│   ├── desktop/    # Window managers (hyprland, i3-gaps, gnome)
+│   ├── desktop/    # Window managers (hyprland, gnome)
 │   ├── programs/   # Applications by category (browser, cli, editor, media, terminal)
 │   ├── scripts/    # Custom utilities (rebuild, rollback, tmux-sessionizer)
 │   └── themes/     # Catppuccin, Dracula, rose-pine + wallpapers
@@ -29,7 +29,7 @@ NixOS configuration using flakes with variables-driven architecture for flexible
 |------|----------|-------|
 | Change config | `hosts/{host}/variables.nix` | Single source of truth for 17 variables |
 | Rebuild system | `rebuild` script | Auto-updates username + hardware detection |
-| Python dev | `dev-shells/python/` | Mimir, hindsight-mcp, general-agentic-memory |
+| Python dev | `dev-shells/python/` | hindsight-mcp (Python 3.13 dev shell) |
 | Add program | `modules/programs/{category}/` | Use `lib.mkIf (config.variables.X == "Y")` |
 | Add host | Copy `hosts/Default/` → add to `flake.nix` | Register in `nixosConfigurations` |
 | GPU issues | `modules/hardware/video/${vars.videoDriver}.nix` | CRITICAL for boot |
@@ -58,7 +58,7 @@ NixOS configuration using flakes with variables-driven architecture for flexible
 - GPU driver selection via `videoDriver` (nvidia/amdgpu/intel/nvk) - CRITICAL for boot
 - 4 hosts sharing modules with host-specific `variables.nix`
 - 46 dev-shell templates: `nix flake init -t .#{template}`
-- Python dev-shell is full project (not template) with Mimir/LightAgent framework
+- Python dev-shell includes hindsight-mcp (FastMCP server wrapping Hindsight REST API)
 - Theme self-contained modules: GTK, icons, Kvantum, cursor, dconf in one file
 - `home-manager.sharedModules` used by program modules to inject into all HM users
 
@@ -80,4 +80,4 @@ nix develop -t .#<lang>    # Enter any of 46 language dev shells
 - `rebuild` supports both `$HOME/NixOS` and `/etc/nixos` locations
 - `modules/core/default.nix` exists but is unused — hosts import core modules individually
 - Repo has artifacts that should be gitignored: `repomix-output.xml`, `.chunkhound/`, `.stfolder/`
-- Subdirectory AGENTS.md: modules/{programs,core,scripts,desktop,desktop/hyprland,hardware}, dev-shells{,/python{,/Mimir}}
+- Subdirectory AGENTS.md: modules/{programs,core,scripts,desktop,desktop/hyprland,hardware}, dev-shells{,/python}

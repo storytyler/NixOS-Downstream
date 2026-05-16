@@ -1,7 +1,9 @@
 {
   # User Configuration
   username = "player00"; # Your username (auto-set with install.sh, live-install.sh, rebuild)
-  desktop = "hyprland"; # Options: hyprland, i3-gaps, gnome
+  desktop = "hyprland"; # Options: hyprland, gnome
+  bar = "waybar"; # Options: waybar, hyprpanel, noctalia-shell, caelestia-shell
+  waybarTheme = "stylish"; # Options: stylish, minimal (only applies when bar = "waybar")
   terminal = "alacritty"; # Options: kitty, alacritty, ghostty
   editor = "vscode"; # Options: vscode, helix
   browser = "firefox"; # Options: firefox, floorp, zen

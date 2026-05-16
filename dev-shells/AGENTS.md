@@ -8,7 +8,7 @@ dev-shells/
 ├── default.nix         # Registry: maps name → { path, description } + aliases
 ├── changeAll.sh        # Bulk nixpkgs URL swapper (FlakeHub ↔ github)
 ├── updateAll.sh        # Bulk nix flake update across all templates
-├── python/             # FULL PROJECT (not template): Mimir, hindsight-mcp, GAM
+├── python/             # FULL PROJECT (not template): hindsight-mcp
 ├── sandboxed-python/   # Docker-based sandbox (shell.nix, not flake)
 └── [43 language dirs]  # Each: standalone flake.nix + flake.lock
 ```
@@ -45,5 +45,5 @@ dev-shells/
 
 ## ANTI-PATTERNS
 - DON'T add shared dependencies between shells — each is standalone by design
-- DON'T use `python/` as a template — it's a full project with Mimir/GAM/hindsight-mcp
+- DON'T use `python/` as a template — it's a full project with hindsight-mcp
 - DON'T modify shells without running `nix flake check` afterward
