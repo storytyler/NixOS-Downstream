@@ -19,3 +19,6 @@ nohup.out
 .stfolder/
 .stignore
 repomix-output.xml
+
+# OpenCode project config (local permissions)
+opencode.json
