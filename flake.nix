@@ -29,6 +29,7 @@
       url = "github:aksiksi/compose2nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprland.url = "github:hyprwm/Hyprland";
     opencode = {
       url = "github:sst/opencode";
     };
