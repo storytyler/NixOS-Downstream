@@ -117,16 +117,14 @@ hl.config({
 		mouse_move_focuses_monitor = true,
 		swallow_regex = "^(Alacritty|kitty)$",
 		enable_swallow = true,
-		vfr = true,
-		vrr = 2, -- 0=off, 1=on, 2=fullscreen only, 3=fullscreen games/media
+		vrr = 2, -- 0=off, 1=on, 2=fullscreen only, 3=fullscreen games/media (replaces deprecated vfr)
 	},
 	xwayland = {
 		force_zero_scaling = false,
 	},
 	dwindle = {
-		pseudotile = true,
 		preserve_split = true,
-	},
+	}, -- pseudotile removed in 0.55.0
 	master = {
 		new_status = "master",
 		new_on_top = true,
