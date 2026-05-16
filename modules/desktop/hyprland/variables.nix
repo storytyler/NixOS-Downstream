@@ -16,6 +16,14 @@ let
     ;
 
   autoclicker = pkgs.callPackage ./scripts/autoclicker.nix { };
+  batterynotify = pkgs.callPackage ./scripts/batterynotify.nix { };
+  clipmanager = pkgs.callPackage ./scripts/clipmanager.nix { };
+  gamemode = pkgs.callPackage ./scripts/gamemode.nix { };
+  keyboardswitch = pkgs.callPackage ./scripts/keyboardswitch.nix { };
+  keybinds = pkgs.callPackage ./scripts/keybinds.nix { };
+  rofimusic = pkgs.callPackage ./scripts/rofimusic.nix { };
+  screen_record = pkgs.callPackage ./scripts/screen-record.nix { };
+  screenshot = pkgs.callPackage ./scripts/screenshot.nix { };
   wallpaper = pkgs.callPackage ./scripts/wallpaper.nix { inherit defaultWallpaper; };
 in
 {
@@ -26,16 +34,15 @@ in
         xdg.configFile."hypr/variables.lua" = {
           text = ''
             autoclicker = "${getExe autoclicker}"
-            batterynotify = "${./scripts/batterynotify.sh}"
-            clipmanager = "${./scripts/ClipManager.sh}"
-            dontkillsteam = "${./scripts/dontkillsteam.sh}"
+            batterynotify = "${getExe batterynotify}"
+            clipmanager = "${getExe clipmanager}"
             fileManager = "term --class \"tuiFileManager\" -e ${tuiFileManager}"
-            gamemode = "${./scripts/gamemode.sh}"
-            keyboardswitch = "${./scripts/keyboardswitch.sh}"
-            keybinds = "${./scripts/keybinds.sh}"
-            rofimusic = "${./scripts/rofimusic.sh}"
-            screen_record = "${./scripts/screen-record.sh}"
-            screenshot = "${./scripts/screenshot.sh}"
+            gamemode = "${getExe gamemode}"
+            keyboardswitch = "${getExe keyboardswitch}"
+            keybinds = "${getExe keybinds}"
+            rofimusic = "${getExe rofimusic}"
+            screen_record = "${getExe screen_record}"
+            screenshot = "${getExe screenshot}"
             wallpaper = "${getExe wallpaper}"
 
             mainMod = "SUPER"
