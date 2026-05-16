@@ -43,8 +43,8 @@ hl.bind(mainMod .. " + F9", hl.dsp.exec_cmd("hyprsunset --temperature 3500"))
 hl.bind(mainMod .. " + F10", hl.dsp.exec_cmd("pkill hyprsunset"))
 
 -- Window/Session actions
-hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(dontkillsteam))
-hl.bind("ALT + F4", hl.dsp.exec_cmd(dontkillsteam))
+hl.bind(mainMod .. " + Q", hl.dsp.window.close())
+hl.bind("ALT + F4", hl.dsp.window.kill())
 hl.bind(mainMod .. " + delete", hl.dsp.exit())
 hl.bind(mainMod .. " + W", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + SHIFT + G", hl.dsp.group.toggle())

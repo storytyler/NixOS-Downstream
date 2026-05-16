@@ -19,7 +19,7 @@
 LightAgent: Production-level lightweight agentic AI framework with mem0, ACE, GAM integration. Currently in fluid development state with modular containerized architecture. `lightagent/` and `agentic-context-engine/` directories referenced in docs but NOT yet on disk — only `mem0/` and `containers/` are present. Comprehensive documentation available in `../documentation/`.
 
 ## Development Environment
-- Working directory: `/home/player00/NixOS/dev-shells/python/`
+- Working directory: `~/NixOS/dev-shells/python/`
 - Dev-shell: Python 3.13, activated via `direnv` (`use flake`)
 - Intended to operate with Docker services for testing modular services
 - Test scripts are ad-hoc smoke tests (NOT pytest) — they hit localhost:11434 (Ollama)
@@ -48,9 +48,9 @@ LightAgent: Production-level lightweight agentic AI framework with mem0, ACE, GA
 ## Configuration Architecture
 - Modular design inspired by Nix configuration structure
 - Service-specific configs with central coordination
-- Directory: `/home/player00/NixOS/dev-shells/python/Mimir`
-  - ex: `/home/player00/NixOS/dev-shells/python/Mimir/lightagent`
-  - ex: `/home/player00/NixOS/dev-shells/python/Mimir/mem0`
+- Directory: `~/NixOS/dev-shells/python/Mimir`
+  - ex: `~/NixOS/dev-shells/python/Mimir/lightagent`
+  - ex: `~/NixOS/dev-shells/python/Mimir/mem0`
 - Hierarchical structure: individual service configs → service central config → primary config
 - ALL service specific configurations and files should be organized neatly into their associated directory for each service as exampled above. ACE in agentic-context-engine/, LightAgent in lightagent/, etc.
 

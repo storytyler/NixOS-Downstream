@@ -4,7 +4,10 @@
   config,
   ...
 }:
-
+let
+  host = config.networking.hostName;
+  inherit (import ../../hosts/${host}/variables.nix) latitude longitude elevation;
+in
 {
   services.home-assistant = {
     enable = true;
@@ -42,9 +45,7 @@
       homeassistant = {
         name = "Home";
         time_zone = config.time.timeZone;
-        latitude = 42.057856;
-        longitude = -91.574895;
-        elevation = 265; # Approximate elevation for Cedar Rapids, IA area
+        inherit latitude longitude elevation;
       };
 
       # Wake on LAN - add MAC addresses later via UI or here

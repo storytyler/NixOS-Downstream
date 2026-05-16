@@ -12,3 +12,10 @@ result-*
 
 tools.yaml
 nohup.out
+
+# Tool artifacts
+.chunkhound/
+.codenomad/
+.stfolder/
+.stignore
+repomix-output.xml
