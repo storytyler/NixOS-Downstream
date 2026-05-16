@@ -10,6 +10,7 @@ in
         enable = true;
         enableBashIntegration = true;
         enableZshIntegration = true;
+        shellWrapperName = "yy"; # Silence stateVersion < 26.05 warning
         initLua = initLua;
         plugins = {
           compress = pkgs.yaziPlugins.compress;

@@ -25,7 +25,7 @@
     kdePackages.qtsvg # Sddm Dependency
     kdePackages.qtmultimedia # Sddm Dependency
     kdePackages.qtvirtualkeyboard # Sddm Dependency
-    # fzf # Fuzzy Finder
+    fzf # Fuzzy Finder
     # fd # Better Find
     git # Git
     gh # Github Authentication Client
