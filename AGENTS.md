@@ -73,6 +73,39 @@ nix develop -t .#python    # Enter Python dev shell
 nix develop -t .#<lang>    # Enter any of 46 language dev shells
 ```
 
+## GIT TOPOLOGY
+
+### Remotes
+| Remote | URL | Role | Default Branch |
+|--------|-----|------|----------------|
+| `origin` | `git@github.com:storytyler/NixOS.git` | Private repo / primary backup | `main` |
+| `fork` | `git@github.com:storytyler/NixOS-Downstream.git` | Collaboration fork (Sly-Harvey upstream) | `my-config` |
+| `upstream` | `https://github.com/sly-harvey/NixOS.git` | Original upstream (read-only reference) | `master` |
+
+### Workflow
+1. **Develop** on local `main` branch
+2. **Commit** with conventional prefixes: `FIX:`, `CHANGE:`, `FEAT:`, `REFACTOR:`, `DOCS:`
+3. **Push to origin** (`git push origin main`) — private backup after each commit batch
+4. **Build & test** manually via `rebuild` (NEVER from agent sessions — see codemem #93)
+5. **Push to fork** (`git push fork main:my-config`) — only after verified working state
+6. **Sync upstream** (`git fetch upstream`) — pull Sly-Harvey's changes when needed
+
+### Aliases
+- `git push-all` — pushes to both origin and fork simultaneously (`!git push origin main && git push fork main:my-config`)
+- Use `push-all` only when both targets should receive the same confirmed-working state
+
+### Collaboration with Sly-Harvey
+- Fork repo: `storytyler/NixOS-Downstream` → `sly-harvey/NixOS`
+- Push completed features to `fork/my-config` for PR/discussion
+- Upstream uses `master` branch (not `main`)
+- Reference: github.com/Sly-Harvey/NixOS, Fufexan's dotfiles for canonical Hyprland patterns
+
+### Anti-Patterns (GIT)
+- DON'T push to fork until changes are verified working
+- DON'T force-push to origin or fork
+- DON'T run `rebuild` from agent sessions — user runs from terminal with sudo
+- DON'T push to upstream directly — always go through fork PRs
+
 ## NOTES
 - **KNOWN BUG**: `hosts/Default/configuration.nix` line 63 has inverted games logic (`vars.games == false` should be `== true`)
 - **TIMEZONE BUG**: Default, Scout-02, Subrelay-01 use invalid `"Chicago/US"` (should be `"America/Chicago"`)
