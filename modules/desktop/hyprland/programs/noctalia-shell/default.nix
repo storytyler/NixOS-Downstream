@@ -5,13 +5,14 @@
   ...
 }:
 let
-  inherit (import ../../../hosts/${host}/variables.nix) clock24h bluetoothSupport;
+  inherit (import ../../../../../hosts/${host}/variables.nix) clock24h bluetoothSupport;
 in
 {
   # Optional Dependencies
   environment.systemPackages = with pkgs; [
     wl-clipboard
     brightnessctl
+    # wf-recorder
   ];
   home-manager.sharedModules = [
     (_: {
@@ -74,7 +75,9 @@ in
               ];
               right = [
                 {
-                  blacklist = [ "nm-applet" ];
+                  blacklist = [
+                    "nm-applet"
+                  ];
                   chevronColor = "none";
                   colorizeIcons = false;
                   drawerEnabled = true;
@@ -110,6 +113,16 @@ in
                   middleClickCommand = "pwvucontrol || pavucontrol";
                   textColor = "none";
                 }
+                /*
+                  {
+                    hideWhenZero = false;
+                    hideWhenZeroUnread = false;
+                    iconColor = "none";
+                    id = "NotificationHistory";
+                    showUnreadBadge = true;
+                    unreadBadgeColor = "primary";
+                  }
+                */
                 {
                   applyToAllMonitors = false;
                   displayMode = "onhover";
@@ -185,7 +198,7 @@ in
             weatherEnabled = true;
             weatherShowEffects = true;
             useFahrenheit = false;
-            use12hourFormat = !clock24h;
+            use12hourFormat = false;
             showWeekNumberInCalendar = true;
             showCalendarEvents = true;
             showCalendarWeather = true;
@@ -205,26 +218,62 @@ in
           controlCenter = {
             shortcuts = {
               left = [
-                { id = "Network"; }
-                { id = "Bluetooth"; }
-                { id = "AirplaneMode"; }
-                { id = "WallpaperSelector"; }
-                { id = "NoctaliaPerformance"; }
+                {
+                  id = "Network";
+                }
+                {
+                  id = "Bluetooth";
+                }
+                {
+                  id = "AirplaneMode";
+                }
+                {
+                  id = "WallpaperSelector";
+                }
+                {
+                  id = "NoctaliaPerformance";
+                }
               ];
               right = [
-                { id = "Notifications"; }
-                { id = "KeepAwake"; }
-                { id = "DarkMode"; }
-                { id = "NightLight"; }
+                {
+                  id = "Notifications";
+                }
+                {
+                  id = "KeepAwake";
+                }
+                {
+                  id = "DarkMode";
+                }
+                {
+                  id = "NightLight";
+                }
               ];
             };
             cards = [
-              { enabled = true; id = "profile-card"; }
-              { enabled = true; id = "shortcuts-card"; }
-              { enabled = true; id = "audio-card"; }
-              { enabled = true; id = "brightness-card"; }
-              { enabled = true; id = "weather-card"; }
-              { enabled = true; id = "media-sysmon-card"; }
+              {
+                enabled = true;
+                id = "profile-card";
+              }
+              {
+                enabled = true;
+                id = "shortcuts-card";
+              }
+              {
+                enabled = true;
+                id = "audio-card";
+              }
+              {
+                enabled = true;
+                id = "brightness-card";
+              }
+              {
+                enabled = true;
+                id = "weather-card";
+              }
+              {
+                enabled = true;
+                id = "media-sysmon-card";
+              }
             ];
           };
           systemMonitor = {
@@ -248,6 +297,7 @@ in
             useCustomColors = false;
             warningColor = "";
             criticalColor = "";
+            externalMonitor = "resources || missioncenter || jdsystemmonitor || corestats || system-monitoring-center || gnome-system-monitor || plasma-systemmonitor || mate-system-monitor || ukui-system-monitor || deepin-system-monitor || pantheon-system-monitor";
           };
           sessionMenu = {
             powerOptions = [
@@ -307,6 +357,7 @@ in
             lowUrgencyDuration = 3;
             normalUrgencyDuration = 8;
             criticalUrgencyDuration = 15;
+
             enableMediaToast = false;
             enableKeyboardLayoutToast = true;
             enableBatteryToast = true;
@@ -323,6 +374,7 @@ in
           };
           nightLight = {
             nightTemp = "4000";
+            # dayTemp = "6500";
           };
           dock.enabled = false;
           idle.enabled = false;

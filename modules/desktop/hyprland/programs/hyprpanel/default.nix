@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (import ../../../hosts/${host}/variables.nix) clock24h bluetoothSupport;
+  inherit (import ../../../../../hosts/${host}/variables.nix) clock24h bluetoothSupport;
 in
 {
   # Optional Dependencies
@@ -64,7 +64,7 @@ in
             windowtitle.title_map = [
               [
                 "gjs"
-                ""
+                ""
                 "Hyprpanel Settings"
               ]
             ];
@@ -78,6 +78,7 @@ in
             media = {
               format = "{title}";
               show_active_only = true;
+              # format = "{artist: - }{title}";
               rightClick = "${pkgs.playerctl}/bin/playerctl play-pause";
               truncation_size = 25; # Default: 30
             };
@@ -92,11 +93,11 @@ in
               monitorSpecific = false;
               showAllActive = false;
               show_icons = false;
-              icons.available = "";
+              icons.available = "";
               show_numbered = false;
               workspaceMask = false;
               showWsIcons = false;
-              icons.occupied = "";
+              icons.occupied = "";
             };
             enableShadow = false;
             layouts = {
@@ -108,6 +109,7 @@ in
                 ];
                 middle = [
                   "windowtitle"
+                  # "media"
                 ];
                 right =
                   [ ]
@@ -137,7 +139,8 @@ in
               hyprsunset.temperature = "4000k";
               hypridle = {
                 onIcon = "󰥔";
-                offIcon = "";
+                offIcon = "";
+
                 label = true;
                 onLabel = "On";
                 offLabel = "Off";
@@ -167,9 +170,9 @@ in
               stats.enable_gpu = true;
               shortcuts = {
                 left = {
-                  shortcut1.tooltip = "Browser";
-                  shortcut1.command = "launcher drun";
-                  shortcut1.icon = "";
+                  shortcut1.tooltip = "Zen Browser";
+                  shortcut1.command = "zen-beta";
+                  shortcut1.icon = "";
                   shortcut2.command = "spotify";
                   shortcut4.command = "launcher drun";
                 };

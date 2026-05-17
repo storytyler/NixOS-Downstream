@@ -6,7 +6,7 @@
 }:
 
 let
-  inherit (import ../../../hosts/${host}/variables.nix)
+  inherit (import ../../../../../hosts/${host}/variables.nix)
     clock24h
     username
     bluetoothSupport
@@ -48,15 +48,42 @@ let
         shown = 10;
       };
       entries = [
-        { id = "logo"; enabled = true; }
-        { id = "workspaces"; enabled = true; }
-        { id = "spacer"; enabled = true; }
-        { id = "spacer"; enabled = true; }
-        { id = "spacer"; enabled = true; }
-        { id = "tray"; enabled = true; }
-        { id = "clock"; enabled = true; }
-        { id = "statusIcons"; enabled = true; }
-        { id = "power"; enabled = true; }
+        {
+          id = "logo";
+          enabled = true;
+        }
+        {
+          id = "workspaces";
+          enabled = true;
+        }
+        {
+          id = "spacer";
+          enabled = true;
+        }
+        {
+          id = "spacer";
+          enabled = true;
+        }
+        {
+          id = "spacer";
+          enabled = true;
+        }
+        {
+          id = "tray";
+          enabled = true;
+        }
+        {
+          id = "clock";
+          enabled = true;
+        }
+        {
+          id = "statusIcons";
+          enabled = true;
+        }
+        {
+          id = "power";
+          enabled = true;
+        }
       ];
     };
 
@@ -112,10 +139,22 @@ let
       dragThreshold = 30;
       vimKeybinds = true;
       commands = {
-        logout = [ "loginctl" "terminate-user" ];
-        shutdown = [ "systemctl" "poweroff" ];
-        hibernate = [ "systemctl" "hibernate" ];
-        reboot = [ "systemctl" "reboot" ];
+        logout = [
+          "loginctl"
+          "terminate-user"
+        ];
+        shutdown = [
+          "systemctl"
+          "poweroff"
+        ];
+        hibernate = [
+          "systemctl"
+          "hibernate"
+        ];
+        reboot = [
+          "systemctl"
+          "reboot"
+        ];
       };
     };
 
