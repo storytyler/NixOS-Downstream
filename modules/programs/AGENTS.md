@@ -18,9 +18,10 @@ modules/programs/
 |------|----------|-------|
 | Add browser | `browser/{name}/` | All Firefox derivatives share: default.nix + settings.nix + bookmarks.nix + search.nix + policies.nix |
 | Add editor | `editor/{name}/` | VSCode (extensions, Vim keybinds, Catppuccin), Helix |
-| Add CLI tool | `cli/{name}/` | File managers, git tools, monitoring |
+| Add CLI tool | `cli/{name}/` | File managers, git tools, monitoring, voicemode |
 | Add terminal | `terminal/{name}/` | Kitty (Catppuccin), Alacritty, Ghostty (custom Catppuccin) |
 | Configure program | Use `home-manager.sharedModules` | Dominant pattern for program configs |
+| Bar/utility programs | Desktop-level (`modules/desktop/hyprland/programs/`) | waybar, rofi, hyprlock etc. NOT in programs/ |
 
 ## CONVENTIONS
 - **Program modules use `home-manager.sharedModules`** to inject configs into all HM users
@@ -28,8 +29,10 @@ modules/programs/
 - Browser config pattern: Betterfox hardening via `inputs.betterfox` for all Firefox derivatives
 - Config files via `xdg.configFile."app/config".source = ./config-file`
 - Always-loaded CLI tools: tmux, direnv, lazygit, cava, btop (not variable-selected)
+- voicemode CLI in `cli/voicemode/` — voice mode TUI tool
 
 ## ANTI-PATTERNS
 - DON'T install all programs - use variable-driven selection
 - DON'T mix categories - keep browser/editor/terminal separate
 - DON'T create program modules without `home-manager.sharedModules` pattern
+- DON'T put Hyprland-specific programs (waybar, rofi) here — they're in `modules/desktop/hyprland/programs/`

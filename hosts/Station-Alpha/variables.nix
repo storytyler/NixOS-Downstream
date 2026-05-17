@@ -14,6 +14,7 @@
   shell = "bash"; # Options: zsh, bash
   games = true; # Whether to enable the gaming module
   bluetoothSupport = true; # Whether your motherboard supports bluetooth
+  batterySupport = false; # Whether device has a battery (laptop)
 
   # Hardware Configuration
   videoDriver = "nvidia"; # CRITICAL: Choose your GPU driver (nvidia, amdgpu, intel)

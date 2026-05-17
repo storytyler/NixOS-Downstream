@@ -1,17 +1,17 @@
 # PROJECT KNOWLEDGE BASE
 
-**Generated:** 2026-04-27
-**Commit:** 3febe1c
+**Generated:** 2026-05-17
+**Commit:** 826472e
 **Branch:** main
 
 ## OVERVIEW
-NixOS configuration using flakes with variables-driven architecture for flexible system management. 575 files across 4 hosts with 46 dev-shell templates. Core system in Nix + Python dev environment (hindsight-mcp).
+NixOS configuration using flakes with variables-driven architecture for flexible system management. 568 files across 4 hosts with 46 dev-shell templates. Core system in Nix (Lua-based Hyprland config) + Python dev environment (hindsight-mcp).
 
 ## STRUCTURE
 ```
 ./
 ├── modules/
-│   ├── core/       # Boot, networking, security, essential system (32 modules)
+│   ├── core/       # Boot, networking, security, essential system (34 modules)
 │   ├── hardware/   # GPU drivers (nvidia/amdgpu/intel/nvk), storage
 │   ├── desktop/    # Window managers (hyprland, gnome)
 │   ├── programs/   # Applications by category (browser, cli, editor, media, terminal)
@@ -37,7 +37,7 @@ NixOS configuration using flakes with variables-driven architecture for flexible
 | Dev shell template | `dev-shells/{lang}/flake.nix` | Register in `dev-shells/default.nix` |
 
 ## CONVENTIONS
-- **Variables-Driven**: `hosts/{host}/variables.nix` controls 17 options (desktop, terminal, browser, editor, videoDriver, games, etc.)
+- **Variables-Driven**: `hosts/{host}/variables.nix` controls 20+ options (desktop, bar, terminal, browser, editor, videoDriver, games, etc.)
 - **Conditional Imports**: `./desktop/${vars.desktop}`, `./hardware/video/${vars.videoDriver}.nix`, `./programs/browser/${vars.browser}`
 - **Flake Structure**: `mkHost "HostName"` in `flake.nix` → `nixosConfigurations.{HostName}`
 - **Overlays**: Custom packages via `overlays/default.nix` with host-specific injection
@@ -114,3 +114,6 @@ nix develop -t .#<lang>    # Enter any of 46 language dev shells
 - `modules/core/default.nix` exists but is unused — hosts import core modules individually
 - Repo has artifacts that should be gitignored: `repomix-output.xml`, `.chunkhound/`, `.stfolder/`
 - Subdirectory AGENTS.md: modules/{programs,core,scripts,desktop,desktop/hyprland,hardware}, dev-shells{,/python}
+- Hyprland config is Lua-based (6 files in `modules/desktop/hyprland/lua/`), not hyprlang
+- Bar selection via `variables.bar`: waybar, hyprpanel, noctalia-shell, caelestia-shell
+- `modules/desktop/hyprland/variables.nix` generates `variables.lua` with Nix-interpolated store paths

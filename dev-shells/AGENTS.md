@@ -28,6 +28,7 @@ dev-shells/
 - **Version pinning**: Single variable at top (e.g., `goVersion = 23`, `javaVersion = 23`, `version = "3.13"`)
 - **Zero coupling**: Each shell has own `flake.lock` — no shared state
 - **Aliases**: `c` → c-cpp, `cpp` → c-cpp, `rt` → rust-toolchain
+- **Overlays**: Some shells (rust, go) define local overlays for version pinning
 
 ## KEY SHELLS
 
