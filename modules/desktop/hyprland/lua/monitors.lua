@@ -11,7 +11,7 @@ hl.monitor({
 	output = "desc:LG Electronics LG TV SSCR2 0x01010101",
 	mode = "preferred",
 	position = "auto",
-	scale = 1,
+	scale = 1.5,
 })
 
 -- Workspaces bound to monitors (find desc with: hyprctl monitors)

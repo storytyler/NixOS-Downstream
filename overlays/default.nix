@@ -24,8 +24,8 @@ in
     };
     discord = prev.discord.override {
       withVencord = true;
-      withOpenASAR = true;
-      enableAutoscroll = true;
+      # withOpenASAR = true;
+      # enableAutoscroll = true;
     };
   };
 }
