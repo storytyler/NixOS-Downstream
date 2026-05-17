@@ -13,7 +13,7 @@
   hyprlockWallpaper = "evening-sky.webp"; # See modules/themes/wallpapers for options
   shell = "bash"; # Options: zsh, bash
   games = false; # Whether to enable the gaming module
-  bluetooth = false; # Disable bluetooth to save CPU (radio polling)
+  bluetoothSupport = true; # Whether your motherboard supports bluetooth
 
   # Hardware Configuration
   videoDriver = "intel"; # CRITICAL: Choose your GPU driver (nvidia, amdgpu, intel)

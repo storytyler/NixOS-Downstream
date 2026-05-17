@@ -2,7 +2,7 @@
   # User Configuration
   username = "player00"; # Your username (auto-set with install.sh, live-install.sh, rebuild)
   desktop = "hyprland"; # Options: hyprland, gnome
-  bar = "waybar"; # Options: waybar, hyprpanel, noctalia-shell, caelestia-shell
+  bar = "hyprpanel"; # Options: waybar, hyprpanel, noctalia-shell, caelestia-shell
   waybarTheme = "stylish"; # Options: stylish, minimal (only applies when bar = "waybar")
   terminal = "alacritty"; # Options: kitty, alacritty, ghostty
   editor = "vscode"; # Options: vscode, helix
@@ -13,6 +13,7 @@
   hyprlockWallpaper = "EmberNAsh.png"; # See modules/themes/wallpapers for options
   shell = "bash"; # Options: zsh, bash
   games = true; # Whether to enable the gaming module
+  bluetoothSupport = true; # Whether your motherboard supports bluetooth
 
   # Hardware Configuration
   videoDriver = "nvidia"; # CRITICAL: Choose your GPU driver (nvidia, amdgpu, intel)
