@@ -19,16 +19,14 @@ hl.env("NIXPKGS_ALLOW_UNFREE", "1")
 
 hl.on("hyprland.start", function()
 	hl.exec_cmd(wallpaper)
-	hl.exec_cmd("waybar")
+	hl.exec_cmd(bar)
 	hl.exec_cmd("swaync")
 	hl.exec_cmd("nm-applet --indicator")
-	hl.exec_cmd("wl-clipboard-history -t")
 	hl.exec_cmd("wl-paste --type text --watch cliphist store")
 	hl.exec_cmd("wl-paste --type image --watch cliphist store")
 	hl.exec_cmd("rm '$XDG_CACHE_HOME/cliphist/db'")
 	hl.exec_cmd(batterynotify)
 	hl.exec_cmd("polkit-agent-helper-1")
-	hl.exec_cmd("pamixer --set-volume 50")
 end)
 
 hl.config({
@@ -76,7 +74,7 @@ hl.config({
 		rounding = 10,
 		dim_special = 0.3,
 		blur = {
-			enabled = false,
+			enabled = true,
 			special = true,
 			size = 6,
 			passes = 2,

@@ -7,6 +7,7 @@
 let
   inherit (lib) getExe;
   inherit (import ../../../hosts/${host}/variables.nix)
+    bar
     browser
     terminal
     tuiFileManager
@@ -33,6 +34,7 @@ in
       {
         xdg.configFile."hypr/variables.lua" = {
           text = ''
+            bar = "${bar}"
             autoclicker = "${getExe autoclicker}"
             batterynotify = "${getExe batterynotify}"
             clipmanager = "${getExe clipmanager}"

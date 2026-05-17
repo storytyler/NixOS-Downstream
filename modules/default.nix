@@ -45,7 +45,7 @@ in
     ./programs/cli/voicemode
     # ./programs/cli/spec-kit
     ./programs/media/discord
-    # ./programs/media/spicetify
+    ./programs/media/spicetify
     ./programs/media/youtube-music
     # ./programs/media/thunderbird
     ./programs/media/obs-studio

@@ -72,6 +72,7 @@ in
       home.packages = with pkgs; [
         awww
         hyprpicker
+        hyprsunset
         cliphist
         wf-recorder
         grimblast
