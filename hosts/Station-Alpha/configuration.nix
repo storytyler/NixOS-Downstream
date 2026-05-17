@@ -65,7 +65,7 @@ in
     ../../modules/programs/cli/voicemode
     # ../../modules/programs/cli/spec-kit
     ../../modules/programs/media/discord
-    # ../../modules/programs/media/spicetify
+    ../../modules/programs/media/spicetify
     ../../modules/programs/media/youtube-music
     # ../../modules/programs/media/thunderbird
     ../../modules/programs/media/obs-studio
