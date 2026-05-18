@@ -2,7 +2,7 @@
 {
   imports = [
     ./dconf.nix
-    ../../themes/Catppuccin
+    ../../themes/gruvbox
   ];
   services = {
     desktopManager.gnome.enable = true;

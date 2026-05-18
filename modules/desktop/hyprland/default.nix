@@ -12,7 +12,7 @@ let
 in
 {
   imports = [
-    ../../themes/Catppuccin
+    ../../themes/gruvbox
     ./variables.nix
     ./programs/${bar}
     ./programs/wlogout
