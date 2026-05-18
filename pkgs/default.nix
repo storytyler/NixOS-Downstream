@@ -7,4 +7,5 @@
   pokego = pkgs.callPackage ./pokego.nix { };
   portainer-mcp = pkgs.callPackage ./portainer-mcp.nix { };
   layout-card = pkgs.callPackage ./layout-card.nix { };
+  phocus = pkgs.callPackage ./phocus { };
 }

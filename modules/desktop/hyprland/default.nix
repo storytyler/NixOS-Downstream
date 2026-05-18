@@ -12,7 +12,7 @@ let
 in
 {
   imports = [
-    ../../themes/gruvbox
+    ../../themes/phocus
     ./variables.nix
     ./programs/${bar}
     ./programs/wlogout
@@ -20,7 +20,7 @@ in
     ./programs/hypridle
     ./programs/hyprlock
   ]
-  ++ optional (bar != "hyprpanel") ./programs/swaync;
+  ++ optional (bar != "hyprpanel" && bar != "wayle") ./programs/swaync;
 
   nix.settings = {
     substituters = [ "https://hyprland.cachix.org" ];
