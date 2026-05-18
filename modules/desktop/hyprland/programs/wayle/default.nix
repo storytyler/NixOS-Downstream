@@ -65,7 +65,7 @@ in
                   "window-title"
                 ];
                 right =
-                  [ "volume" "network" "systray" "idle-inhibit" "clock" "notification" ]
+                  [ "volume" "network" "systray" "idle-inhibit" "clock" "notifications" ]
                   ++ lib.optionals (bluetoothSupport == true) [ "bluetooth" ]
                   ++ lib.optionals (batterySupport == true) [ "battery" ];
               }
@@ -138,7 +138,7 @@ in
             };
 
             # Notifications (built-in, replaces swaync)
-            notification = {
+            notifications = {
               popup-duration = 3500;
               popup-position = "top-right";
               popup-max-visible = 5;

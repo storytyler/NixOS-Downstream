@@ -18,13 +18,8 @@ in
               color = "rgb(26, 21, 18)";
               path = "${../../../../themes/wallpapers/${hyprlockWallpaper}}";
 
-              blur_size = 3;
-              blur_passes = 2;
-              noise = 0.1;
-              contrast = 1.000;
-              brightness = 0.8000;
-              vibrancy = 0.2100;
-              vibrancy_darkness = 0.0;
+              blur_size = 0;
+              blur_passes = 0;
             }
           ];
 
