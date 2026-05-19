@@ -44,30 +44,40 @@ in
           # ── Bar Chrome ────────────────────────────────────────────
           bar = {
             location = "top";
-            background-opacity = 100;
+            bg = "transparent";
+            background-opacity = 0;
             rounding = "sm";
             border-location = "none";
             padding = 0.35;
             padding-ends = 0.5;
-            module-gap = 0.5;
+            end-inset = 1.0;
+            module-gap = 0.0;
             button-variant = "block-prefix";
             button-rounding = "sm";
             button-label-weight = "semibold";
+            button-opacity = 0.6;
+            button-icon-size = 1.5;
+            button-group-rounding = "md";
+            button-group-padding = 1.0;
+            button-group-background = "transparent";
+            button-group-border-location = "bottom";
+            button-group-border-width = 2;
+            button-group-border-color = "blue";
             layout = [
               {
                 monitor = "*";
                 left = [
-                  "dashboard"
-                  "hyprland-workspaces"
+                  { name = "left-group"; modules = ["dashboard" "hyprland-workspaces" "systray"]; }
                   "cava"
                 ];
                 center = [
-                  "window-title"
+                  { name = "center-group"; modules = ["clock" "weather"]; }
                 ];
-                right =
-                  [ "volume" "network" "systray" "idle-inhibit" "hyprsunset" "clock" "notifications" ]
-                  ++ lib.optionals (bluetoothSupport == true) [ "bluetooth" ]
-                  ++ lib.optionals (batterySupport == true) [ "battery" ];
+                right = [
+                  { name = "volume-group"; modules = ["volume"]; }
+                  { name = "right-group"; modules = ["hyprsunset" "idle-inhibit" "notifications"]; }
+                ]
+                ++ lib.optionals (batterySupport == true) [ "battery" ];
               }
             ];
           };
@@ -77,6 +87,10 @@ in
             # Dashboard (profile dropdown with power menu)
             dashboard = {
               icon-override = "";
+              icon-color = "blue";
+              icon-bg-color = "transparent";
+              button-bg-color = "transparent";
+              border-show = false;
             };
 
             # Workspaces (pills/bubbles, no numbers — matches HyprPanel style)
@@ -98,10 +112,16 @@ in
 
             # Cava (audio visualizer, click = play/pause)
             cava = {
-              bars = 20;
+              bars = 200;
               framerate = 60;
-              style = "bars";
+              style = "peaks";
               direction = "normal";
+              monstercat = 0.5;
+              bar-width = 1;
+              internal-padding = 14.0;
+              color = "blue";
+              button-bg-color = "transparent";
+              border-show = false;
               left-click = "${pkgs.playerctl}/bin/playerctl play-pause";
             };
 
@@ -112,30 +132,69 @@ in
               label-max-length = 50;
             };
 
-            # Volume
+            # Volume (icon only)
             volume = {
+              icon-color = "blue";
+              icon-bg-color = "transparent";
+              button-bg-color = "transparent";
+              border-show = false;
+              label-show = false;
               right-click = "pavucontrol";
+              scroll-up = "wayle audio output-volume +5";
+              scroll-down = "wayle audio output-volume -5";
             };
 
-            # Network (show label + wifi info)
+            # Network (icon only, no label)
             network = {
-              label-show = true;
+              icon-color = "blue";
+              icon-bg-color = "transparent";
+              button-bg-color = "transparent";
+              border-show = false;
+              label-show = false;
             };
 
             # Bluetooth (icon only, no label)
             bluetooth = {
+              icon-color = "blue";
+              icon-bg-color = "transparent";
+              button-bg-color = "transparent";
+              border-show = false;
               label-show = false;
             };
 
-            # System tray (defaults are fine)
+            # Battery (icon only, no label)
+            battery = {
+              icon-color = "blue";
+              icon-bg-color = "transparent";
+              button-bg-color = "transparent";
+              border-show = false;
+              label-show = false;
+            };
 
-            # Idle inhibit (hypridle toggle)
+            # System tray
+            systray = {
+              button-bg-color = "transparent";
+            };
+
+            # Idle inhibit (hypridle toggle, icon only)
             idle-inhibit = {
-              format = "{{ state }}";
+              icon-color = "blue";
+              icon-bg-color = "transparent";
+              button-bg-color = "transparent";
+              border-show = false;
+              label-show = false;
               icon-active = "tb-coffee-symbolic";
               icon-inactive = "tb-coffee-off-symbolic";
-              label-show = true;
               startup-duration = 60;
+            };
+
+            # Hyprsunset (night light toggle)
+            hyprsunset = {
+              icon-color = "blue";
+              icon-bg-color = "transparent";
+              button-bg-color = "transparent";
+              border-show = false;
+              label-show = false;
             };
 
             # Clock (respects clock24h from host variables)
@@ -143,13 +202,32 @@ in
               format = if clock24h == true then "%a %d %b %R" else "%a %d %b %I:%M %p";
               icon-show = false;
               label-show = true;
+              label-color = "blue";
+              button-bg-color = "transparent";
             };
 
-            # Notifications (built-in, replaces swaync)
+            # Weather (imperial, right of clock)
+            weather = {
+              units = "imperial";
+              location = "San Francisco";
+              format = "{{ temp }}{{ temp_unit }} {{ condition }}";
+              icon-color = "blue";
+              icon-bg-color = "transparent";
+              label-color = "blue";
+              button-bg-color = "transparent";
+            };
+
+            # Notifications (built-in, replaces swaync, icon only)
             notifications = {
+              icon-color = "blue";
+              icon-bg-color = "transparent";
+              button-bg-color = "transparent";
+              border-show = false;
+              label-show = false;
               popup-duration = 3500;
               popup-position = "top-right";
-              popup-max-visible = 5;
+              popup-max-visible = 3;
+              middle-click = "wayle notify dismiss-all";
             };
 
             # Media (title only, truncated to 25 chars)
