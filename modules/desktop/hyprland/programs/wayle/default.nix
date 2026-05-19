@@ -23,21 +23,21 @@ in
       services.wayle = {
         enable = true;
         settings = {
-          # ── Acid-HUD Palette ──────────────────────────────────────
+          # ── Tokyo Night Palette ──────────────────────────────────────
           styling = {
             theme-provider = "wayle";
             rounding = "sm";
             palette = {
-              bg = "#241f2b";
-              surface = "#312d3d";
-              elevated = "#312d3d";
-              fg = "#e0dce4";
-              fg-muted = "#a8988f";
-              primary = "#a11bae";
-              red = "#fa1d42";
-              yellow = "#eeeb5f";
-              green = "#d9ff3b";
-              blue = "#0091cb";
+              bg = "#1a1b26";
+              surface = "#16161e";
+              elevated = "#292e42";
+              fg = "#c0caf5";
+              fg-muted = "#565f89";
+              primary = "#7aa2f7";
+              red = "#f7768e";
+              yellow = "#e0af68";
+              green = "#9ece6a";
+              blue = "#7aa2f7";
             };
           };
 
@@ -65,7 +65,7 @@ in
                   "window-title"
                 ];
                 right =
-                  [ "volume" "network" "systray" "idle-inhibit" "clock" "notifications" ]
+                  [ "volume" "network" "systray" "idle-inhibit" "hyprsunset" "clock" "notifications" ]
                   ++ lib.optionals (bluetoothSupport == true) [ "bluetooth" ]
                   ++ lib.optionals (batterySupport == true) [ "battery" ];
               }
@@ -79,17 +79,21 @@ in
               icon-override = "";
             };
 
-            # Workspaces (10 workspaces, non-monitor-specific, no icons/numbers)
+            # Workspaces (pills/bubbles, no numbers — matches HyprPanel style)
             hyprland-workspaces = {
               min-workspace-count = 10;
               monitor-specific = false;
               show-special = false;
-              display-mode = "label";
-              label-use-name = false;
-              numbering = "absolute";
-              app-icons-show = false;
+              display-mode = "none";
+              app-icons-show = true;
+              app-icons-empty = "tbf-circle-symbolic";
               workspace-ignore = [ "-99" ];
               active-indicator = "background";
+              active-color = "primary";
+              occupied-color = "fg-muted";
+              empty-color = "fg-muted";
+              icon-gap = 0.0;
+              workspace-padding = 0.0;
             };
 
             # Cava (audio visualizer, click = play/pause)
@@ -118,8 +122,7 @@ in
               label-show = true;
             };
 
-            # System tray
-            systray = {};
+            # System tray (defaults are fine)
 
             # Idle inhibit (hypridle toggle)
             idle-inhibit = {
@@ -130,9 +133,9 @@ in
               startup-duration = 60;
             };
 
-            # Clock (24h format matching hyprpanel)
+            # Clock (respects clock24h from host variables)
             clock = {
-              format = "%a %d %b  %R";
+              format = if clock24h == true then "%a %d %b %R" else "%a %d %b %I:%M %p";
               icon-show = false;
               label-show = true;
             };

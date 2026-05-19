@@ -51,7 +51,7 @@ hl.bind(mainMod .. " + SHIFT + G", hl.dsp.group.toggle())
 hl.bind("ALT + return", hl.dsp.window.fullscreen())
 hl.bind(mainMod .. " + ALT + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + backspace", hl.dsp.exec_cmd("pkill -x wlogout || wlogout -b 4"))
-hl.bind("CONTROL + ESCAPE", hl.dsp.exec_cmd('pkill "waybar|hyprpanel|noctalia-shell|caelestia-shell|.quickshell" || ' .. bar))
+hl.bind("CONTROL + ESCAPE", hl.dsp.exec_cmd('pkill "waybar|hyprpanel|wayle|noctalia-shell|caelestia-shell|.quickshell" || ' .. bar))
 
 -- Applications/Programs
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(term))

@@ -34,7 +34,7 @@ in
       {
         xdg.configFile."hypr/variables.lua" = {
           text = ''
-            bar = "${bar}"
+            bar = "${if bar == "wayle" then "wayle shell" else bar}"
             autoclicker = "${getExe autoclicker}"
             batterynotify = "${getExe batterynotify}"
             clipmanager = "${getExe clipmanager}"
