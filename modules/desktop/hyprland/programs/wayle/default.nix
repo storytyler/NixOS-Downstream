@@ -122,6 +122,11 @@ in
               label-show = true;
             };
 
+            # Bluetooth (icon only, no label)
+            bluetooth = {
+              label-show = false;
+            };
+
             # System tray (defaults are fine)
 
             # Idle inhibit (hypridle toggle)

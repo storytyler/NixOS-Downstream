@@ -77,5 +77,6 @@
     htop
     file # Program that shows the type of files
     tree # Command to produce a depth indented directory listing
+    lua-language-server # LSP for Lua (OpenCode + Hyprland config)
   ];
 }
