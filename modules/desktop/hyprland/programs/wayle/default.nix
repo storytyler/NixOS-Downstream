@@ -51,11 +51,11 @@ in
             padding = 0.35;
             padding-ends = 0.5;
             end-inset = 1.0;
-            module-gap = 0.0;
+            module-gap = 1.0;
             button-variant = "block-prefix";
             button-rounding = "sm";
             button-label-weight = "semibold";
-            button-opacity = 0.6;
+            button-opacity = 0.0;
             button-icon-size = 1.5;
             button-group-rounding = "md";
             button-group-padding = 1.0;
@@ -102,10 +102,11 @@ in
               app-icons-show = true;
               app-icons-empty = "tbf-circle-symbolic";
               workspace-ignore = [ "-99" ];
-              active-indicator = "background";
-              active-color = "primary";
+              active-indicator = "underline";
+              active-color = "blue";
               occupied-color = "fg-muted";
-              empty-color = "fg-muted";
+              empty-color = "hover";
+              container-bg-color = "transparent";
               icon-gap = 0.0;
               workspace-padding = 0.0;
             };
@@ -234,6 +235,15 @@ in
             media = {
               format = "{{ title }}";
               label-max-length = 25;
+            };
+          };
+
+          # ── Overlays ─────────────────────────────────────────────
+          overlays = {
+            osd = {
+              position = "bottom";
+              duration = 1000;
+              margin = 10.0;
             };
           };
         };
