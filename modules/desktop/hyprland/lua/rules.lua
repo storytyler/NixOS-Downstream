@@ -331,7 +331,7 @@ hl.window_rule({
 	match = { class = "^(cava|Cava)$" },
 	float = true,
 	pin = true,
-	no_border = true,
+	border_size = 0,
 	no_shadow = true,
 	no_blur = true,
 	no_focus = true,

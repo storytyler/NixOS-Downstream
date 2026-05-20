@@ -1,9 +1,7 @@
 { ... }:
 {
   home-manager.sharedModules = [
-    ({ config, ... }: let
-      shaderPath = "${config.home.homeDirectory}/.config/cava/shaders/mirror.frag";
-    in {
+    (_: {
       # Mirror GLSL shader — bars mirrored left-to-right from center
       xdg.configFile."cava/shaders/mirror.frag".text = ''
         #version 120
@@ -56,7 +54,8 @@
         method = sdl_glsl
         channels = stereo
         # mono_option = left
-        fragment_shader = ${shaderPath}
+        # Relative to config dir (~/.config/cava/)
+        fragment_shader = shaders/mirror.frag
 
         [color]
         gradient = 1
