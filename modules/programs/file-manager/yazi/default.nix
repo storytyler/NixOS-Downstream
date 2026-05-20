@@ -23,7 +23,11 @@ in
             show_symlink = true;
             sort_dir_first = true;
             linemode = "size";
-            ratio = [ 1 3 4 ];
+            ratio = [
+              1
+              3
+              4
+            ];
           };
           preview = {
             tab_size = 4;
@@ -36,37 +40,58 @@ in
         keymap = {
           mgr.prepend_keymap = [
             {
-              on = [ "R" "b" ];
+              on = [
+                "R"
+                "b"
+              ];
               run = "plugin recycle-bin";
               desc = "Open Recycle Bin Menu";
             }
             {
-              on = [ "R" "x" ];
+              on = [
+                "R"
+                "x"
+              ];
               run = "plugin chmod";
               desc = "Chmod on selected files";
             }
             {
-              on = [ "<S-c>" "a" ];
+              on = [
+                "<S-c>"
+                "a"
+              ];
               run = "plugin compress";
               desc = "Compress selected files";
             }
             {
-              on = [ "<S-c>" "p" ];
+              on = [
+                "<S-c>"
+                "p"
+              ];
               run = "plugin compress -p";
               desc = "Compress selected files (password)";
             }
             {
-              on = [ "<S-c>" "h" ];
+              on = [
+                "<S-c>"
+                "h"
+              ];
               run = "plugin compress -ph";
               desc = "Compress selected files (password+header)";
             }
             {
-              on = [ "<S-c>" "l" ];
+              on = [
+                "<S-c>"
+                "l"
+              ];
               run = "plugin compress -l";
               desc = "Compress selected files (compression level)";
             }
             {
-              on = [ "<S-c>" "u" ];
+              on = [
+                "<S-c>"
+                "u"
+              ];
               run = "plugin compress -phl";
               desc = "Compress selected files (password+header+level)";
             }
@@ -79,15 +104,24 @@ in
               run = "open";
             }
             {
-              on = [ "g" "D" ];
+              on = [
+                "g"
+                "D"
+              ];
               run = "cd ~/Documents";
             }
             {
-              on = [ "g" "p" ];
+              on = [
+                "g"
+                "p"
+              ];
               run = "cd /mnt/work/Projects";
             }
             {
-              on = [ "g" "P" ];
+              on = [
+                "g"
+                "P"
+              ];
               run = "cd /mnt/games/Windows/Pirate";
             }
           ];

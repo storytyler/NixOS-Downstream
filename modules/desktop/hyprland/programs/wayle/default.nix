@@ -5,7 +5,11 @@
   ...
 }:
 let
-  inherit (import ../../../../../hosts/${host}/variables.nix) clock24h bluetoothSupport batterySupport;
+  inherit (import ../../../../../hosts/${host}/variables.nix)
+    clock24h
+    bluetoothSupport
+    batterySupport
+    ;
 in
 {
   environment.systemPackages = with pkgs; [
@@ -67,15 +71,38 @@ in
               {
                 monitor = "*";
                 left = [
-                  { name = "left-group"; modules = ["dashboard" "hyprland-workspaces" "systray"]; }
+                  {
+                    name = "left-group";
+                    modules = [
+                      "dashboard"
+                      "hyprland-workspaces"
+                      "systray"
+                    ];
+                  }
                   "cava"
                 ];
                 center = [
-                  { name = "center-group"; modules = ["clock" "weather"]; }
+                  {
+                    name = "center-group";
+                    modules = [
+                      "clock"
+                      "weather"
+                    ];
+                  }
                 ];
                 right = [
-                  { name = "volume-group"; modules = ["volume"]; }
-                  { name = "right-group"; modules = ["hyprsunset" "idle-inhibit" "notifications"]; }
+                  {
+                    name = "volume-group";
+                    modules = [ "volume" ];
+                  }
+                  {
+                    name = "right-group";
+                    modules = [
+                      "hyprsunset"
+                      "idle-inhibit"
+                      "notifications"
+                    ];
+                  }
                 ]
                 ++ lib.optionals (batterySupport == true) [ "battery" ];
               }

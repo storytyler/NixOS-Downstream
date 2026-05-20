@@ -42,14 +42,27 @@ in
               active-only = false;
               on-click = "activate";
               persistent-workspaces = {
-                "*" = [ 1 2 3 4 5 6 7 8 9 10 ];
+                "*" = [
+                  1
+                  2
+                  3
+                  4
+                  5
+                  6
+                  7
+                  8
+                  9
+                  10
+                ];
               };
             };
 
             "clock" = {
               format = if clock24h == true then "{:%H:%M}" else "{:%I:%M %p}";
               tooltip-format = "{:%a %d %b %Y}";
-              calendar = { mode = "month"; };
+              calendar = {
+                mode = "month";
+              };
             };
 
             "pulseaudio" = {
@@ -57,7 +70,11 @@ in
               format-muted = "";
               on-click = "pavucontrol -t 3";
               format-icons = {
-                default = [ "" "" "" ];
+                default = [
+                  ""
+                  ""
+                  ""
+                ];
               };
             };
 
@@ -82,8 +99,17 @@ in
               format-charging = " {capacity}%";
               format-plugged = " {capacity}%";
               format-icons = [
-                "󰂎" "󰁺" "󰁻" "󰁼" "󰁽"
-                "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"
+                "󰂎"
+                "󰁺"
+                "󰁻"
+                "󰁼"
+                "󰁽"
+                "󰁾"
+                "󰁿"
+                "󰂀"
+                "󰂁"
+                "󰂂"
+                "󰁹"
               ];
             };
           };

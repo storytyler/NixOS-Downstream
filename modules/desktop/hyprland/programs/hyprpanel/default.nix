@@ -5,7 +5,11 @@
   ...
 }:
 let
-  inherit (import ../../../../../hosts/${host}/variables.nix) clock24h bluetoothSupport batterySupport;
+  inherit (import ../../../../../hosts/${host}/variables.nix)
+    clock24h
+    bluetoothSupport
+    batterySupport
+    ;
 in
 {
   # Optional Dependencies
@@ -111,10 +115,16 @@ in
                   "windowtitle"
                   # "media"
                 ];
-                right =
-                  [ "volume" "network" "systray" "hypridle" "clock" "notifications" ]
-                  ++ lib.optionals (bluetoothSupport == true) [ "bluetooth" ]
-                  ++ lib.optionals (batterySupport == true) [ "battery" ];
+                right = [
+                  "volume"
+                  "network"
+                  "systray"
+                  "hypridle"
+                  "clock"
+                  "notifications"
+                ]
+                ++ lib.optionals (bluetoothSupport == true) [ "bluetooth" ]
+                ++ lib.optionals (batterySupport == true) [ "battery" ];
               };
             };
             customModules = {
