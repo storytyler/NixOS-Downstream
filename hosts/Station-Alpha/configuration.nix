@@ -74,6 +74,9 @@ in
     ../../modules/programs/file-manager/thunar
     # ../../modules/programs/misc/lact # GPU fan, clock and power configuration - disabled due to boot hang with kernel 6.19
     # ../../modules/programs/nixai
+
+    # Cava OSD — mirrored audio visualizer (SDL_GLSL on hyprwinwrap layer)
+    ../../modules/desktop/hyprland/programs/cava-osd
   ]
   ++ lib.optional (vars.games == true) ../../modules/core/games.nix;
 }

@@ -325,3 +325,15 @@ hl.window_rule({
 	match = { class = "^(eog)$" },
 	float = true,
 })
+
+-- Cava OSD (SDL_GLSL visualizer window)
+hl.window_rule({
+	match = { class = "^(cava|Cava)$" },
+	float = true,
+	pin = true,
+	no_border = true,
+	no_shadow = true,
+	no_blur = true,
+	no_focus = true,
+	no_anim = true,
+})

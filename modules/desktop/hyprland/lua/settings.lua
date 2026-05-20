@@ -26,6 +26,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("wl-paste --type image --watch cliphist store")
 	hl.exec_cmd("rm '$XDG_CACHE_HOME/cliphist/db'")
 	hl.exec_cmd(batterynotify)
+	hl.exec_cmd(cavaosd)
 	hl.exec_cmd("polkit-agent-helper-1")
 end)
 
