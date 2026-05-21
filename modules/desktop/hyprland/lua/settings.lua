@@ -18,6 +18,7 @@ hl.env("WLR_RENDERER_ALLOW_SOFTWARE", "1")
 hl.env("NIXPKGS_ALLOW_UNFREE", "1")
 
 hl.on("hyprland.start", function()
+	hl.exec_cmd("cava-osd")
 	hl.exec_cmd(wallpaper)
 	hl.exec_cmd(bar)
 	hl.exec_cmd("swaync")

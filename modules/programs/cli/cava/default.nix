@@ -23,6 +23,13 @@
             gradient_color_7 = "'#eba0ac'";
             gradient_color_8 = "'#f38ba8'";
           };
+          output = {
+            # This mirrors the bars across the horizontal X-axis (shooting up AND down)
+            orientation = "horizontal";
+
+            # horizontal only works with noncurses output method
+            method = "noncurses";
+          };
         };
       };
     })

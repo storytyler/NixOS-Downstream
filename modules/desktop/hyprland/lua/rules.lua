@@ -3,6 +3,20 @@
 
 -- Layer Rules (require blur.enabled = true in settings.lua)
 
+hl.layer_rule({
+	match = { class = "^(cava-osd)$" },
+	layer = "background",
+})
+hl.window_rule({
+	match = { class = "^(cava-osd)$" },
+	border_size = 0,
+	no_shadow = true,
+	no_blur = true,
+	no_anim = true,
+	pin = true,
+	fullscreen = true,
+})
+
 -- Rofi
 hl.layer_rule({
 	match = { namespace = "rofi" },

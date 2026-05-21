@@ -15,6 +15,7 @@ in
     ../../themes/phocus
     ./variables.nix
     ./programs/${bar}
+    ./programs/cava-osd
     ./programs/wlogout
     ./programs/rofi
     ./programs/hypridle
