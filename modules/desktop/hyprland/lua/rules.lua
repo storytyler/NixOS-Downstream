@@ -326,7 +326,3 @@ hl.window_rule({
 	float = true,
 })
 
-hl.window_rule({
-	match = { class = "^(cava|Cava)$" },
-	opacity = "0.80 0.70",
-})

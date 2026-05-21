@@ -18,7 +18,6 @@ let
 
   autoclicker = pkgs.callPackage ./scripts/autoclicker.nix { };
   batterynotify = pkgs.callPackage ./scripts/batterynotify.nix { };
-  cavaosd = pkgs.callPackage ./scripts/cava-osd.nix { };
   clipmanager = pkgs.callPackage ./scripts/clipmanager.nix { };
   gamemode = pkgs.callPackage ./scripts/gamemode.nix { };
   keyboardswitch = pkgs.callPackage ./scripts/keyboardswitch.nix { };
@@ -47,8 +46,6 @@ in
             screen_record = "${getExe screen_record}"
             screenshot = "${getExe screenshot}"
             wallpaper = "${getExe wallpaper}"
-
-            cavaosd = "${getExe cavaosd}"
 
             mainMod = "SUPER"
             launcher = "launcher"

@@ -76,7 +76,7 @@ in
     # ../../modules/programs/nixai
 
     # Cava OSD — mirrored audio visualizer (SDL_GLSL on hyprwinwrap layer)
-    ../../modules/desktop/hyprland/programs/cava-osd
+
   ]
   ++ lib.optional (vars.games == true) ../../modules/core/games.nix;
 }
