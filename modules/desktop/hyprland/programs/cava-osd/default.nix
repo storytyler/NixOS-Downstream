@@ -19,18 +19,16 @@ let
     reverse = 0
   '';
 
-  # Wrapper script that launches alacritty in OSD mode
+  # Wrapper script that launches kitty panel at the background layer
   cava-osd = pkgs.writeShellScriptBin "cava-osd" ''
-    exec ${pkgs.alacritty}/bin/alacritty \
-      --class cava-osd,cava-osd \
-      -o window.decorations=none \
-      -o window.opacity=0.0 \
-      -o window.startup_mode=fullscreen \
-      -o window.padding.x=0 \
-      -o window.padding.y=0 \
-      -o font.size=1 \
-      -o colors.primary.background='#000000' \
-      -e ${pkgs.cava}/bin/cava -c ${cavaConfig}
+    exec ${pkgs.kitty}/bin/kitty +kitten panel \
+      --edge=background \
+      --focus-policy=not-allowed \
+      -o background_opacity=0.0 \
+      -o background='#000000' \
+      -o font_size=1 \
+      --detach \
+      -- ${pkgs.cava}/bin/cava -p ${cavaConfig}
   '';
 in
 {

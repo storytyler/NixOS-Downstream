@@ -20,6 +20,7 @@ let
   batterynotify = pkgs.callPackage ./scripts/batterynotify.nix { };
   clipmanager = pkgs.callPackage ./scripts/clipmanager.nix { };
   gamemode = pkgs.callPackage ./scripts/gamemode.nix { };
+  hyprglass = pkgs.callPackage ./scripts/hyprglass.nix { };
   keyboardswitch = pkgs.callPackage ./scripts/keyboardswitch.nix { };
   keybinds = pkgs.callPackage ./scripts/keybinds.nix { };
   rofimusic = pkgs.callPackage ./scripts/rofimusic.nix { };
@@ -40,6 +41,7 @@ in
             clipmanager = "${getExe clipmanager}"
             fileManager = "term --class \"tuiFileManager\" -e ${tuiFileManager}"
             gamemode = "${getExe gamemode}"
+            hyprglass = "${getExe hyprglass}"
             keyboardswitch = "${getExe keyboardswitch}"
             keybinds = "${getExe keybinds}"
             rofimusic = "${getExe rofimusic}"

@@ -100,6 +100,7 @@ in
         "hypr/animations.lua".source = ./lua/animations.lua;
         "hypr/binds.lua".source = ./lua/binds.lua;
         "hypr/rules.lua".source = ./lua/rules.lua;
+        "hypr/hyprglass.lua".source = ./lua/hyprglass.lua;
 
         "hypr/icons" = {
           source = ./icons;

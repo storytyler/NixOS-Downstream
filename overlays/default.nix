@@ -8,7 +8,7 @@ in
     final: _prev:
     import ../pkgs {
       pkgs = final;
-      inherit host;
+      inherit host inputs;
     };
 
   # https://wiki.nixos.org/wiki/Overlays

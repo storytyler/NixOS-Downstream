@@ -3,18 +3,10 @@
 
 -- Layer Rules (require blur.enabled = true in settings.lua)
 
+-- Cava OSD (kitty panel at background layer)
 hl.layer_rule({
-	match = { class = "^(cava-osd)$" },
-	layer = "background",
-})
-hl.window_rule({
-	match = { class = "^(cava-osd)$" },
-	border_size = 0,
-	no_shadow = true,
-	no_blur = true,
+	match = { namespace = "^kitty-panel$" },
 	no_anim = true,
-	pin = true,
-	fullscreen = true,
 })
 
 -- Rofi

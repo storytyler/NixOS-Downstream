@@ -1,4 +1,4 @@
-{ host, pkgs, ... }:
+{ host, inputs, pkgs, ... }:
 {
   # these will be overlayed in nixpkgs automatically.
   # for built pkgs to be available, they must be used with pkgs.<name>
@@ -8,4 +8,7 @@
   portainer-mcp = pkgs.callPackage ./portainer-mcp.nix { };
   layout-card = pkgs.callPackage ./layout-card.nix { };
   phocus = pkgs.callPackage ./phocus { };
+  hyprglass = pkgs.callPackage ./hyprglass.nix {
+    hyprland = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+  };
 }
