@@ -2,41 +2,44 @@
 {
   home-manager.sharedModules = [
     (_: {
-      # Mirror GLSL shader — bars mirrored left-to-right from center
       xdg.configFile."cava/shaders/mirror.frag".text = ''
-        #version 120
+        #version 330
 
-        uniform int bars_count;
+        in vec2 fragCoord;
+        out vec4 fragColor;
+
         uniform float bars[512];
+        uniform int bars_count;
+        uniform vec3 u_resolution;
+        uniform vec3 bg_color;
+        uniform int gradient_count;
         uniform vec3 gradient_colors[8];
-        uniform vec2 u_resolution;
-
-        const vec4 tokyo_bg = vec4(0.102, 0.106, 0.149, 1.0);
 
         void main() {
-            vec2 fragCoord = gl_FragCoord.xy / u_resolution;
-
             float mirror_x = fragCoord.x < 0.5
                 ? fragCoord.x * 2.0
                 : (1.0 - fragCoord.x) * 2.0;
 
-            int bar_index = int(clamp(bars_count * mirror_x, 0.0, 511.0));
-            float bar_h = bars[bar_index];
+            int bar = int(bars_count * mirror_x);
+            float bar_h = bars[bar];
 
-            float y = 1.0 - fragCoord.y;
+            float y = fragCoord.y;
 
             if (y > bar_h) {
-                gl_FragColor = tokyo_bg;
+                fragColor = vec4(bg_color, 0.0);
             } else {
                 bar_h = max(bar_h, 0.001);
                 float t = clamp(y / bar_h, 0.0, 1.0);
-                int ci = int(clamp(t * 7.0, 0.0, 7.0));
-                gl_FragColor = vec4(gradient_colors[ci], 1.0);
+                int ci = int(clamp(t * float(gradient_count - 1), 0.0, float(gradient_count - 1)));
+                float y_min = float(ci) / float(gradient_count - 1);
+                float y_max = float(ci + 1) / float(gradient_count - 1);
+                float yr = (t - y_min) / (y_max - y_min);
+                vec3 col = gradient_colors[ci] * (1.0 - yr) + gradient_colors[ci + 1] * yr;
+                fragColor = vec4(col, 1.0);
             }
         }
       '';
 
-      # Separate cava config for OSD mode (avoids conflict with terminal cava)
       xdg.configFile."cava/cava-osd.config".text = ''
         [general]
         framerate = 60
@@ -49,8 +52,6 @@
         [output]
         method = sdl_glsl
         channels = stereo
-        # mono_option = left
-        # cava prepends shaders/ — so this resolves to shaders/mirror.frag
         fragment_shader = mirror.frag
 
         [color]

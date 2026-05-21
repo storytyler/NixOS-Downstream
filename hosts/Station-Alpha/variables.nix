@@ -10,7 +10,7 @@
   tuiFileManager = "yazi"; # Options: yazi, lf
   sddmTheme = "hyprland_kath"; # Options: astronaut, black_hole, purple_leaves, jake_the_dog, hyprland_kath
   defaultWallpaper = "EmberNAsh.png"; # to change wallpaper: SUPER + SHIFT + W
-  hyprlockWallpaper = "gruvbox_astro.jpg"; # See modules/themes/wallpapers for options
+  hyprlockWallpaper = "monochrome-planet.jpg"; # See modules/themes/wallpapers for options
   shell = "bash"; # Options: zsh, bash
   games = true; # Whether to enable the gaming module
   bluetoothSupport = true; # Whether your motherboard supports bluetooth

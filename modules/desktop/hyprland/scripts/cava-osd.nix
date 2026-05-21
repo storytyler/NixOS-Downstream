@@ -1,6 +1,8 @@
 { pkgs, ... }:
 let
-  cavaWithSDL = pkgs.cava.override { withSDL2 = true; };
+  cavaPatched = (pkgs.cava.override { withSDL2 = true; }).overrideAttrs (finalAttrs: {
+    patches = (finalAttrs.patches or []) ++ [ ../programs/cava-osd/alpha-framebuffer.patch ];
+  });
 in
 pkgs.writeShellScriptBin "cava-osd" ''
   # Start cava in SDL_GLSL mode with the OSD config
@@ -9,5 +11,5 @@ pkgs.writeShellScriptBin "cava-osd" ''
   if ! test -f "$config"; then
     exit 0
   fi
-  exec ${cavaWithSDL}/bin/cava -p "$config"
+  exec ${cavaPatched}/bin/cava -p "$config"
 ''

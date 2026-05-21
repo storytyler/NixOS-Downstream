@@ -28,7 +28,7 @@ in
               monitor = "";
               size = "250, 50";
               outline_thickness = 3;
-              outer_color = "rgb(217, 255, 59)";
+              outer_color = "rgb(115, 115, 115)";
               inner_color = "rgb(26, 21, 18)";
               font_color = "rgb(230, 213, 195)";
               fail_color = "rgb(166, 92, 59)";
@@ -50,7 +50,7 @@ in
               monitor = "";
               text = "$TIME";
               font_size = 80;
-              color = "rgb(217, 255, 59)";
+              color = "rgb(115, 115, 115)";
               position = "0, -80";
               halign = "center";
               valign = "top";
