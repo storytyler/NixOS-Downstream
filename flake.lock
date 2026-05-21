@@ -811,11 +811,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1779361296,
-        "narHash": "sha256-8lVuqeKzMEAf9W7RdKyh2zO/dvoWLvUkJcuTIYNGkMg=",
+        "lastModified": 1779376755,
+        "narHash": "sha256-2k8btFqdXMGvX/Xu1O+6MucOEyHi+KizEuxTB22fKbo=",
         "owner": "sst",
         "repo": "opencode",
-        "rev": "6bee6ee7557072a81eed030edcf021acc0faf3c6",
+        "rev": "75ce8feff5c1c6d73b44f9234d142cf9ccfc1267",
         "type": "github"
       },
       "original": {
