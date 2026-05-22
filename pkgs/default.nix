@@ -8,7 +8,4 @@
   portainer-mcp = pkgs.callPackage ./portainer-mcp.nix { };
   layout-card = pkgs.callPackage ./layout-card.nix { };
   phocus = pkgs.callPackage ./phocus { };
-  hyprglass = pkgs.callPackage ./hyprglass.nix {
-    hyprland = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-  };
 }

@@ -20,7 +20,6 @@ hl.env("NIXPKGS_ALLOW_UNFREE", "1")
 hl.on("hyprland.start", function()
 	hl.exec_cmd("cava-osd")
 	hl.exec_cmd(wallpaper)
-	hl.exec_cmd(hyprglass)
 	hl.exec_cmd(bar)
 	hl.exec_cmd("swaync")
 	hl.exec_cmd("nm-applet --indicator")
@@ -58,11 +57,11 @@ hl.config({
 		border_size = 2,
 		col = {
 			active_border = {
-				colors = { "rgba(ff6f3cff)", "rgba(b23a24ff)" },
+				colors = { "rgba(cfd3dbff)", "rgba(8f8f8fff)" },
 				angle = 45,
 			},
 			inactive_border = {
-				colors = { "rgba(3a2010cc)", "rgba(4a2810cc)" },
+				colors = { "rgba(323232ff)", "rgba(1f1f1fff)" },
 				angle = 45,
 			},
 		},
@@ -71,7 +70,10 @@ hl.config({
 	},
 	decoration = {
 		shadow = {
-			enabled = false,
+			enabled = true,
+			range = 0,
+			render_power = 1,
+			color = "rgba(00000000)",
 		},
 		rounding = 10,
 		dim_special = 0.3,

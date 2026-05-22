@@ -1,0 +1,15 @@
+/**
+ *
+ * Monochrome Planet Theme
+ *
+ * Colors
+ **/
+
+* {
+    background:     #1f1f1fff;
+    background-alt: #323232ff;
+    foreground:     #323232ff;
+    selected:       #6b6b6bff;
+    active:         #6da050ff;
+    urgent:         #c31700ff;
+}

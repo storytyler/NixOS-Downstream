@@ -32,16 +32,16 @@ in
             theme-provider = "wayle";
             rounding = "sm";
             palette = {
-              bg = "#1a1b26";
-              surface = "#16161e";
-              elevated = "#292e42";
-              fg = "#c0caf5";
-              fg-muted = "#565f89";
-              primary = "#7aa2f7";
-              red = "#f7768e";
-              yellow = "#e0af68";
-              green = "#9ece6a";
-              blue = "#7aa2f7";
+              bg = "#1f1f1f";
+              surface = "#1f1f1f";
+              elevated = "#1f1f1f";
+              fg = "#cfd3db";
+              fg-muted = "#6b6b6b";
+              primary = "#8f8f8f";
+              red = "#c31700";
+              yellow = "#ffc42d";
+              green = "#74e91c";
+              blue = "#6acfff";
             };
           };
 
@@ -66,7 +66,7 @@ in
             button-group-background = "transparent";
             button-group-border-location = "bottom";
             button-group-border-width = 2;
-            button-group-border-color = "blue";
+            button-group-border-color = "fg-default";
             layout = [
               {
                 monitor = "*";
@@ -113,7 +113,7 @@ in
             # Dashboard (profile dropdown with power menu)
             dashboard = {
               icon-override = "";
-              icon-color = "blue";
+              icon-color = "fg-default";
               icon-bg-color = "transparent";
               button-bg-color = "transparent";
               border-show = false;
@@ -129,9 +129,10 @@ in
               app-icons-empty = "tbf-circle-symbolic";
               workspace-ignore = [ "-99" ];
               active-indicator = "underline";
-              active-color = "blue";
-              occupied-color = "fg-muted";
+              active-color = "green";
+              occupied-color = "blue";
               empty-color = "hover";
+              border-color = "status-success";
               container-bg-color = "transparent";
               icon-gap = 0.0;
               workspace-padding = 0.0;
@@ -146,7 +147,7 @@ in
 
             # Volume (icon only)
             volume = {
-              icon-color = "blue";
+              icon-color = "fg-default";
               icon-bg-color = "transparent";
               button-bg-color = "transparent";
               border-show = false;
@@ -167,7 +168,7 @@ in
 
             # Bluetooth (icon only, no label)
             bluetooth = {
-              icon-color = "blue";
+              icon-color = "fg-default";
               icon-bg-color = "transparent";
               button-bg-color = "transparent";
               border-show = false;
@@ -190,7 +191,7 @@ in
 
             # Idle inhibit (hypridle toggle, icon only)
             idle-inhibit = {
-              icon-color = "blue";
+              icon-color = "fg-default";
               icon-bg-color = "transparent";
               button-bg-color = "transparent";
               border-show = false;
@@ -202,7 +203,7 @@ in
 
             # Hyprsunset (night light toggle)
             hyprsunset = {
-              icon-color = "blue";
+              icon-color = "fg-default";
               icon-bg-color = "transparent";
               button-bg-color = "transparent";
               border-show = false;
@@ -214,7 +215,7 @@ in
               format = if clock24h == true then "%a %d %b %R" else "%a %d %b %I:%M %p";
               icon-show = false;
               label-show = true;
-              label-color = "blue";
+              label-color = "fg-default";
               button-bg-color = "transparent";
             };
 
@@ -223,15 +224,15 @@ in
               units = "imperial";
               location = "San Francisco";
               format = "{{ temp }}{{ temp_unit }} {{ condition }}";
-              icon-color = "blue";
+              icon-color = "fg-default";
               icon-bg-color = "transparent";
-              label-color = "blue";
+              label-color = "fg-default";
               button-bg-color = "transparent";
             };
 
             # Notifications (built-in, replaces swaync, icon only)
             notifications = {
-              icon-color = "blue";
+              icon-color = "fg-default";
               icon-bg-color = "transparent";
               button-bg-color = "transparent";
               border-show = false;
