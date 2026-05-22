@@ -16,12 +16,12 @@
             colors = {
               primary = {
                 background = "#1f1f1f";
-                foreground = "#cfd3db";
+                foreground = "#afc4ca";
               };
 
               cursor = {
                 text = "#1f1f1f";
-                cursor = "#5aa0c1";
+                cursor = "#8f8f8f";
               };
 
               vi_mode_cursor = {

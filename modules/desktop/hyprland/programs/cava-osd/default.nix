@@ -33,14 +33,10 @@ let
       -o background_opacity=0.0 \
       -o background='#000000' \
       -o font_size=1 \
-      -o 'modify_font cell_width 25%' \
-      -o 'modify_font cell_height 25%' \
-      -o dim_opacity=0.2 \
+      -o 'modify_font cell_width 50%' \
+      -o 'modify_font cell_height 50%' \
       --detach \
-      -- ${pkgs.writeShellScriptBin "cava-dim" ''
-        printf '\033[2m'
-        exec ${pkgs.cava}/bin/cava -p ${cavaConfig}
-      ''}/bin/cava-dim
+      -- ${pkgs.cava}/bin/cava -p ${cavaConfig}
   '';
 in
 {

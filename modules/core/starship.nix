@@ -11,11 +11,9 @@
           directory = {
             truncate_to_repo = false;
             read_only = " ro";
-            style = "#3c728c";
-            # style = "bold italic bright-blue";
+            style = "#8f8f8f";
           };
           /*
-               username = {
                style_user = "green bold";
                style_root = "red bold";
                format = "[$user]($style)";
@@ -34,7 +32,7 @@
             style = "#3c728c";
           };
           git_status = {
-            format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](#6acfff) ($ahead_behind$stashed)]($style)";
+            format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](#ffc42d) ($ahead_behind$stashed)]($style)";
             style = "#3c728c";
             conflicted = "​";
             untracked = "​";

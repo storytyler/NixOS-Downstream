@@ -79,7 +79,6 @@ in
                       "systray"
                     ];
                   }
-                  "cava"
                 ];
                 center = [
                   {
@@ -136,21 +135,6 @@ in
               container-bg-color = "transparent";
               icon-gap = 0.0;
               workspace-padding = 0.0;
-            };
-
-            # Cava (audio visualizer, click = play/pause)
-            cava = {
-              bars = 200;
-              framerate = 60;
-              style = "peaks";
-              direction = "normal";
-              monstercat = 0.5;
-              bar-width = 1;
-              internal-padding = 14.0;
-              color = "blue";
-              button-bg-color = "transparent";
-              border-show = false;
-              left-click = "${pkgs.playerctl}/bin/playerctl play-pause";
             };
 
             # Window title

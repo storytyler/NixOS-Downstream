@@ -14,7 +14,7 @@
             "alias" = "fg=#6da050";
             "function" = "fg=#6da050";
             "precommand" = "fg=#5d7849";
-            "unknown-token" = "fg=#d06050";
+            "unknown-token" = "fg=#6b6b6b";
             "path" = "fg=#3c728c";
             "single-quoted-argument" = "fg=#c38c00";
             "double-quoted-argument" = "fg=#c38c00";
@@ -48,7 +48,7 @@
             ZSH_HIGHLIGHT_STYLES[alias]="fg=#6da050"
             ZSH_HIGHLIGHT_STYLES[function]="fg=#6da050"
             ZSH_HIGHLIGHT_STYLES[precommand]="fg=#5d7849"
-            ZSH_HIGHLIGHT_STYLES[unknown-token]="fg=#d06050"
+            ZSH_HIGHLIGHT_STYLES[unknown-token]="fg=#6b6b6b"
             ZSH_HIGHLIGHT_STYLES[path]="fg=#3c728c"
             ZSH_HIGHLIGHT_STYLES[single-quoted-argument]="fg=#c38c00"
             ZSH_HIGHLIGHT_STYLES[double-quoted-argument]="fg=#c38c00"
