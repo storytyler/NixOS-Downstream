@@ -5,12 +5,14 @@ let
     [general]
     framerate = 60
     bars = 0
+    bar_width = 1
+    bar_height = 9
     autosens = 1
     sensitivity = 100
 
     [color]
     gradient = 0
-    foreground = '#6c6c6c'
+    foreground = '#3c3c3c'
 
     [output]
     method = noncurses
@@ -24,11 +26,21 @@ let
     exec ${pkgs.kitty}/bin/kitty +kitten panel \
       --edge=background \
       --focus-policy=not-allowed \
+      --margin-top=960 \
+      --margin-bottom=3 \
+      --margin-left=2 \
+      --margin-right=2 \
       -o background_opacity=0.0 \
       -o background='#000000' \
       -o font_size=1 \
+      -o 'modify_font cell_width 25%' \
+      -o 'modify_font cell_height 25%' \
+      -o dim_opacity=0.2 \
       --detach \
-      -- ${pkgs.cava}/bin/cava -p ${cavaConfig}
+      -- ${pkgs.writeShellScriptBin "cava-dim" ''
+        printf '\033[2m'
+        exec ${pkgs.cava}/bin/cava -p ${cavaConfig}
+      ''}/bin/cava-dim
   '';
 in
 {

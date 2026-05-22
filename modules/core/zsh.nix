@@ -9,14 +9,19 @@
           autosuggestion.enable = true;
           syntaxHighlighting.enable = true;
           syntaxHighlighting.styles = {
-            "command" = "fg=#E07A5F";
-            "builtin" = "fg=#E07A5F";
-            "alias" = "fg=#E07A5F";
-            "function" = "fg=#E07A5F";
-            "unknown-token" = "fg=#D1495B";
-            "path" = "fg=#d9a066";
-            "single-quoted-argument" = "fg=#e0a040";
-            "double-quoted-argument" = "fg=#e0a040";
+            "command" = "fg=#6da050";
+            "builtin" = "fg=#6da050";
+            "alias" = "fg=#6da050";
+            "function" = "fg=#6da050";
+            "precommand" = "fg=#5d7849";
+            "unknown-token" = "fg=#d06050";
+            "path" = "fg=#3c728c";
+            "single-quoted-argument" = "fg=#c38c00";
+            "double-quoted-argument" = "fg=#c38c00";
+            "globbing" = "fg=#6acfff";
+            "redirection" = "fg=#8f8f8f";
+            "commandseparator" = "fg=#8f8f8f";
+            "comment" = "fg=#6b6b6b";
           };
           enableCompletion = true;
           history.size = 100000;
@@ -36,16 +41,21 @@
             # zoxide — smart directory jumping
             zsh-defer -c 'eval "$(zoxide init zsh)"' 2>/dev/null
 
-            # Syntax Highlighting — Ember & Ash overrides
+            # Syntax Highlighting — Holographic palette
             typeset -A ZSH_HIGHLIGHT_STYLES
-            ZSH_HIGHLIGHT_STYLES[command]="fg=#E07A5F"
-            ZSH_HIGHLIGHT_STYLES[builtin]="fg=#E07A5F"
-            ZSH_HIGHLIGHT_STYLES[alias]="fg=#E07A5F"
-            ZSH_HIGHLIGHT_STYLES[function]="fg=#E07A5F"
-            ZSH_HIGHLIGHT_STYLES[unknown-token]="fg=#D1495B"
-            ZSH_HIGHLIGHT_STYLES[path]="fg=#d9a066"
-            ZSH_HIGHLIGHT_STYLES[single-quoted-argument]="fg=#e0a040"
-            ZSH_HIGHLIGHT_STYLES[double-quoted-argument]="fg=#e0a040"
+            ZSH_HIGHLIGHT_STYLES[command]="fg=#6da050"
+            ZSH_HIGHLIGHT_STYLES[builtin]="fg=#6da050"
+            ZSH_HIGHLIGHT_STYLES[alias]="fg=#6da050"
+            ZSH_HIGHLIGHT_STYLES[function]="fg=#6da050"
+            ZSH_HIGHLIGHT_STYLES[precommand]="fg=#5d7849"
+            ZSH_HIGHLIGHT_STYLES[unknown-token]="fg=#d06050"
+            ZSH_HIGHLIGHT_STYLES[path]="fg=#3c728c"
+            ZSH_HIGHLIGHT_STYLES[single-quoted-argument]="fg=#c38c00"
+            ZSH_HIGHLIGHT_STYLES[double-quoted-argument]="fg=#c38c00"
+            ZSH_HIGHLIGHT_STYLES[globbing]="fg=#6acfff"
+            ZSH_HIGHLIGHT_STYLES[redirection]="fg=#8f8f8f"
+            ZSH_HIGHLIGHT_STYLES[commandseparator]="fg=#8f8f8f"
+            ZSH_HIGHLIGHT_STYLES[comment]="fg=#6b6b6b"
 
             # Starship Prompt
             if command -v starship &>/dev/null; then
@@ -81,8 +91,8 @@
             setopt share_history
           '';
           envExtra = ''
-            # Autosuggestion color — muted orange, visible against dark background
-            export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#b87a4f"
+            # Autosuggestion color — dim gray ghost text
+            export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#6b6b6b"
 
             # Defaults
             export XMONAD_CONFIG_DIR="''${XDG_CONFIG_HOME:-$HOME/.config}/xmonad" # xmonad.hs is expected to stay here
@@ -90,9 +100,9 @@
             export XMONAD_CACHE_DIR="''${XDG_CACHE_HOME:-$HOME/.cache}/xmonad"
 
             export FZF_DEFAULT_OPTS=" \
-            --color=bg+:#3A2F2B,bg:#1A1513,spinner:#ff915e,hl:#D1495B \
-            --color=fg:#D8C9B6,header:#D1495B,info:#C67E4F,pointer:#E07A5F \
-            --color=marker:#ff915e,fg+:#F4EDE4,prompt:#C67E4F,hl+:#D1495B"
+            --color=bg+:#323232,bg:#1f1f1f,spinner:#6acfff,hl:#a05045 \
+            --color=fg:#cfd3db,header:#3c728c,info:#5aa0c1,pointer:#5aa0c1 \
+            --color=marker:#6acfff,fg+:#cfd3db,prompt:#8f8f8f,hl+:#d06050"
           '';
           shellGlobalAliases = {
             UUID = "$(uuidgen | tr -d \\n)";

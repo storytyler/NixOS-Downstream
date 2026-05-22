@@ -15,86 +15,46 @@
           settings = {
             colors = {
               primary = {
-                background = "#141414";
-                foreground = "#e5d6c6";
-                dim_foreground = "#7f6b5d";
-                bright_foreground = "#f2e6d8";
+                background = "#1f1f1f";
+                foreground = "#cfd3db";
               };
 
               cursor = {
-                text = "#1a1a1a";
-                cursor = "#ff884d";
+                text = "#1f1f1f";
+                cursor = "#5aa0c1";
               };
 
               vi_mode_cursor = {
-                text = "#1a1a1a";
-                cursor = "#C67E4F";
-              };
-
-              search = {
-                matches = {
-                  foreground = "#1a1a1a";
-                  background = "#ff884d";
-                };
-                focused_match = {
-                  foreground = "#1a1a1a";
-                  background = "#ffb366";
-                };
-              };
-
-              footer_bar = {
-                foreground = "#1a1a1a";
-                background = "#a98274";
-              };
-
-              hints = {
-                start = {
-                  foreground = "#1a1a1a";
-                  background = "#d9a066";
-                };
-                end = {
-                  foreground = "#1a1a1a";
-                  background = "#a98274";
-                };
+                text = "#1f1f1f";
+                cursor = "#5aa0c1";
               };
 
               selection = {
-                text = "#1a1a1a";
-                background = "#ffbb99";
+                text = "#1f1f1f";
+                background = "#3c728c";
               };
 
               normal = {
-                black = "#141414"; # charcoal
-                red = "#d45d3c"; # burnt orange
-                green = "#a89860"; # muted olive
-                yellow = "#e0a040"; # golden amber
-                blue = "#6c5b4c"; # smoky brown
-                magenta = "#c07060"; # warm rose
-                cyan = "#b08860"; # warm amber
-                white = "#c89870"; # warm copper
+                black = "#1f1f1f";
+                red = "#a05045";
+                green = "#5d7849";
+                yellow = "#c38c00";
+                blue = "#3c728c";
+                magenta = "#6a5a66";
+                cyan = "#4a6666";
+                white = "#6b6b6b";
               };
 
               bright = {
-                black = "#2a2a2a"; # dark charcoal
-                red = "#f07850"; # ember orange
-                green = "#bca870"; # khaki sand
-                yellow = "#f0c050"; # bright gold
-                blue = "#7f6b5d"; # warm taupe
-                magenta = "#d08870"; # salmon peach
-                cyan = "#c09878"; # warm tan
-                white = "#d8a878"; # amber copper
+                black = "#323232";
+                red = "#d06050";
+                green = "#6da050";
+                yellow = "#ffc42d";
+                blue = "#5aa0c1";
+                magenta = "#887280";
+                cyan = "#688880";
+                white = "#cfd3db";
               };
-
-              indexed_colors = [
-                {
-                  index = 16;
-                  color = "#d9a066";
-                }
-                {
-                  index = 17;
-                  color = "#ff884d";
-                }
-              ];
             };
 
             font.size = 12.0;
@@ -103,7 +63,7 @@
               decorations = "full";
               dynamic_padding = false;
               startup_mode = "Maximized";
-              opacity = 0.9;
+              opacity = 0.2;
 
               padding.x = 0;
               padding.y = 0;

@@ -11,7 +11,7 @@
           directory = {
             truncate_to_repo = false;
             read_only = " ro";
-            style = "#E07A5F";
+            style = "#3c728c";
             # style = "bold italic bright-blue";
           };
           /*
@@ -24,18 +24,18 @@
              };
           */
           character = {
-            success_symbol = "[❯](#E07A5F)";
-            error_symbol = "[❯](#D1495B)";
-            vimcmd_symbol = "[❮](#A3A36F)";
+            success_symbol = "[❯](#3c728c)";
+            error_symbol = "[❯](#d06050)";
+            vimcmd_symbol = "[❮](#8f8f8f)";
           };
           git_branch = {
             format = "[$branch]($style)";
             symbol = "git ";
-            style = "#6c5b4c";
+            style = "#3c728c";
           };
           git_status = {
-            format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)";
-            style = "#a98274";
+            format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](#6acfff) ($ahead_behind$stashed)]($style)";
+            style = "#3c728c";
             conflicted = "​";
             untracked = "​";
             modified = "​";
@@ -46,11 +46,11 @@
           };
           git_state = {
             format = ''\([$state( $progress_current/$progress_total)]($style)\) '';
-            style = "#4a3a35";
+            style = "#6b6b6b";
           };
           cmd_duration = {
             format = "[$duration]($style) ";
-            style = "#E6B566";
+            style = "#3c728c";
           };
           aws = {
             symbol = "aws ";

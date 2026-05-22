@@ -4,7 +4,7 @@ if hl.plugin.hyprglass then
 	hg.config({
 		enabled = 1,
 		default_theme = "dark",
-		default_preset = "subtle",
+		default_preset = "clear",
 
 		blur_strength = 2.0,
 		refraction_strength = 0.6,
