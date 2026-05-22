@@ -19,12 +19,12 @@ configuration {
 @import                          "shared/fonts.rasi"
 
 * {
-    background:                  rgba(26, 21, 19, 80%);
-    background-alt:              rgba(58, 47, 43, 80%);
-    foreground:                  #D8C9B6FF;
-    selected:                    rgba(224, 122, 95, 80%);
-    active:                      rgba(163, 163, 111, 80%);
-    urgent:                      rgba(209, 73, 91, 80%);
+    background:                  rgba(31, 31, 31, 80%);
+    background-alt:              rgba(50, 50, 50, 80%);
+    foreground:                  #cfd3dbFF;
+    selected:                    rgba(50, 50, 50, 80%);
+    active:                      rgba(109, 160, 80, 80%);
+    urgent:                      rgba(195, 23, 0, 80%);
 }
 
 /*****----- Main Window -----*****/
@@ -144,7 +144,7 @@ element normal.normal {
 }
 element selected.normal {
     background-color:            @selected;
-    text-color:                  @background;
+    text-color:                  #cfd3db;
 }
 element-icon {
     background-color:            transparent;

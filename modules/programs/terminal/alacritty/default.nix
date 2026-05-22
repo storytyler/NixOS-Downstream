@@ -30,8 +30,8 @@
               };
 
               selection = {
-                text = "#1f1f1f";
-                background = "#3c728c";
+                text = "#c38c00";
+                background = "#1f1f1f";
               };
 
               normal = {

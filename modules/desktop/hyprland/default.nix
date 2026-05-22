@@ -8,7 +8,7 @@
 }:
 let
   inherit (lib) optional;
-  inherit (import ../../../hosts/${host}/variables.nix) bar;
+  inherit (import ../../../hosts/${host}/variables.nix) bar wallpaperPicker;
 in
 {
   imports = [
@@ -21,7 +21,8 @@ in
     ./programs/hypridle
     ./programs/hyprlock
   ]
-  ++ optional (bar != "hyprpanel" && bar != "wayle") ./programs/swaync;
+  ++ optional (bar != "hyprpanel" && bar != "wayle") ./programs/swaync
+  ++ optional (wallpaperPicker == "skwd-wall") ./programs/skwd-wall;
 
   nix.settings = {
     substituters = [ "https://hyprland.cachix.org" ];
@@ -89,7 +90,7 @@ in
         wl-clipboard
         xdotool
         yad
-      ];
+      ] ++ optional (wallpaperPicker == "skwd-wall") inputs.skwd-wall.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
       services.awww.enable = true;
 

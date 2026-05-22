@@ -43,6 +43,7 @@ pkgs.writeShellScriptBin "keybinds" ''
     "SUPER SHIFT Y" "Launch youtube-music" "youtube-music" \
     "SUPER SHIFT P" "Launch Pokemon Infinite Fusion" "wine ~/.games/InfiniteFusion.exe" \
     "SUPER B" "Launch factcheck" "launcher factcheck" \
+    "SUPER ALT Tab" "Window switcher (all workspaces)" "launcher window" \
     "CTRL ALT Delete" "Open system monitor" "$_terminal -e 'btop'" \
     "SUPER A" "Launch application menu" "launcher drun" \
     "SUPER SPACE" "Launch application menu" "launcher drun" \

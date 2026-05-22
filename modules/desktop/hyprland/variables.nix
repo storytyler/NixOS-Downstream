@@ -14,6 +14,7 @@ let
     kbdLayout
     kbdVariant
     defaultWallpaper
+    wallpaperPicker
     ;
 
   autoclicker = pkgs.callPackage ./scripts/autoclicker.nix { };
@@ -54,6 +55,7 @@ in
             browser = "${browser}"
             kbdLayout = "${kbdLayout}"
             kbdVariant = "${kbdVariant}"
+            wallpaperPicker = "${wallpaperPicker}"
           '';
         };
       }

@@ -66,7 +66,11 @@ hl.bind(mainMod .. " + CTRL + C", hl.dsp.exec_cmd("hyprpicker --autocopy --forma
 
 hl.bind(mainMod .. " + A", hl.dsp.exec_cmd(launcher .. " drun"))
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(launcher .. " drun"))
-hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd(launcher .. " wallpaper"))
+if wallpaperPicker == "skwd-wall" then
+    hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("skwd wall toggle"))
+else
+    hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd(launcher .. " wallpaper"))
+end
 hl.bind(mainMod .. " + Z", hl.dsp.exec_cmd(launcher .. " emoji"))
 hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd(launcher .. " tmux"))
 hl.bind(mainMod .. " + G", hl.dsp.exec_cmd(launcher .. " games"))
@@ -78,6 +82,7 @@ hl.bind(mainMod .. " + SHIFT + P", hl.dsp.exec_cmd("wine ~/.games/InfiniteFusion
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd(clipmanager))
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd(rofimusic))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(launcher .. " factcheck"))
+hl.bind(mainMod .. " + ALT + Tab", hl.dsp.exec_cmd(launcher .. " window"))
 
 -- Screenshot/Screencapture
 hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd(screen_record .. " a"))

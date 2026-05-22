@@ -24,29 +24,29 @@ configuration {
 @import                          "shared/fonts.rasi"
 
 * {
-    border-colour:               rgba(122, 162, 247, 80%);
-    handle-colour:               rgba(122, 162, 247, 80%);
-    background-colour:           rgba(30, 29, 47, 80%);
-    foreground-colour:           #D9E0EEFF;
-    alternate-background:        rgba(40, 40, 57, 80%);
-    normal-background:           rgba(30, 29, 47, 80%);
-    normal-foreground:           #D9E0EEFF;
-    urgent-background:           rgba(242, 143, 173, 80%);
-    urgent-foreground:           rgba(30, 29, 47, 80%);
-    active-background:           rgba(171, 233, 179, 80%);
-    active-foreground:           rgba(30, 29, 47, 80%);
-    selected-normal-background:  rgba(122, 162, 247, 80%);
-    selected-normal-foreground:  rgba(30, 29, 47, 80%);
-    selected-urgent-background:  rgba(171, 233, 179, 80%);
-    selected-urgent-foreground:  rgba(30, 29, 47, 80%);
-    selected-active-background:  rgba(242, 143, 173, 80%);
-    selected-active-foreground:  rgba(30, 29, 47, 80%);
-    alternate-normal-background: rgba(30, 29, 47, 80%);
-    alternate-normal-foreground: #D9E0EEFF;
-    alternate-urgent-background: rgba(242, 143, 173, 80%);
-    alternate-urgent-foreground: rgba(30, 29, 47, 80%);
-    alternate-active-background: rgba(171, 233, 179, 80%);
-    alternate-active-foreground: rgba(30, 29, 47, 80%);
+    border-colour:               rgba(50, 50, 50, 80%);
+    handle-colour:               rgba(50, 50, 50, 80%);
+    background-colour:           rgba(31, 31, 31, 80%);
+    foreground-colour:           #cfd3db;
+    alternate-background:        rgba(50, 50, 50, 80%);
+    normal-background:           rgba(31, 31, 31, 80%);
+    normal-foreground:           #cfd3db;
+    urgent-background:           rgba(195, 23, 0, 80%);
+    urgent-foreground:           rgba(31, 31, 31, 80%);
+    active-background:           rgba(109, 160, 80, 80%);
+    active-foreground:           rgba(31, 31, 31, 80%);
+    selected-normal-background:  rgba(50, 50, 50, 80%);
+    selected-normal-foreground:  #cfd3db;
+    selected-urgent-background:  rgba(109, 160, 80, 80%);
+    selected-urgent-foreground:  rgba(31, 31, 31, 80%);
+    selected-active-background:  rgba(195, 23, 0, 80%);
+    selected-active-foreground:  rgba(31, 31, 31, 80%);
+    alternate-normal-background: rgba(31, 31, 31, 80%);
+    alternate-normal-foreground: #cfd3db;
+    alternate-urgent-background: rgba(195, 23, 0, 80%);
+    alternate-urgent-foreground: rgba(31, 31, 31, 80%);
+    alternate-active-background: rgba(109, 160, 80, 80%);
+    alternate-active-foreground: rgba(31, 31, 31, 80%);
 }
 
 /*****----- Main Window -----*****/
