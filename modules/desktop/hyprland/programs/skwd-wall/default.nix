@@ -5,6 +5,8 @@ in
 {
   home-manager.sharedModules = [
     (_: {
+      # comment to disable matugen theming
+      home.packages = [ pkgs.matugen ];
       xdg.configFile."skwd-wall/config.json" = {
         text = builtins.toJSON {
           compositor = "hyprland";
@@ -16,7 +18,7 @@ in
           };
           paths = {
             wallpaper = wallpaperDir;
-            videoWallpaper = "~/videowalls";
+            videoWallpaper = wallpaperDir;
             cache = "";
             templates = "";
             scripts = "";

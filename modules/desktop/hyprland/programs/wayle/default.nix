@@ -27,9 +27,10 @@ in
       services.wayle = {
         enable = true;
         settings = {
-          # ── Tokyo Night Palette ──────────────────────────────────────
+          # ── Styling ──────────────────────────────────────────────
           styling = {
-            theme-provider = "wayle";
+            theme-provider = "matugen";
+            matugen-scheme = "fidelity";
             rounding = "sm";
             palette = {
               bg = "#1f1f1f";
@@ -59,7 +60,7 @@ in
             button-variant = "block-prefix";
             button-rounding = "sm";
             button-label-weight = "semibold";
-            button-opacity = 0.0;
+            button-opacity = 0;
             button-icon-size = 1.5;
             button-group-rounding = "md";
             button-group-padding = 1.0;
@@ -131,7 +132,7 @@ in
               active-indicator = "underline";
               active-color = "green";
               occupied-color = "blue";
-              empty-color = "hover";
+              empty-color = "bg-hover";
               border-color = "status-success";
               container-bg-color = "transparent";
               icon-gap = 0.0;
