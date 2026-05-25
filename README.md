@@ -15,7 +15,7 @@ A modular NixOS configuration using flakes with a variables-driven architecture 
 
 ### Installation
 ```bash
-git clone https://github.com/Sly-Harvey/NixOS.git ~/NixOS
+git clone https://github.com/storytyler/NixOS-Downstream.git -b my-config ~/NixOS
 cd ~/NixOS
 ./install.sh
 ```
@@ -38,7 +38,7 @@ The system uses `hosts/Default/variables.nix` as the central configuration hub:
 
 ```nix
 {
-  username = "player00";      # Auto-updated by rebuild script
+  username = "username";        # Auto-updated by rebuild script
   desktop = "hyprland";       # hyprland, gnome
   terminal = "kitty";         # kitty, alacritty
   editor = "vscode";          # nixvim, vscode, helix, doom-emacs, nvchad

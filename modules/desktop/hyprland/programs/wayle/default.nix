@@ -24,13 +24,15 @@ in
 
   home-manager.sharedModules = [
     (_: {
+      # comment to disable matugen theming
+      home.packages = [ pkgs.matugen ];
+
       services.wayle = {
         enable = true;
         settings = {
           # ── Styling ──────────────────────────────────────────────
           styling = {
-            theme-provider = "matugen";
-            matugen-scheme = "fidelity";
+            theme-provider = "wayle";
             rounding = "sm";
             palette = {
               bg = "#1f1f1f";
@@ -60,7 +62,7 @@ in
             button-variant = "block-prefix";
             button-rounding = "sm";
             button-label-weight = "semibold";
-            button-opacity = 0;
+            button-opacity = 80;
             button-icon-size = 1.5;
             button-group-rounding = "md";
             button-group-padding = 1.0;
@@ -231,16 +233,13 @@ in
               button-bg-color = "transparent";
             };
 
-            # Notifications (built-in, replaces swaync, icon only)
-            notifications = {
+            # Notification (built-in, replaces swaync, icon only)
+            notification = {
               icon-color = "fg-default";
               icon-bg-color = "transparent";
               button-bg-color = "transparent";
               border-show = false;
               label-show = false;
-              popup-duration = 3500;
-              popup-position = "top-right";
-              popup-max-visible = 3;
               middle-click = "wayle notify dismiss-all";
             };
 

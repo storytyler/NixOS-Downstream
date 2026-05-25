@@ -60,6 +60,11 @@ in
               template = "quickshell-colors.json";
               output = "~/.cache/skwd/colors.json";
             }
+            {
+              name = "vscode";
+              template = "vscode-theme.json";
+              output = "~/.vscode/extensions/matugen.matugen-theme-1.0.0/themes/matugen-color-theme.json";
+            }
           ];
           components = {
             wallpaperSelector = {

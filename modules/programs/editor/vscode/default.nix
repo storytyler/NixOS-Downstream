@@ -1,12 +1,37 @@
 {
+  host,
   lib,
   pkgs,
   ...
 }:
+let
+  wallpaperPicker = (import ../../../../hosts/${host}/variables.nix).wallpaperPicker or "rofi";
+  useMatugen = wallpaperPicker == "skwd-wall";
+in
 {
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "vscode" ];
   home-manager.sharedModules = [
     (_: {
+
+      # Matugen extension manifest — skwd-wall doesn't create this, only the theme file
+      home.file = lib.mkIf useMatugen {
+        ".vscode/extensions/matugen.matugen-theme-1.0.0/package.json".text = builtins.toJSON {
+          name = "matugen-theme";
+          displayName = "Matugen";
+          version = "1.0.0";
+          publisher = "matugen";
+          engines = { vscode = "^1.0.0"; };
+          categories = [ "Themes" ];
+          contributes = {
+            themes = [{
+              label = "Matugen";
+              uiTheme = "vs-dark";
+              path = "./themes/matugen-color-theme.json";
+            }];
+          };
+        };
+      };
+
       programs.vscode = {
         enable = true;
         mutableExtensionsDir = true;
@@ -57,7 +82,7 @@
             "window.menuBarVisibility" = "classic";
             # "window.zoomLevel" = 0.5;
             "editor.fontSize" = 11;
-            "workbench.colorTheme" = "Catppuccin Mocha";
+            "workbench.colorTheme" = if useMatugen then "Matugen" else "Catppuccin Mocha";
             "workbench.iconTheme" = "catppuccin-mocha";
             "catppuccin.accentColor" = "mauve";
             "vsicons.dontShowNewVersionMessage" = true;

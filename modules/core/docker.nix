@@ -28,4 +28,24 @@ in
     compose2nix
     lazydocker
   ];
+
+  home-manager.sharedModules = [
+    (_: {
+      xdg.configFile."lazydocker/config.yml".text = ''
+        gui:
+          theme:
+            activeBorderColor:
+              - "#8f8f8f"
+              - bold
+            inactiveBorderColor:
+              - "#6b6b6b"
+            searchingActiveBorderColor:
+              - "#cfd3db"
+              - bold
+            optionsTextColor:
+              - "#6da050"
+          border: single
+      '';
+    })
+  ];
 }
