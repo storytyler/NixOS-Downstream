@@ -4,7 +4,7 @@
   desktop = "hyprland"; # Options: hyprland, gnome
   bar = "waybar"; # Options: waybar, hyprpanel, noctalia-shell, caelestia-shell
   waybarTheme = "stylish"; # Options: stylish, minimal (only applies when bar = "waybar")
-  terminal = "alacritty"; # Options: kitty, alacritty, ghostty
+  terminal = "alacritty"; # Options: kitty, alacritty, ghostty, wezterm
   editor = "vscode"; # Options: vscode, helix
   browser = "firefox"; # Options: firefox, floorp, zen
   tuiFileManager = "yazi"; # Options: yazi, lf
