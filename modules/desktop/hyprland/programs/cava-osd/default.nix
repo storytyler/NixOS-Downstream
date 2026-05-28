@@ -1,37 +1,41 @@
-{ pkgs, inputs, ... }:
+{ pkgs, ... }:
 let
-  system = pkgs.stdenv.hostPlatform.system;
+  cavaConfig = pkgs.writeText "cava-config" ''
+    [general]
+    framerate = 60
+    bars = 0
+    bar_width = 1
+    bar_height = 9
+    autosens = 1
+    sensitivity = 100
 
-  cava-osd = pkgs.stdenv.mkDerivation {
-    pname = "cava-osd";
-    version = "0.1.0";
-    src = ./src;
+    [color]
+    gradient = 0
+    foreground = '#3c3c3c'
 
-    nativeBuildInputs = with pkgs; [
-      wrapGAppsHook3
-      gobject-introspection
-      inputs.ags.packages.${system}.default
-    ];
+    [output]
+    method = noncurses
+    orientation = horizontal
+    channels = stereo
+    reverse = 0
+  '';
 
-    buildInputs = [
-      pkgs.glib
-      pkgs.gjs
-      inputs.astal.packages.${system}.io
-      inputs.astal.packages.${system}.astal4
-      inputs.astal.packages.${system}.cava
-    ];
-
-    installPhase = ''
-      mkdir -p $out/bin
-      ags bundle app.tsx $out/bin/cava-osd
-    '';
-
-    preFixup = ''
-      gappsWrapperArgs+=(
-        --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs.gjs ]}
-      )
-    '';
-  };
+  cava-osd = pkgs.writeShellScriptBin "cava-osd" ''
+    exec ${pkgs.kitty}/bin/kitty +kitten panel \
+      --edge=background \
+      --focus-policy=not-allowed \
+      --margin-top=960 \
+      --margin-bottom=3 \
+      --margin-left=2 \
+      --margin-right=2 \
+      -o background_opacity=0.0 \
+      -o background='#000000' \
+      -o font_size=1 \
+      -o 'modify_font cell_width 50%' \
+      -o 'modify_font cell_height 50%' \
+      --detach \
+      -- ${pkgs.cava}/bin/cava -p ${cavaConfig}
+  '';
 in
 {
   home-manager.sharedModules = [

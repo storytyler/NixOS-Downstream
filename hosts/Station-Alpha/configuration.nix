@@ -69,6 +69,7 @@ in
     ../../modules/programs/media/youtube-music
     # ../../modules/programs/media/thunderbird
     ../../modules/programs/media/obs-studio
+    ../../modules/programs/office/obsidian.nix
     # ../../modules/programs/media/mpv
     # ../../modules/programs/misc/tlp
     ../../modules/programs/file-manager/thunar
