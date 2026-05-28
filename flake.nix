@@ -27,6 +27,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland.url = "github:hyprwm/Hyprland";
+    astal.url = "github:aylur/astal";
+    ags = {
+      url = "github:aylur/ags";
+      inputs.astal.follows = "astal";
+    };
     skwd-wall.url = "github:liixini/skwd-wall";
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
