@@ -57,7 +57,7 @@
       enable = true;
       remotePlay.openFirewall = true;
       dedicatedServer.openFirewall = true;
-      gamescopeSession.enable = true;
+      gamescopeSession.enable = false;
       extraCompatPackages = [ pkgs.proton-ge-bin ];
     };
     gamescope = {
