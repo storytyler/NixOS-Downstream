@@ -47,12 +47,23 @@ FloatingWindow {
 		font.family: "monospace"
 	}
 
-	ArcGauge {
+	Row {
 		anchors.centerIn: parent
 		anchors.verticalCenterOffset: 120
-		value: 0.73
-		arcColor: saved.primary
-		trackColor: saved.surface
-		textColor: saved.textMain
+		spacing: 40
+
+		ArcGauge {
+			value: 0.73
+			arcColor: saved.primary
+			trackColor: saved.surface
+			textColor: saved.textMain
+		}
+
+		RadialGauge {
+			value: 0.58
+			arcColor: "#f7768e"
+			trackColor: saved.surface
+			textColor: saved.textMain
+		}
 	}
 }
