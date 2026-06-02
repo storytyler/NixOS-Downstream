@@ -20,6 +20,7 @@ in
     ./programs/rofi
     ./programs/hypridle
     ./programs/hyprlock
+    ./dashboard
   ]
   ++ optional (bar != "hyprpanel" && bar != "wayle" && bar != "caelestia-shell") ./programs/swaync
   ++ optional (wallpaperPicker == "skwd-wall") ./programs/skwd-wall;
