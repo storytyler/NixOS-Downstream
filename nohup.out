@@ -11,3 +11,15 @@ MESA-INTEL: warning: Haswell Vulkan support is incomplete
 Warning: maxDynamicUniformBuffersPerPipelineLayout artificially reduced from 500000 to 16 to fit dynamic offset allocation limit.
 Warning: maxDynamicStorageBuffersPerPipelineLayout artificially reduced from 500000 to 16 to fit dynamic offset allocation limit.
 [63782:63858:1122/231059.552252:ERROR:google_apis/gcm/engine/registration_request.cc:292] Registration response error message: DEPRECATED_ENDPOINT
+[32m  INFO[0m: Launching config: "/home/player00/.config/quickshell/dashboard/shell.qml"
+[32m  INFO[0m: Shell ID: "a86f1ffb541f9d181fc12be0712a5045" Path ID "a86f1ffb541f9d181fc12be0712a5045"
+[32m  INFO[0m: Saving logs to "/run/user/1000/quickshell/by-id/prb70h0gt/log.qslog"
+[32m  INFO[0m: Configuration Loaded
+[32m  INFO[0m: Launching config: "/home/player00/.config/quickshell/dashboard/shell.qml"
+[32m  INFO[0m: Shell ID: "a86f1ffb541f9d181fc12be0712a5045" Path ID "a86f1ffb541f9d181fc12be0712a5045"
+[32m  INFO[0m: Saving logs to "/run/user/1000/quickshell/by-id/7ze07h0gt/log.qslog"
+[32m  INFO[0m: Configuration Loaded
+[32m  INFO[0m: Launching config: "/home/player00/.config/quickshell/dashboard/shell.qml"
+[32m  INFO[0m: Shell ID: "a86f1ffb541f9d181fc12be0712a5045" Path ID "a86f1ffb541f9d181fc12be0712a5045"
+[32m  INFO[0m: Saving logs to "/run/user/1000/quickshell/by-id/u5fp7h0gt/log.qslog"
+[32m  INFO[0m: Configuration Loaded

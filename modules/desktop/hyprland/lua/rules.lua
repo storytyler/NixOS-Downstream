@@ -297,6 +297,15 @@ hl.window_rule({
 	tag = "+games",
 })
 
+-- Dashboard (Quickshell)
+hl.window_rule({
+	match = { class = "^(org.quickshell)$" },
+	fullscreen = true,
+	border_size = 0,
+	no_shadow = true,
+	no_anim = true,
+})
+
 -- Godot
 hl.window_rule({
 	match = {

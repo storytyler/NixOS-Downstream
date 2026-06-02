@@ -36,6 +36,7 @@ in
         xdg.configFile."hypr/variables.lua" = {
           text = ''
             bar = "${if bar == "wayle" then "wayle shell" else bar}"
+            dashboard = "qs -p ${config.xdg.configHome}/quickshell/dashboard"
             autoclicker = "${getExe autoclicker}"
             batterynotify = "${getExe batterynotify}"
             clipmanager = "${getExe clipmanager}"

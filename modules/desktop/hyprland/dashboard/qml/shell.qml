@@ -1,29 +1,17 @@
 import Quickshell
-import Quickshell.Hyprland
 import QtQuick
 
-ShellWindow {
+FloatingWindow {
 	id: root
 
-	// Hyprland workspace assignment
-	HyprlandWindow {
-		id: hw
-		identifier: "dashboard"
+	title: "Dashboard"
+	fullscreen: true
+	color: "#991f1f1f"
+
+	SettingsPanel {
+		id: settingsPanel
 	}
 
-	// Window properties
-	width: 1920
-	height: 1080
-	color: "transparent"
-	visible: true
-
-	// Fullscreen on Hyprland via QML
-	// Window rules in Hyprland handle the rest (no borders, no shadows)
-	Component.onCompleted: {
-		console.log("Dashboard loaded on workspace 10");
-	}
-
-	// Placeholder — just a label to confirm rendering
 	Text {
 		anchors.centerIn: parent
 		text: "DASHBOARD"
