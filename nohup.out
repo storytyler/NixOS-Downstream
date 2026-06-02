@@ -23,3 +23,11 @@ Warning: maxDynamicStorageBuffersPerPipelineLayout artificially reduced from 500
 [32m  INFO[0m: Shell ID: "a86f1ffb541f9d181fc12be0712a5045" Path ID "a86f1ffb541f9d181fc12be0712a5045"
 [32m  INFO[0m: Saving logs to "/run/user/1000/quickshell/by-id/u5fp7h0gt/log.qslog"
 [32m  INFO[0m: Configuration Loaded
+[32m  INFO[0m: Launching config: "/home/player00/.config/quickshell/dashboard/shell.qml"
+[32m  INFO[0m: Shell ID: "a86f1ffb541f9d181fc12be0712a5045" Path ID "a86f1ffb541f9d181fc12be0712a5045"
+[32m  INFO[0m: Saving logs to "/run/user/1000/quickshell/by-id/rcv7uk0gt/log.qslog"
+[32m  INFO[0m: Configuration Loaded
+[32m  INFO[0m: Launching config: "/home/player00/.config/quickshell/dashboard/shell.qml"
+[32m  INFO[0m: Shell ID: "a86f1ffb541f9d181fc12be0712a5045" Path ID "a86f1ffb541f9d181fc12be0712a5045"
+[32m  INFO[0m: Saving logs to "/run/user/1000/quickshell/by-id/v8zu4l0gt/log.qslog"
+[32m  INFO[0m: Configuration Loaded

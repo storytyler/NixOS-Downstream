@@ -24,8 +24,8 @@
     # gemini-cli
     pkgs.opencode
 
-    # MCP Servers
-    # portainer-mcp
+    # LSP Servers
+    qt6.qtdeclarative
 
     uv
     # nix-tree
