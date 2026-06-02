@@ -38,6 +38,14 @@ in
       {
         home.packages = [ pkgs.obsidian ];
 
+        # Spellcheck dictionaries (Chromium .bdic format)
+        xdg.configFile = {
+          "obsidian/Dictionaries/${pkgs.hunspellDictsChromium.en-us.dictFileName}".source =
+            pkgs.hunspellDictsChromium.en-us;
+          "obsidian/Dictionaries/${pkgs.hunspellDictsChromium.en-gb.dictFileName}".source =
+            pkgs.hunspellDictsChromium.en-gb;
+        };
+
         home.file =
           (builtins.foldl' (acc: x: acc // x) { } [
             # Core Obsidian config (mutable)
@@ -46,8 +54,7 @@ in
             (mkObsidianLink "core-plugins.json")
             (mkObsidianLink "community-plugins.json")
 
-{}
-          ])
+          {}])
           // {
             # LiveSync plugin files (immutable — from Nix store)
             "${plugin}/main.js".source = livesyncMainJs;

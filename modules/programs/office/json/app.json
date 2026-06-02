@@ -3,7 +3,7 @@
   "spellcheck": true,
   "spellcheckLanguages": null,
   "showLineNumber": false,
-  "readableLineLength": true,
+  "readableLineLength": false,
   "strictLineBreaks": false,
   "showUnsupportedFiles": false
 }

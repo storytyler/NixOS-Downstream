@@ -21,7 +21,7 @@ in
     ./programs/hypridle
     ./programs/hyprlock
   ]
-  ++ optional (bar != "hyprpanel" && bar != "wayle") ./programs/swaync
+  ++ optional (bar != "hyprpanel" && bar != "wayle" && bar != "caelestia-shell") ./programs/swaync
   ++ optional (wallpaperPicker == "skwd-wall") ./programs/skwd-wall;
 
   nix.settings = {

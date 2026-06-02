@@ -1,5 +1,6 @@
 {
-  "baseFontSize": 16,
+  "baseFontSize": 24,
   "cssTheme": "",
-  "enabledCssSnippets": []
+  "enabledCssSnippets": [],
+  "baseFontSizeAction": true
 }
