@@ -39,6 +39,10 @@
     opencode = {
       url = "github:sst/opencode";
     };
+    qmd = {
+      url = "github:tobi/qmd";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     optnix = {
       url = "github:water-sucks/optnix";
     };

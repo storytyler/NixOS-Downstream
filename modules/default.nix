@@ -43,6 +43,7 @@ in
     ./programs/cli/cava
     ./programs/cli/btop
     ./programs/cli/voicemode
+    ./programs/cli/qmd
     # ./programs/cli/spec-kit
     ./programs/media/discord
     ./programs/media/spicetify

@@ -49,21 +49,39 @@ FloatingWindow {
 
 	Row {
 		anchors.centerIn: parent
-		anchors.verticalCenterOffset: 120
+		anchors.verticalCenterOffset: 140
 		spacing: 40
 
-		ArcGauge {
-			value: 0.73
-			arcColor: saved.primary
-			trackColor: saved.surface
-			textColor: saved.textMain
-		}
+		Item {
+			width: 200
+			height: 230
 
-		RadialGauge {
-			value: 0.58
-			arcColor: "#f7768e"
-			trackColor: saved.surface
-			textColor: saved.textMain
+			HexFrame {
+				anchors.fill: parent
+				borderColor: "#f7768e"
+				glowColor: "#f7768e"
+				backgroundColor: Qt.rgba(0.1, 0.1, 0.15, 0.6)
+				glowOpacity: 0.25
+			}
+
+			RadialGauge {
+				anchors.fill: parent
+				anchors.margins: 14
+				value: 0.58
+				arcColor: "#f7768e"
+				trackColor: "transparent"
+				textColor: saved.textMain
+			}
+
+			Text {
+				anchors.top: parent.top
+				anchors.topMargin: 24
+				anchors.horizontalCenter: parent.horizontalCenter
+				text: "GPU"
+				color: saved.textDim
+				font.pointSize: 11
+				font.family: "monospace"
+			}
 		}
 	}
 }

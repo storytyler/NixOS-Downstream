@@ -9,6 +9,8 @@
       xdg.configFile."quickshell/dashboard/SettingsPanel.qml".source = ./qml/SettingsPanel.qml;
       xdg.configFile."quickshell/dashboard/ArcGauge.qml".source = ./qml/ArcGauge.qml;
       xdg.configFile."quickshell/dashboard/RadialGauge.qml".source = ./qml/RadialGauge.qml;
+      xdg.configFile."quickshell/dashboard/WaveFill.qml".source = ./qml/WaveFill.qml;
+      xdg.configFile."quickshell/dashboard/HexFrame.qml".source = ./qml/HexFrame.qml;
     })
   ];
 }

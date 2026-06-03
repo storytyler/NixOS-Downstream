@@ -8,9 +8,7 @@ Canvas {
 	property color trackColor: "#1a1b26"
 	property color textColor: "#c0caf5"
 	property real lineWidth: 8
-
-	implicitWidth: 160
-	implicitHeight: 160
+	property real padding: 14
 
 	onValueChanged: requestPaint()
 	onArcColorChanged: requestPaint()
@@ -22,10 +20,10 @@ Canvas {
 
 		var cx = width / 2
 		var cy = height / 2
-		var radius = Math.max(1, Math.min(cx, cy) - lineWidth)
+		var radius = Math.max(1, Math.min(cx, cy) - lineWidth - padding)
 		var startRad = -Math.PI / 2
 		var fullSweep = 2 * Math.PI
-		var valueRad = startRad + fullSweep * value
+		var valueRad = startRad - fullSweep * value
 
 		ctx.lineCap = "round"
 		ctx.lineWidth = lineWidth
@@ -37,7 +35,7 @@ Canvas {
 
 		if (value > 0.001) {
 			ctx.beginPath()
-			ctx.arc(cx, cy, radius, startRad, valueRad)
+			ctx.arc(cx, cy, radius, startRad, valueRad, true)
 			ctx.strokeStyle = arcColor
 			ctx.stroke()
 		}
