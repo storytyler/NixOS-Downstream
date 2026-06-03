@@ -1,27 +1,24 @@
-// HudPoC.qml — Proof-of-concept for vuild.com-style HUD effects
-// Tests: Canvas shadowBlur glow, spinning dial arcs, transparency,
-//        text glow, bar gauges, flicker animation
-// Reference: https://vuild.com/suit/ (HTML/CSS Iron Man HUD)
+// HudPoC.qml — Dashboard layout: stacked gauge+graph top-left, status top-right
+// DialGauge: uniform gray (#cfd3db / #8f8f8f / #6b6b6b)
+// GlowSparkline: matching palette, no panel border when paired with gauge
+// Status panel: top-right, dynamic font sizing
 import QtQuick
 
 Item {
 	id: poc
 
-	// Tokyo Night colors (from shell.qml PersistentProperties)
-	property color primary: "#7aa2f7"
-	property color surface: "#1a1b26"
-	property color textMain: "#c0caf5"
-	property color textDim: "#565f89"
+	// ── Uniform gray palette ──
+	property color light: "#cfd3db"
+	property color mid: "#8f8f8f"
+	property color dark: "#6b6b6b"
 	property color accent: "#f7768e"
-	property color green: "#9ece6a"
-	property color orange: "#e0af68"
 
-	// Simulated values (oscillating for PoC)
+	// ── Simulated values ──
 	property real cpuValue: 0.58
 	property real memValue: 0.42
 	property real gpuValue: 0.73
 
-	// Data simulation timer — random walk every 1s to feed sparklines
+	// ── Data simulation timer (1s random walk) ──
 	Timer {
 		interval: 1000
 		running: true
@@ -36,7 +33,7 @@ Item {
 		}
 	}
 
-	// Helper: draw a rounded rectangle path (CSS border-radius equivalent)
+	// ── Helper: rounded rect path ──
 	function rr(ctx, x, y, w, h, r) {
 		ctx.beginPath()
 		ctx.moveTo(x + r, y)
@@ -51,326 +48,208 @@ Item {
 		ctx.closePath()
 	}
 
-	Row {
-		anchors.centerIn: parent
-		spacing: 30
+	// ═══════════════════════════════════════════════
+	// LEFT COLUMN: Stacked gauge + sparkline groups
+	// CPU gauge → CPU graph → MEM gauge → MEM graph → GPU gauge → GPU graph
+	// ═══════════════════════════════════════════════
+	Column {
+		id: leftColumn
+		anchors.left: parent.left
+		anchors.top: parent.top
+		anchors.margins: 30
+		width: parent.width * 0.32
+		height: parent.height * 0.48
 
-		// =====================================================
-		// TEST 1: Hero dial gauge (vuild spinning dial pattern)
-		// Two concentric arc rings spinning in opposite directions
-		// with a value arc and glowing text readout in the center.
-		// =====================================================
-		Item {
-			width: 240
-			height: 240
+		spacing: 6
 
-			// -- Panel background with glowing border --
-			Canvas {
-				id: heroPanel
-				anchors.fill: parent
-
-				onPaint: {
-					var ctx = getContext("2d")
-					ctx.reset()
-					var m = 4
-					var w = width - m * 2
-					var h = height - m * 2
-					var r = 12
-
-					// Dark transparent fill (vuild: background: rgba(0,0,0,.2))
-					poc.rr(ctx, m, m, w, h, r)
-					ctx.fillStyle = Qt.rgba(0.05, 0.06, 0.09, 0.5)
-					ctx.fill()
-
-					// Glowing border (vuild: box-shadow: 0 0 10px #07C4FF + border: 2px solid #07C4FF)
-					ctx.shadowBlur = 25
-					ctx.shadowColor = "#7aa2f7"
-					ctx.strokeStyle = "#7aa2f7"
-					ctx.lineWidth = 1.5
-					poc.rr(ctx, m, m, w, h, r)
-					ctx.stroke()
-					ctx.shadowBlur = 0
-				}
-			}
-
-			// -- Outer spinning arc ring (clockwise, 4s) --
-			Canvas {
-				id: outerDial
-				anchors.centerIn: parent
-				width: 200
-				height: 200
-
-				property real dialAngle: 0
-
-				NumberAnimation on dialAngle {
-					from: 0; to: 360; duration: 4000; loops: Animation.Infinite
-				}
-
-				onDialAngleChanged: requestPaint()
-
-				onPaint: {
-					var ctx = getContext("2d")
-					ctx.reset()
-					var cx = width / 2, cy = height / 2
-					var r = Math.max(1, Math.min(cx, cy) - 12)
-					var base = dialAngle * Math.PI / 180
-
-					ctx.shadowBlur = 12
-					ctx.shadowColor = "#7aa2f7"
-					ctx.strokeStyle = "#7aa2f7"
-					ctx.lineWidth = 2.5
-					ctx.lineCap = "round"
-
-					// 8 evenly-spaced arc segments
-					for (var i = 0; i < 8; i++) {
-						var a = base + i * Math.PI / 4
-						ctx.beginPath()
-						ctx.arc(cx, cy, r, a, a + 0.45)
-						ctx.stroke()
-					}
-					ctx.shadowBlur = 0
-				}
-			}
-
-			// -- Inner spinning arc ring (counter-clockwise, 6s) --
-			Canvas {
-				id: innerDial
-				anchors.centerIn: parent
-				width: 150
-				height: 150
-
-				property real dialAngle: 0
-
-				NumberAnimation on dialAngle {
-					from: 360; to: 0; duration: 6000; loops: Animation.Infinite
-				}
-
-				onDialAngleChanged: requestPaint()
-
-				onPaint: {
-					var ctx = getContext("2d")
-					ctx.reset()
-					var cx = width / 2, cy = height / 2
-					var r = Math.max(1, Math.min(cx, cy) - 10)
-					var base = dialAngle * Math.PI / 180
-
-					ctx.shadowBlur = 8
-					ctx.shadowColor = Qt.rgba(0.48, 0.64, 0.97, 0.6)
-					ctx.strokeStyle = Qt.rgba(0.48, 0.64, 0.97, 0.5)
-					ctx.lineWidth = 1.5
-					ctx.lineCap = "round"
-
-					// 6 evenly-spaced arc segments
-					for (var i = 0; i < 6; i++) {
-						var a = base + i * Math.PI / 3
-						ctx.beginPath()
-						ctx.arc(cx, cy, r, a, a + 0.55)
-						ctx.stroke()
-					}
-					ctx.shadowBlur = 0
-				}
-			}
-
-			// -- Value arc (actual data, like RadialGauge but with glow) --
-			Canvas {
-				id: valueArc
-				anchors.centerIn: parent
-				width: 110
-				height: 110
-
-				property real value: poc.gpuValue
-				onValueChanged: requestPaint()
-
-				onPaint: {
-					var ctx = getContext("2d")
-					ctx.reset()
-					var cx = width / 2, cy = height / 2
-					var r = Math.max(1, Math.min(cx, cy) - 8)
-
-					// Track
-					ctx.beginPath()
-					ctx.arc(cx, cy, r, 0, 2 * Math.PI)
-					ctx.strokeStyle = Qt.rgba(0.48, 0.64, 0.97, 0.12)
-					ctx.lineWidth = 5
-					ctx.stroke()
-
-					// Value arc with glow
-					if (value > 0.001) {
-						var s = -Math.PI / 2
-						var e = s + 2 * Math.PI * value
-						ctx.shadowBlur = 15
-						ctx.shadowColor = "#7aa2f7"
-						ctx.beginPath()
-						ctx.arc(cx, cy, r, s, e)
-						ctx.strokeStyle = "#7aa2f7"
-						ctx.lineWidth = 5
-						ctx.lineCap = "round"
-						ctx.stroke()
-						ctx.shadowBlur = 0
-					}
-				}
-			}
-
-			// -- Center text with glow (Canvas shadowBlur on text) --
-			Canvas {
-				id: heroText
-				anchors.centerIn: parent
-				width: 90
-				height: 60
-
-				property real _trigger: poc.gpuValue
-				on_TriggerChanged: requestPaint()
-
-				onPaint: {
-					var ctx = getContext("2d")
-					ctx.reset()
-					ctx.shadowBlur = 10
-					ctx.shadowColor = "#7aa2f7"
-					ctx.fillStyle = "#c0caf5"
-					ctx.font = "bold 26px monospace"
-					ctx.textAlign = "center"
-					ctx.textBaseline = "middle"
-					ctx.fillText(Math.round(poc.gpuValue * 100) + "%", width / 2, height / 2)
-					ctx.shadowBlur = 0
-				}
-			}
-
-			// Label
-			Text {
-				anchors.top: parent.top
-				anchors.topMargin: 16
-				anchors.horizontalCenter: parent.horizontalCenter
-				text: "GPU"
-				color: poc.textDim
-				font.pointSize: 10
-				font.family: "monospace"
-				font.bold: true
-			}
-		}
-
-		// =====================================================
-		// TEST 2: Scrolling glow sparklines
-		// GlowSparkline: self-contained panel with ring buffer,
-		// shadowBlur glow, gradient fill, end-point dot
-		// =====================================================
+		// ── CPU ──
 		Column {
-			spacing: 14
-			anchors.verticalCenter: parent.verticalCenter
+			width: parent.width
+			height: (leftColumn.height - leftColumn.spacing * 5) / 3
+			spacing: 2
 
-			GlowSparkline {
-				width: 280
-				height: 64
+			DialGauge {
+				width: parent.width
+				height: parent.height * 0.72
 				label: "CPU"
 				value: poc.cpuValue
-				lineColor: "#7aa2f7"
-				textColor: poc.textMain
-				dimColor: poc.textDim
+				lightColor: poc.light
+				midColor: poc.mid
+				darkColor: poc.dark
 			}
 
 			GlowSparkline {
-				width: 280
-				height: 64
-				label: "MEM"
-				value: poc.memValue
-				lineColor: "#9ece6a"
-				textColor: poc.textMain
-				dimColor: poc.textDim
-			}
-
-			GlowSparkline {
-				width: 280
-				height: 64
-				label: "TEMP"
-				value: 0.65
-				lineColor: "#e0af68"
-				textColor: poc.textMain
-				dimColor: poc.textDim
+				width: parent.width
+				height: parent.height * 0.26
+				label: "CPU"
+				value: poc.cpuValue
+				lineColor: poc.mid
+				textColor: poc.light
+				dimColor: poc.dark
+				showPanel: false
 			}
 		}
 
-		// =====================================================
-		// TEST 3: Flickering status panel + data readout
-		// Tests: SequentialAnimation opacity (vuild flicker),
-		//        Canvas text glow on multi-line readout
-		// =====================================================
-		Item {
-			width: 180
-			height: 240
+		// ── MEMORY ──
+		Column {
+			width: parent.width
+			height: (leftColumn.height - leftColumn.spacing * 5) / 3
+			spacing: 2
 
-			Canvas {
-				anchors.fill: parent
-				onPaint: {
-					var ctx = getContext("2d")
-					ctx.reset()
-					poc.rr(ctx, 2, 2, width - 4, height - 4, 12)
-					ctx.fillStyle = Qt.rgba(0.05, 0.06, 0.09, 0.5)
-					ctx.fill()
-					ctx.shadowBlur = 20
-					ctx.shadowColor = "#f7768e"
-					ctx.strokeStyle = "#f7768e"
-					ctx.lineWidth = 1.5
-					poc.rr(ctx, 2, 2, width - 4, height - 4, 12)
-					ctx.stroke()
-					ctx.shadowBlur = 0
-				}
+			DialGauge {
+				width: parent.width
+				height: parent.height * 0.72
+				label: "MEMORY"
+				value: poc.memValue
+				lightColor: poc.light
+				midColor: poc.mid
+				darkColor: poc.dark
 			}
 
-			// Flickering "SYSTEM ONLINE" text (vuild @keyframes flicker)
-			Text {
-				id: statusFlicker
-				anchors.horizontalCenter: parent.horizontalCenter
-				anchors.top: parent.top
-				anchors.topMargin: 20
-				text: "SYSTEM ONLINE"
-				color: "#f7768e"
-				font.pointSize: 10
-				font.family: "monospace"
-				font.bold: true
-				horizontalAlignment: Text.AlignHCenter
+			GlowSparkline {
+				width: parent.width
+				height: parent.height * 0.26
+				label: "MEM"
+				value: poc.memValue
+				lineColor: poc.mid
+				textColor: poc.light
+				dimColor: poc.dark
+				showPanel: false
+			}
+		}
 
-				SequentialAnimation on opacity {
-					loops: Animation.Infinite
-					NumberAnimation { to: 0.2; duration: 400 }
-					NumberAnimation { to: 1.0; duration: 400 }
-				}
+		// ── GPU ──
+		Column {
+			width: parent.width
+			height: (leftColumn.height - leftColumn.spacing * 5) / 3
+			spacing: 2
+
+			DialGauge {
+				width: parent.width
+				height: parent.height * 0.72
+				label: "GPU"
+				value: poc.gpuValue
+				lightColor: poc.light
+				midColor: poc.mid
+				darkColor: poc.dark
 			}
 
-			// Data readout with glow (vuild summary-box pattern)
-			Canvas {
-				id: dataReadout
-				anchors.top: statusFlicker.bottom
-				anchors.topMargin: 16
-				anchors.left: parent.left
-				anchors.right: parent.right
-				anchors.leftMargin: 14
-				anchors.rightMargin: 14
-				height: 160
-
-				onPaint: {
-					var ctx = getContext("2d")
-					ctx.reset()
-					ctx.shadowBlur = 6
-					ctx.shadowColor = "#f7768e"
-					ctx.fillStyle = Qt.rgba(0.97, 0.46, 0.56, 0.7)
-					ctx.font = "9px monospace"
-					ctx.textAlign = "left"
-					ctx.textBaseline = "top"
-
-					var lines = [
-						"Speed: 130 MPH",
-						"Alt: -30M",
-						"Ext Temp: 57\u2109",
-						"Int Temp: 86\u2109",
-						"Status: Good",
-						"Uptime: 4d 7h",
-						"Load: 2.41"
-					]
-					for (var i = 0; i < lines.length; i++) {
-						ctx.fillText(lines[i], 4, 4 + i * 20)
-					}
-					ctx.shadowBlur = 0
-				}
+			GlowSparkline {
+				width: parent.width
+				height: parent.height * 0.26
+				label: "GPU"
+				value: poc.gpuValue
+				lineColor: poc.mid
+				textColor: poc.light
+				dimColor: poc.dark
+				showPanel: false
 			}
+		}
+	}
+
+	// ═══════════════════════════════════════════════
+	// RIGHT COLUMN: Status panel
+	// Same allocation as left (~1/3 width, ~1/2 height)
+	// Dynamic font sizing relative to panel dimensions
+	// ═══════════════════════════════════════════════
+	Item {
+		id: rightPanel
+		anchors.right: parent.right
+		anchors.top: parent.top
+		anchors.margins: 30
+		width: parent.width * 0.32
+		height: parent.height * 0.48
+
+		// Panel border
+		Canvas {
+			anchors.fill: parent
+			onPaint: {
+				var ctx = getContext("2d")
+				ctx.reset()
+				poc.rr(ctx, 3, 3, width - 6, height - 6, 12)
+				ctx.fillStyle = Qt.rgba(0.05, 0.06, 0.09, 0.5)
+				ctx.fill()
+				ctx.shadowBlur = 20
+				ctx.shadowColor = "#f7768e"
+				ctx.strokeStyle = "#f7768e"
+				ctx.lineWidth = 1.5
+				poc.rr(ctx, 3, 3, width - 6, height - 6, 12)
+				ctx.stroke()
+				ctx.shadowBlur = 0
+			}
+		}
+
+		// SYSTEM ONLINE (dynamic font)
+		Text {
+			id: statusText
+			anchors.horizontalCenter: parent.horizontalCenter
+			anchors.top: parent.top
+			anchors.topMargin: parent.height * 0.05
+			text: "SYSTEM ONLINE"
+			color: "#f7768e"
+			font.pixelSize: Math.max(12, parent.height * 0.04)
+			font.family: "monospace"
+			font.bold: true
+			horizontalAlignment: Text.AlignHCenter
+
+			SequentialAnimation on opacity {
+				loops: Animation.Infinite
+				NumberAnimation { to: 0.2; duration: 400 }
+				NumberAnimation { to: 1.0; duration: 400 }
+			}
+		}
+
+		// Data readout (dynamic font, fills remaining space)
+		Canvas {
+			id: dataReadout
+			anchors.top: statusText.bottom
+			anchors.topMargin: parent.height * 0.04
+			anchors.left: parent.left
+			anchors.right: parent.right
+			anchors.bottom: parent.bottom
+			anchors.margins: parent.width * 0.06
+
+			onPaint: {
+				var ctx = getContext("2d")
+				ctx.reset()
+				var fontSize = Math.max(9, Math.round(height * 0.055))
+				ctx.shadowBlur = 6
+				ctx.shadowColor = "#f7768e"
+				ctx.fillStyle = Qt.rgba(0.97, 0.46, 0.56, 0.7)
+				ctx.font = fontSize + "px monospace"
+				ctx.textAlign = "left"
+				ctx.textBaseline = "top"
+
+				var lines = [
+					"Speed: 130 MPH",
+					"Alt: -30M",
+					"Ext Temp: 57\u2109",
+					"Int Temp: 86\u2109",
+					"Status: Good",
+					"Uptime: 4d 7h",
+					"Load: 2.41",
+					"CPU: " + Math.round(poc.cpuValue * 100) + "%",
+					"MEM: " + Math.round(poc.memValue * 100) + "%",
+					"GPU: " + Math.round(poc.gpuValue * 100) + "%",
+					"Net: 142 Mb/s",
+					"Disk: 340G/2T",
+					"Procs: 387",
+					"Threads: 1249"
+				]
+				var lineH = fontSize * 1.7
+				for (var i = 0; i < lines.length; i++) {
+					ctx.fillText(lines[i], 4, 4 + i * lineH)
+				}
+				ctx.shadowBlur = 0
+			}
+
+			// Repaint when simulated values change
+			property real _t1: poc.cpuValue
+			property real _t2: poc.memValue
+			property real _t3: poc.gpuValue
+			on_T1Changed: requestPaint()
+			on_T2Changed: requestPaint()
+			on_T3Changed: requestPaint()
 		}
 	}
 }

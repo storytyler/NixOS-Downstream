@@ -39,16 +39,7 @@ FloatingWindow {
 		}
 	}
 
-	Text {
-		anchors.centerIn: parent
-		text: "DASHBOARD"
-		color: saved.textMain
-		font.pointSize: 48
-		font.family: "monospace"
-	}
-
 	HudPoC {
-		anchors.centerIn: parent
-		anchors.verticalCenterOffset: 40
+		anchors.fill: parent
 	}
 }

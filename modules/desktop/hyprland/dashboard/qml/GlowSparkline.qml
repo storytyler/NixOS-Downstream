@@ -24,6 +24,7 @@ Item {
 	property color textColor: "#c0caf5"
 	property color dimColor: "#565f89"
 	property int maxPoints: 60            // ring buffer size (~2 min at 2s)
+	property bool showPanel: true         // set false to hide border + labels
 
 	// ── Internal ──
 	property var _history: []
@@ -54,6 +55,7 @@ Item {
 	// ── Glowing panel border ──
 	Canvas {
 		anchors.fill: parent
+		visible: panel.showPanel
 		onPaint: {
 			var ctx = getContext("2d")
 			ctx.reset()
@@ -80,6 +82,7 @@ Item {
 
 	// ── Label (top-left) ──
 	Text {
+		visible: panel.showPanel
 		anchors.left: parent.left
 		anchors.leftMargin: 12
 		anchors.top: parent.top
@@ -94,6 +97,7 @@ Item {
 	// ── Value readout (top-right) ──
 	Text {
 		id: valueText
+		visible: panel.showPanel
 		anchors.right: parent.right
 		anchors.rightMargin: 12
 		anchors.top: parent.top
@@ -109,8 +113,8 @@ Item {
 	Canvas {
 		id: graphCanvas
 		anchors.fill: parent
-		anchors.margins: 12
-		anchors.topMargin: 22
+		anchors.margins: panel.showPanel ? 12 : 2
+		anchors.topMargin: panel.showPanel ? 22 : 2
 
 		onPaint: {
 			var ctx = getContext("2d")
