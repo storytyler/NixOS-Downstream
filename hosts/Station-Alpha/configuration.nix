@@ -63,6 +63,7 @@ in
     ../../modules/programs/cli/fastfetch
     ../../modules/programs/cli/btop
     ../../modules/programs/cli/voicemode
+    ../../modules/programs/cli/qmd
     # ../../modules/programs/cli/spec-kit
     ../../modules/programs/media/discord
     # ../../modules/programs/media/spicetify

@@ -12,6 +12,7 @@
       xdg.configFile."quickshell/dashboard/WaveFill.qml".source = ./qml/WaveFill.qml;
       xdg.configFile."quickshell/dashboard/HexFrame.qml".source = ./qml/HexFrame.qml;
       xdg.configFile."quickshell/dashboard/HudPoC.qml".source = ./qml/HudPoC.qml;
+      xdg.configFile."quickshell/dashboard/GlowSparkline.qml".source = ./qml/GlowSparkline.qml;
     })
   ];
 }

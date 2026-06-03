@@ -16,10 +16,25 @@ Item {
 	property color green: "#9ece6a"
 	property color orange: "#e0af68"
 
-	// Simulated values
+	// Simulated values (oscillating for PoC)
 	property real cpuValue: 0.58
 	property real memValue: 0.42
 	property real gpuValue: 0.73
+
+	// Data simulation timer — random walk every 1s to feed sparklines
+	Timer {
+		interval: 1000
+		running: true
+		repeat: true
+		onTriggered: {
+			poc.cpuValue = Math.max(0.1, Math.min(0.95,
+				poc.cpuValue + (Math.random() - 0.48) * 0.08))
+			poc.memValue = Math.max(0.15, Math.min(0.85,
+				poc.memValue + (Math.random() - 0.48) * 0.05))
+			poc.gpuValue = Math.max(0.2, Math.min(0.95,
+				poc.gpuValue + (Math.random() - 0.48) * 0.06))
+		}
+	}
 
 	// Helper: draw a rounded rectangle path (CSS border-radius equivalent)
 	function rr(ctx, x, y, w, h, r) {
@@ -234,241 +249,42 @@ Item {
 		}
 
 		// =====================================================
-		// TEST 2: Stat bars with glowing panel borders
-		// (vuild .meta class pattern: dark transparent bg,
-		//  colored border, shadow glow, bar gauge inside)
+		// TEST 2: Scrolling glow sparklines
+		// GlowSparkline: self-contained panel with ring buffer,
+		// shadowBlur glow, gradient fill, end-point dot
 		// =====================================================
 		Column {
 			spacing: 14
 			anchors.verticalCenter: parent.verticalCenter
 
-			// --- CPU bar ---
-			Item {
+			GlowSparkline {
 				width: 280
 				height: 64
-
-				Canvas {
-					anchors.fill: parent
-					onPaint: {
-						var ctx = getContext("2d")
-						ctx.reset()
-						poc.rr(ctx, 2, 2, width - 4, height - 4, 8)
-						ctx.fillStyle = Qt.rgba(0.05, 0.06, 0.09, 0.5)
-						ctx.fill()
-						ctx.shadowBlur = 15
-						ctx.shadowColor = "#7aa2f7"
-						ctx.strokeStyle = "#7aa2f7"
-						ctx.lineWidth = 1.5
-						poc.rr(ctx, 2, 2, width - 4, height - 4, 8)
-						ctx.stroke()
-						ctx.shadowBlur = 0
-					}
-				}
-
-				Canvas {
-					anchors.fill: parent
-					anchors.margins: 14
-					anchors.topMargin: 24
-					anchors.bottomMargin: 16
-
-					property real value: poc.cpuValue
-					onValueChanged: requestPaint()
-
-					onPaint: {
-						var ctx = getContext("2d")
-						ctx.reset()
-
-						// Track
-						poc.rr(ctx, 0, 0, width, height, 3)
-						ctx.fillStyle = Qt.rgba(0.2, 0.2, 0.3, 0.3)
-						ctx.fill()
-
-						// Fill with glow
-						var fillW = width * value
-						if (fillW > 4) {
-							ctx.shadowBlur = 8
-							ctx.shadowColor = "#7aa2f7"
-							poc.rr(ctx, 0, 0, fillW, height, 3)
-							ctx.fillStyle = "#7aa2f7"
-							ctx.fill()
-							ctx.shadowBlur = 0
-						}
-					}
-				}
-
-				Text {
-					anchors.left: parent.left
-					anchors.leftMargin: 14
-					anchors.top: parent.top
-					anchors.topMargin: 5
-					text: "CPU"
-					color: poc.textDim
-					font.pointSize: 9
-					font.family: "monospace"
-					font.bold: true
-				}
-
-				Text {
-					anchors.right: parent.right
-					anchors.rightMargin: 14
-					anchors.top: parent.top
-					anchors.topMargin: 5
-					text: Math.round(poc.cpuValue * 100) + "%"
-					color: "#7aa2f7"
-					font.pointSize: 9
-					font.family: "monospace"
-					font.bold: true
-				}
+				label: "CPU"
+				value: poc.cpuValue
+				lineColor: "#7aa2f7"
+				textColor: poc.textMain
+				dimColor: poc.textDim
 			}
 
-			// --- MEM bar ---
-			Item {
+			GlowSparkline {
 				width: 280
 				height: 64
-
-				Canvas {
-					anchors.fill: parent
-					onPaint: {
-						var ctx = getContext("2d")
-						ctx.reset()
-						poc.rr(ctx, 2, 2, width - 4, height - 4, 8)
-						ctx.fillStyle = Qt.rgba(0.05, 0.06, 0.09, 0.5)
-						ctx.fill()
-						ctx.shadowBlur = 15
-						ctx.shadowColor = "#9ece6a"
-						ctx.strokeStyle = "#9ece6a"
-						ctx.lineWidth = 1.5
-						poc.rr(ctx, 2, 2, width - 4, height - 4, 8)
-						ctx.stroke()
-						ctx.shadowBlur = 0
-					}
-				}
-
-				Canvas {
-					anchors.fill: parent
-					anchors.margins: 14
-					anchors.topMargin: 24
-					anchors.bottomMargin: 16
-
-					property real value: poc.memValue
-					onValueChanged: requestPaint()
-
-					onPaint: {
-						var ctx = getContext("2d")
-						ctx.reset()
-						poc.rr(ctx, 0, 0, width, height, 3)
-						ctx.fillStyle = Qt.rgba(0.2, 0.2, 0.3, 0.3)
-						ctx.fill()
-						var fillW = width * value
-						if (fillW > 4) {
-							ctx.shadowBlur = 8
-							ctx.shadowColor = "#9ece6a"
-							poc.rr(ctx, 0, 0, fillW, height, 3)
-							ctx.fillStyle = "#9ece6a"
-							ctx.fill()
-							ctx.shadowBlur = 0
-						}
-					}
-				}
-
-				Text {
-					anchors.left: parent.left
-					anchors.leftMargin: 14
-					anchors.top: parent.top
-					anchors.topMargin: 5
-					text: "MEM"
-					color: poc.textDim
-					font.pointSize: 9
-					font.family: "monospace"
-					font.bold: true
-				}
-
-				Text {
-					anchors.right: parent.right
-					anchors.rightMargin: 14
-					anchors.top: parent.top
-					anchors.topMargin: 5
-					text: Math.round(poc.memValue * 100) + "%"
-					color: "#9ece6a"
-					font.pointSize: 9
-					font.family: "monospace"
-					font.bold: true
-				}
+				label: "MEM"
+				value: poc.memValue
+				lineColor: "#9ece6a"
+				textColor: poc.textMain
+				dimColor: poc.textDim
 			}
 
-			// --- TEMP bar ---
-			Item {
+			GlowSparkline {
 				width: 280
 				height: 64
-
-				Canvas {
-					anchors.fill: parent
-					onPaint: {
-						var ctx = getContext("2d")
-						ctx.reset()
-						poc.rr(ctx, 2, 2, width - 4, height - 4, 8)
-						ctx.fillStyle = Qt.rgba(0.05, 0.06, 0.09, 0.5)
-						ctx.fill()
-						ctx.shadowBlur = 15
-						ctx.shadowColor = "#e0af68"
-						ctx.strokeStyle = "#e0af68"
-						ctx.lineWidth = 1.5
-						poc.rr(ctx, 2, 2, width - 4, height - 4, 8)
-						ctx.stroke()
-						ctx.shadowBlur = 0
-					}
-				}
-
-				Canvas {
-					anchors.fill: parent
-					anchors.margins: 14
-					anchors.topMargin: 24
-					anchors.bottomMargin: 16
-
-					property real value: 0.65
-					onValueChanged: requestPaint()
-
-					onPaint: {
-						var ctx = getContext("2d")
-						ctx.reset()
-						poc.rr(ctx, 0, 0, width, height, 3)
-						ctx.fillStyle = Qt.rgba(0.2, 0.2, 0.3, 0.3)
-						ctx.fill()
-						var fillW = width * value
-						if (fillW > 4) {
-							ctx.shadowBlur = 8
-							ctx.shadowColor = "#e0af68"
-							poc.rr(ctx, 0, 0, fillW, height, 3)
-							ctx.fillStyle = "#e0af68"
-							ctx.fill()
-							ctx.shadowBlur = 0
-						}
-					}
-				}
-
-				Text {
-					anchors.left: parent.left
-					anchors.leftMargin: 14
-					anchors.top: parent.top
-					anchors.topMargin: 5
-					text: "TEMP"
-					color: poc.textDim
-					font.pointSize: 9
-					font.family: "monospace"
-					font.bold: true
-				}
-
-				Text {
-					anchors.right: parent.right
-					anchors.rightMargin: 14
-					anchors.top: parent.top
-					anchors.topMargin: 5
-					text: "65%"
-					color: "#e0af68"
-					font.pointSize: 9
-					font.family: "monospace"
-					font.bold: true
-				}
+				label: "TEMP"
+				value: 0.65
+				lineColor: "#e0af68"
+				textColor: poc.textMain
+				dimColor: poc.textDim
 			}
 		}
 
