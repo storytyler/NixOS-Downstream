@@ -47,41 +47,8 @@ FloatingWindow {
 		font.family: "monospace"
 	}
 
-	Row {
+	HudPoC {
 		anchors.centerIn: parent
-		anchors.verticalCenterOffset: 140
-		spacing: 40
-
-		Item {
-			width: 200
-			height: 230
-
-			HexFrame {
-				anchors.fill: parent
-				borderColor: "#f7768e"
-				glowColor: "#f7768e"
-				backgroundColor: Qt.rgba(0.1, 0.1, 0.15, 0.6)
-				glowOpacity: 0.25
-			}
-
-			RadialGauge {
-				anchors.fill: parent
-				anchors.margins: 14
-				value: 0.58
-				arcColor: "#f7768e"
-				trackColor: "transparent"
-				textColor: saved.textMain
-			}
-
-			Text {
-				anchors.top: parent.top
-				anchors.topMargin: 24
-				anchors.horizontalCenter: parent.horizontalCenter
-				text: "GPU"
-				color: saved.textDim
-				font.pointSize: 11
-				font.family: "monospace"
-			}
-		}
+		anchors.verticalCenterOffset: 40
 	}
 }
