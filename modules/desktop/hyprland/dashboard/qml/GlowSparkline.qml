@@ -1,18 +1,20 @@
-// GlowSparkline.qml — Scrolling time series with neon glow
+// GlowSparkline.qml — Scrolling time series with neon glow (GPU-accelerated)
 // Self-contained panel: glowing border + sparkline graph + label + value readout
 //
 // Data flow: set `value` (0.0-1.0) from outside. Component manages its own
 // ring buffer internally via push/shift. Each value change triggers requestPaint.
 //
-// Rendering: Canvas shadowBlur glow on line stroke, gradient fill underneath,
-// end-point dot at the newest value. Scrolling left-to-right (newest = right).
+// Rendering: Canvas → FramebufferObject → MultiEffect (GPU bloom shader).
+// Glow via double-stroke (wide semi-transparent + thin solid) and double-circle
+// dot. No CPU-side shadowBlur — all bloom is GPU-composited.
 //
 // References:
 //   - end-4 Graph.qml (data model, push/shift)
-//   - RuView hud-controller.js (shadowBlur sparkline + gradient fill)
+//   - RuView hud-controller.js (sparkline + gradient fill pattern)
 //   - bluewave-labs SparklineGraph.qml (end-point dot, double-stroke glow)
 //   - ~/Workspace/tmp/quickshell/hud-visual-reference.md
 import QtQuick
+import QtQuick.Effects
 
 Item {
 	id: panel
@@ -56,6 +58,14 @@ Item {
 	Canvas {
 		anchors.fill: parent
 		visible: panel.showPanel
+		renderTarget: Canvas.FramebufferObject
+		layer.enabled: true
+		layer.effect: MultiEffect {
+			shadowEnabled: true
+			shadowColor: panel.lineColor
+			shadowBlur: 0.6
+			shadowOpacity: 0.5
+		}
 		onPaint: {
 			var ctx = getContext("2d")
 			ctx.reset()
@@ -69,14 +79,11 @@ Item {
 			ctx.fillStyle = Qt.rgba(0.05, 0.06, 0.09, 0.5)
 			ctx.fill()
 
-			// Glowing border (vuild .meta pattern)
-			ctx.shadowBlur = 20
-			ctx.shadowColor = panel.lineColor
+			// Border stroke (bloom via MultiEffect GPU shader)
 			ctx.strokeStyle = panel.lineColor
 			ctx.lineWidth = 1.5
 			panel.rr(ctx, m, m, w, h, r)
 			ctx.stroke()
-			ctx.shadowBlur = 0
 		}
 	}
 
@@ -115,6 +122,14 @@ Item {
 		anchors.fill: parent
 		anchors.margins: panel.showPanel ? 12 : 2
 		anchors.topMargin: panel.showPanel ? 22 : 2
+		renderTarget: Canvas.FramebufferObject
+		layer.enabled: true
+		layer.effect: MultiEffect {
+			shadowEnabled: true
+			shadowColor: panel.lineColor
+			shadowBlur: 0.5
+			shadowOpacity: 0.4
+		}
 
 		onPaint: {
 			var ctx = getContext("2d")
@@ -150,40 +165,42 @@ Item {
 			ctx.fillStyle = grad
 			ctx.fill()
 
-			// ── Glow stroke (shadowBlur) ──
+			// ── Glow pass: wide, semi-transparent ──
 			ctx.beginPath()
 			ctx.moveTo(pts[0].x, pts[0].y)
 			for (var k = 1; k < pts.length; k++)
 				ctx.lineTo(pts[k].x, pts[k].y)
+			ctx.strokeStyle = Qt.rgba(c.r, c.g, c.b, 0.2)
+			ctx.lineWidth = 8
+			ctx.lineCap = "round"
+			ctx.lineJoin = "round"
+			ctx.stroke()
 
-			ctx.shadowBlur = 12
-			ctx.shadowColor = panel.lineColor
-			ctx.strokeStyle = panel.lineColor
+			// ── Core pass: thin, solid ──
+			ctx.beginPath()
+			ctx.moveTo(pts[0].x, pts[0].y)
+			for (var k2 = 1; k2 < pts.length; k2++)
+				ctx.lineTo(pts[k2].x, pts[k2].y)
+			ctx.strokeStyle = Qt.rgba(c.r, c.g, c.b, 0.9)
 			ctx.lineWidth = 1.8
 			ctx.lineCap = "round"
 			ctx.lineJoin = "round"
 			ctx.stroke()
-			ctx.shadowBlur = 0
-
-			// ── Bright core (thinner, lighter) ──
-			ctx.beginPath()
-			ctx.moveTo(pts[0].x, pts[0].y)
-			for (var m = 1; m < pts.length; m++)
-				ctx.lineTo(pts[m].x, pts[m].y)
-
-			ctx.strokeStyle = Qt.rgba(c.r, c.g, c.b, 0.9)
-			ctx.lineWidth = 0.8
-			ctx.stroke()
 
 			// ── End-point dot (newest value) ──
 			var last = pts[pts.length - 1]
-			ctx.shadowBlur = 8
-			ctx.shadowColor = panel.lineColor
+
+			// Glow circle: large, semi-transparent
+			ctx.beginPath()
+			ctx.arc(last.x, last.y, 6, 0, Math.PI * 2)
+			ctx.fillStyle = Qt.rgba(c.r, c.g, c.b, 0.2)
+			ctx.fill()
+
+			// Core circle: small, solid
 			ctx.beginPath()
 			ctx.arc(last.x, last.y, 3, 0, Math.PI * 2)
 			ctx.fillStyle = panel.lineColor
 			ctx.fill()
-			ctx.shadowBlur = 0
 		}
 	}
 }

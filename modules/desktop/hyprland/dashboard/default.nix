@@ -14,6 +14,14 @@
       xdg.configFile."quickshell/dashboard/HudPoC.qml".source = ./qml/HudPoC.qml;
       xdg.configFile."quickshell/dashboard/GlowSparkline.qml".source = ./qml/GlowSparkline.qml;
       xdg.configFile."quickshell/dashboard/DialGauge.qml".source = ./qml/DialGauge.qml;
+      xdg.configFile."quickshell/dashboard/services/CpuData.qml".source = ./qml/services/CpuData.qml;
+      xdg.configFile."quickshell/dashboard/services/MemData.qml".source = ./qml/services/MemData.qml;
+      xdg.configFile."quickshell/dashboard/services/GpuData.qml".source = ./qml/services/GpuData.qml;
+      xdg.configFile."quickshell/dashboard/services/NetData.qml".source = ./qml/services/NetData.qml;
+      xdg.configFile."quickshell/dashboard/services/DiskData.qml".source = ./qml/services/DiskData.qml;
+      xdg.configFile."quickshell/dashboard/services/SysInfo.qml".source = ./qml/services/SysInfo.qml;
+      xdg.configFile."quickshell/dashboard/services/SignalData.qml".source = ./qml/services/SignalData.qml;
+      xdg.configFile."quickshell/dashboard/services/WeatherData.qml".source = ./qml/services/WeatherData.qml;
     })
   ];
 }

@@ -1,56 +1,83 @@
 // DialGauge.qml — Compact animated radial dial gauge
-// Uniform gray palette with spinning arcs, value arc, and glow
-// Self-contained: single Canvas draws all layers in paint order
-//
-// Palette: #cfd3db (light) for value arc + text
-//          #8f8f8f (mid)   for spinning arcs + glow
-//          #6b6b6b (dark)  for panel border + track
+// Neutral ramp: all layers brighten N1→N5 as value rises
+// Dual arc layers: outer staggered (collecting) + inner counter-rotating
+// Visual detail: tick marks, cardinal marks, double-stroke value glow
+// Configurable patterns: segment counts, arc lengths, speeds, directions
+// Performance: single Timer at 30fps, Canvas.FramebufferObject + MultiEffect GPU glow
 import QtQuick
+import QtQuick.Effects
 
 Item {
 	id: gauge
 
 	property string label: "CPU"
 	property real value: 0.5               // 0.0 – 1.0
-	property color lightColor: "#cfd3db"
-	property color midColor: "#8f8f8f"
-	property color darkColor: "#6b6b6b"
+	property real temp: 0                   // °C, 0 = not available
 
-	// -- Single Canvas: all layers drawn in order --
+	// Neutral ramp (matugen-ready)
+	property color n1: "#1f1f1f"   // Background. Deep neutral black.
+	property color n2: "#323232"   // Inactive borders, panel fills.
+	property color n3: "#6b6b6b"   // Secondary text, comments, separators.
+	property color n4: "#8f8f8f"   // Dim highlights, alternate rows.
+	property color n5: "#cfd3db"   // Primary text. Cool-tinted dim white.
+
+	// Arc configuration (for visual desync between instances)
+	property int arcCount: 6          // number of arc segments
+	property real arcLen: 0.4         // arc length in radians
+	property real baseSpeed: 3        // base degrees per tick
+	property int arcDir: 1            // 1=CW, -1=CCW
+
+	property int innerCount: 4          // number of inner arc segments
+	property real innerArcLen: 0.5      // arc length in radians
+	property real innerBaseSpeed: 2     // base degrees per tick
+	property int innerDir: -1           // 1=CW, -1=CCW
+
+	// Spinning arc angle (driven by Timer below)
+	property real _arcAngle: 0
+	property real _innerAngle: 0
+
+	// Computed active color from neutral ramp
+	property color _activeColor: n3
+	onValueChanged: _activeColor = _lerp(n3, n5, value)
+
+	function _lerp(c1, c2, t) {
+		return Qt.rgba(
+			c1.r + (c2.r - c1.r) * t,
+			c1.g + (c2.g - c1.g) * t,
+			c1.b + (c2.b - c1.b) * t,
+			1.0
+		)
+	}
+
+	// 30fps timer — dynamic speed based on value
+	Timer {
+		interval: 33
+		running: true
+		repeat: true
+		onTriggered: {
+			var speedFactor = 0.3 + gauge.value * 1.7
+			gauge._arcAngle = (gauge._arcAngle + gauge.arcDir * gauge.baseSpeed * speedFactor + 360) % 360
+			gauge._innerAngle = (gauge._innerAngle + gauge.innerDir * gauge.innerBaseSpeed * speedFactor + 360) % 360
+			dialCanvas.requestPaint()
+		}
+	}
+
+	// Single Canvas: all layers in paint order
 	Canvas {
-		id: gc
+		id: dialCanvas
 		anchors.fill: parent
-
-		property real outerAngle: 0
-		property real innerAngle: 0
-
-		NumberAnimation on outerAngle {
-			from: 0; to: 360; duration: 4000; loops: Animation.Infinite
+		renderStrategy: Canvas.Threaded
+		renderTarget: Canvas.FramebufferObject
+		layer.enabled: true
+		layer.effect: MultiEffect {
+			shadowEnabled: true
+			shadowColor: gauge._activeColor
+			shadowBlur: 0.5
+			shadowOpacity: 0.3
 		}
-		NumberAnimation on innerAngle {
-			from: 360; to: 0; duration: 6000; loops: Animation.Infinite
-		}
-
-		onOuterAngleChanged: requestPaint()
-		onInnerAngleChanged: requestPaint()
 
 		property real _val: gauge.value
 		on_ValChanged: requestPaint()
-
-		// Helper
-		function rr(ctx, x, y, w, h, r) {
-			ctx.beginPath()
-			ctx.moveTo(x + r, y)
-			ctx.lineTo(x + w - r, y)
-			ctx.arcTo(x + w, y, x + w, y + r, r)
-			ctx.lineTo(x + w, y + h - r)
-			ctx.arcTo(x + w, y + h, x + w - r, y + h, r)
-			ctx.lineTo(x + r, y + h)
-			ctx.arcTo(x, y + h, x, y + h - r, r)
-			ctx.lineTo(x, y + r)
-			ctx.arcTo(x, y, x + r, y, r)
-			ctx.closePath()
-		}
 
 		onPaint: {
 			var ctx = getContext("2d")
@@ -58,92 +85,127 @@ Item {
 			var w = width, h = height
 			var cx = w / 2, cy = h / 2
 			var size = Math.min(cx, cy)
+			var v = gauge.value
+			var ac = gauge._activeColor   // lerp(n3, n5, value)
 
-			// -- Layer 1: Dark transparent background --
-			rr(ctx, 3, 3, w - 6, h - 6, 10)
-			ctx.fillStyle = Qt.rgba(0.05, 0.06, 0.09, 0.5)
-			ctx.fill()
-
-			// -- Layer 2: Panel border with glow --
-			ctx.shadowBlur = 18
-			ctx.shadowColor = midColor.toString()
-			ctx.strokeStyle = darkColor.toString()
-			ctx.lineWidth = 1.5
-			rr(ctx, 3, 3, w - 6, h - 6, 10)
-			ctx.stroke()
-			ctx.shadowBlur = 0
-
-			// -- Radii (proportional to component size) --
-			var outerR = Math.max(1, size - 8)
-			var innerR = Math.max(1, size * 0.72)
 			var valueR = Math.max(1, size * 0.5)
+			var innerR = Math.max(1, size * 0.72)
+			var edgeR = Math.max(1, size - 8)
 
-			// -- Layer 3: Outer spinning arcs (6 segments, CW) --
-			var obase = outerAngle * Math.PI / 180
-			ctx.shadowBlur = 6
-			ctx.shadowColor = midColor.toString()
-			ctx.strokeStyle = midColor.toString()
-			ctx.lineWidth = 1.5
+			// ═══ Layer 1: Outer staggered arcs (collecting toward edge) ═══
+			// Each segment at unique radius, converging toward edgeR as value rises
+			// Color: per-segment gradient from N1 (inner) to N4 (outer), all brighten to N5 with value
+			var abase = gauge._arcAngle * Math.PI / 180
 			ctx.lineCap = "round"
-			for (var i = 0; i < 6; i++) {
-				var a = obase + i * Math.PI / 3
+			ctx.lineWidth = 1.5
+			for (var i = 0; i < gauge.arcCount; i++) {
+				var fraction = gauge.arcCount > 1 ? i / (gauge.arcCount - 1) : 0.5
+				var baseR = valueR + 8 + (edgeR - valueR - 8) * fraction
+				var currentR = baseR + (edgeR - baseR) * v
+				var baseColor = gauge._lerp(gauge.n1, gauge.n4, fraction)
+				var segColor = gauge._lerp(baseColor, gauge.n5, v)
+				var a = abase + i * (2 * Math.PI / gauge.arcCount)
 				ctx.beginPath()
-				ctx.arc(cx, cy, outerR, a, a + 0.4)
+				ctx.arc(cx, cy, Math.max(1, currentR), a, a + gauge.arcLen)
+				ctx.strokeStyle = segColor.toString()
 				ctx.stroke()
 			}
-			ctx.shadowBlur = 0
 
-			// -- Layer 4: Inner spinning arcs (4 segments, CCW, subtle) --
-			var ibase = innerAngle * Math.PI / 180
-			ctx.strokeStyle = Qt.rgba(
-				midColor.r, midColor.g, midColor.b, 0.35)
+			// ═══ Layer 2: Inner counter-rotating arcs ═══
+			// Fixed radius, subtle opacity (0.5), same N1→N5 color gradient
+			var ibase = gauge._innerAngle * Math.PI / 180
+			var innerColor = gauge._lerp(gauge.n2, gauge.n4, v)
+			ctx.strokeStyle = Qt.rgba(innerColor.r, innerColor.g, innerColor.b, 0.5)
 			ctx.lineWidth = 1
-			for (var j = 0; j < 4; j++) {
-				var b = ibase + j * Math.PI / 2
+			ctx.lineCap = "round"
+			for (var j = 0; j < gauge.innerCount; j++) {
+				var b = ibase + j * (2 * Math.PI / gauge.innerCount)
 				ctx.beginPath()
-				ctx.arc(cx, cy, innerR, b, b + 0.5)
+				ctx.arc(cx, cy, innerR, b, b + gauge.innerArcLen)
 				ctx.stroke()
 			}
 
-			// -- Layer 5: Value track (full circle, dim) --
+			// ═══ Layer 3: Tick marks around value track ═══
+			// 24 small dots evenly spaced around valueR, very subtle
+			var tickColor = gauge._lerp(gauge.n2, gauge.n3, v * 0.5)
+			ctx.fillStyle = Qt.rgba(tickColor.r, tickColor.g, tickColor.b, 0.3)
+			for (var t = 0; t < 24; t++) {
+				var ta = t * (2 * Math.PI / 24)
+				var tx = cx + Math.cos(ta) * valueR
+				var ty = cy + Math.sin(ta) * valueR
+				ctx.beginPath()
+				ctx.arc(tx, ty, 1, 0, Math.PI * 2)
+				ctx.fill()
+			}
+
+			// ═══ Layer 4: Cardinal marks (12/3/6/9 o'clock) ═══
+			// Slightly larger dots at 4 cardinal positions, brighter
+			var cardColor = gauge._lerp(gauge.n3, gauge.n5, v * 0.7)
+			ctx.fillStyle = Qt.rgba(cardColor.r, cardColor.g, cardColor.b, 0.4)
+			for (var c = 0; c < 4; c++) {
+				var ca = c * Math.PI / 2 - Math.PI / 2
+				var cardx = cx + Math.cos(ca) * valueR
+				var cardy = cy + Math.sin(ca) * valueR
+				ctx.beginPath()
+				ctx.arc(cardx, cardy, 2, 0, Math.PI * 2)
+				ctx.fill()
+			}
+
+			// ═══ Layer 5: Value track (full circle, near-invisible) ═══
 			ctx.beginPath()
 			ctx.arc(cx, cy, valueR, 0, 2 * Math.PI)
-			ctx.strokeStyle = Qt.rgba(
-				darkColor.r, darkColor.g, darkColor.b, 0.2)
-			ctx.lineWidth = 4
+			ctx.strokeStyle = Qt.rgba(ac.r, ac.g, ac.b, 0.06)
+			ctx.lineWidth = 2
 			ctx.stroke()
 
-			// -- Layer 6: Value arc (glow) --
-			var v = gauge.value
+			// ═══ Layer 6: Value arc with double-stroke glow ═══
 			if (v > 0.001) {
 				var s = -Math.PI / 2
 				var e = s + 2 * Math.PI * v
-				ctx.shadowBlur = 10
-				ctx.shadowColor = lightColor.toString()
+				// Glow pass
 				ctx.beginPath()
 				ctx.arc(cx, cy, valueR, s, e)
-				ctx.strokeStyle = lightColor.toString()
+				ctx.strokeStyle = Qt.rgba(ac.r, ac.g, ac.b, 0.25)
+				ctx.lineWidth = 12
+				ctx.lineCap = "round"
+				ctx.stroke()
+				// Core pass
+				ctx.beginPath()
+				ctx.arc(cx, cy, valueR, s, e)
+				ctx.strokeStyle = ac.toString()
 				ctx.lineWidth = 4
 				ctx.lineCap = "round"
 				ctx.stroke()
-				ctx.shadowBlur = 0
 			}
 
-			// -- Layer 7: Percentage text with glow --
-			ctx.shadowBlur = 6
-			ctx.shadowColor = lightColor.toString()
-			ctx.fillStyle = lightColor.toString()
-			ctx.font = "bold " + Math.round(Math.max(10, h * 0.16)) + "px monospace"
-			ctx.textAlign = "center"
-			ctx.textBaseline = "middle"
-			ctx.fillText(Math.round(v * 100) + "%", cx, cy)
-			ctx.shadowBlur = 0
-
-			// -- Layer 8: Label text (above center) --
-			ctx.shadowBlur = 0
-			ctx.fillStyle = midColor.toString()
-			ctx.font = Math.round(Math.max(8, h * 0.07)) + "px monospace"
-			ctx.fillText(gauge.label, cx, cy - valueR + Math.max(6, h * 0.06))
 		}
 	}
+
+	// Percentage text (scales dynamically with gauge)
+	Text {
+		id: percentText
+		anchors.centerIn: parent
+		anchors.verticalCenterOffset: 0
+		text: Math.round(gauge.value * 100) + "%"
+		color: gauge._activeColor
+		font.pixelSize: Math.max(10, Math.min(dialCanvas.height * 0.18, dialCanvas.width * 0.14))
+		font.family: "monospace"
+		font.bold: true
+		style: Text.Raised
+		styleColor: Qt.rgba(gauge._activeColor.r, gauge._activeColor.g, gauge._activeColor.b, 0.3)
+	}
+
+	// Label beneath percentage
+	Text {
+		id: labelText
+		anchors.horizontalCenter: parent.horizontalCenter
+		anchors.top: percentText.bottom
+		anchors.topMargin: font.pixelSize * 0.2
+		text: gauge.label
+		color: gauge._activeColor
+		font.pixelSize: Math.max(7, Math.min(dialCanvas.height * 0.06, dialCanvas.width * 0.05))
+		font.family: "monospace"
+	}
+
+
 }

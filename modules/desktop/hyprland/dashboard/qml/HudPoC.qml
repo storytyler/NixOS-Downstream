@@ -1,37 +1,30 @@
-// HudPoC.qml — Dashboard layout: stacked gauge+graph top-left, status top-right
-// DialGauge: uniform gray (#cfd3db / #8f8f8f / #6b6b6b)
-// GlowSparkline: matching palette, no panel border when paired with gauge
-// Status panel: top-right, dynamic font sizing
+// HudPoC.qml — Dashboard layout: three gauges top-left, status panel top-right
+// DialGauge: neutral ramp (N1→N5), staggered collecting arcs, desynced patterns
+// Data: real system metrics via services/ (CpuData, MemData, GpuData, NetData, etc.)
+// Status panel: live metrics grouped — system, disk, net+signal
 import QtQuick
+import "services"
 
 Item {
 	id: poc
+	opacity: 0.7
 
-	// ── Uniform gray palette ──
-	property color light: "#cfd3db"
-	property color mid: "#8f8f8f"
-	property color dark: "#6b6b6b"
-	property color accent: "#f7768e"
+	// ── Neutral ramp palette ──
+	property color n1: "#1f1f1f"
+	property color n2: "#323232"
+	property color n3: "#6b6b6b"
+	property color n4: "#8f8f8f"
+	property color n5: "#cfd3db"
 
-	// ── Simulated values ──
-	property real cpuValue: 0.58
-	property real memValue: 0.42
-	property real gpuValue: 0.73
-
-	// ── Data simulation timer (1s random walk) ──
-	Timer {
-		interval: 1000
-		running: true
-		repeat: true
-		onTriggered: {
-			poc.cpuValue = Math.max(0.1, Math.min(0.95,
-				poc.cpuValue + (Math.random() - 0.48) * 0.08))
-			poc.memValue = Math.max(0.15, Math.min(0.85,
-				poc.memValue + (Math.random() - 0.48) * 0.05))
-			poc.gpuValue = Math.max(0.2, Math.min(0.95,
-				poc.gpuValue + (Math.random() - 0.48) * 0.06))
-		}
-	}
+	// ── Data services (real system metrics) ──
+	CpuData { id: cpuData }
+	MemData { id: memData }
+	GpuData { id: gpuData }
+	NetData { id: netData }
+	DiskData { id: diskData }
+	SysInfo { id: sysInfo }
+	SignalData { id: signalData }
+	WeatherData { id: weatherData }
 
 	// ── Helper: rounded rect path ──
 	function rr(ctx, x, y, w, h, r) {
@@ -49,101 +42,48 @@ Item {
 	}
 
 	// ═══════════════════════════════════════════════
-	// LEFT COLUMN: Stacked gauge + sparkline groups
-	// CPU gauge → CPU graph → MEM gauge → MEM graph → GPU gauge → GPU graph
+	// LEFT COLUMN: Three gauges (sparklines removed for larger gauge allocation)
 	// ═══════════════════════════════════════════════
 	Column {
 		id: leftColumn
 		anchors.left: parent.left
 		anchors.top: parent.top
-		anchors.margins: 30
+		anchors.leftMargin: 5
+		anchors.topMargin: 30
 		width: parent.width * 0.32
 		height: parent.height * 0.48
-
 		spacing: 6
 
-		// ── CPU ──
-		Column {
+		DialGauge {
 			width: parent.width
-			height: (leftColumn.height - leftColumn.spacing * 5) / 3
-			spacing: 2
-
-			DialGauge {
-				width: parent.width
-				height: parent.height * 0.72
-				label: "CPU"
-				value: poc.cpuValue
-				lightColor: poc.light
-				midColor: poc.mid
-				darkColor: poc.dark
-			}
-
-			GlowSparkline {
-				width: parent.width
-				height: parent.height * 0.26
-				label: "CPU"
-				value: poc.cpuValue
-				lineColor: poc.mid
-				textColor: poc.light
-				dimColor: poc.dark
-				showPanel: false
-			}
+			height: (leftColumn.height - leftColumn.spacing * 2) / 3
+			label: "CPU"
+			value: cpuData.usage
+			temp: cpuData.temp
+			// Desync: outer 6 CW, inner 4 CCW
+			arcCount: 6; arcLen: 0.4; baseSpeed: 3; arcDir: 1
+			innerCount: 4; innerArcLen: 0.5; innerBaseSpeed: 2; innerDir: -1
 		}
 
-		// ── MEMORY ──
-		Column {
+		DialGauge {
 			width: parent.width
-			height: (leftColumn.height - leftColumn.spacing * 5) / 3
-			spacing: 2
-
-			DialGauge {
-				width: parent.width
-				height: parent.height * 0.72
-				label: "MEMORY"
-				value: poc.memValue
-				lightColor: poc.light
-				midColor: poc.mid
-				darkColor: poc.dark
-			}
-
-			GlowSparkline {
-				width: parent.width
-				height: parent.height * 0.26
-				label: "MEM"
-				value: poc.memValue
-				lineColor: poc.mid
-				textColor: poc.light
-				dimColor: poc.dark
-				showPanel: false
-			}
+			height: (leftColumn.height - leftColumn.spacing * 2) / 3
+			label: "MEMORY"
+			value: memData.usage
+			// Desync: outer 8 CCW short, inner 3 CW long
+			arcCount: 8; arcLen: 0.25; baseSpeed: 2; arcDir: -1
+			innerCount: 3; innerArcLen: 0.7; innerBaseSpeed: 3.5; innerDir: 1
 		}
 
-		// ── GPU ──
-		Column {
+		DialGauge {
 			width: parent.width
-			height: (leftColumn.height - leftColumn.spacing * 5) / 3
-			spacing: 2
-
-			DialGauge {
-				width: parent.width
-				height: parent.height * 0.72
-				label: "GPU"
-				value: poc.gpuValue
-				lightColor: poc.light
-				midColor: poc.mid
-				darkColor: poc.dark
-			}
-
-			GlowSparkline {
-				width: parent.width
-				height: parent.height * 0.26
-				label: "GPU"
-				value: poc.gpuValue
-				lineColor: poc.mid
-				textColor: poc.light
-				dimColor: poc.dark
-				showPanel: false
-			}
+			height: (leftColumn.height - leftColumn.spacing * 2) / 3
+			label: "GPU"
+			value: gpuData.usage
+			temp: gpuData.temp
+			// Desync: outer 5 CW long, inner 5 CW (same direction)
+			arcCount: 5; arcLen: 0.55; baseSpeed: 4; arcDir: 1
+			innerCount: 5; innerArcLen: 0.3; innerBaseSpeed: 1.5; innerDir: 1
 		}
 	}
 
@@ -157,25 +97,20 @@ Item {
 		anchors.right: parent.right
 		anchors.top: parent.top
 		anchors.margins: 30
-		width: parent.width * 0.32
+		width: parent.width * 0.22
 		height: parent.height * 0.48
 
-		// Panel border
+		// Panel border (stroke only, no fill)
 		Canvas {
 			anchors.fill: parent
+			renderTarget: Canvas.FramebufferObject
 			onPaint: {
 				var ctx = getContext("2d")
 				ctx.reset()
 				poc.rr(ctx, 3, 3, width - 6, height - 6, 12)
-				ctx.fillStyle = Qt.rgba(0.05, 0.06, 0.09, 0.5)
-				ctx.fill()
-				ctx.shadowBlur = 20
-				ctx.shadowColor = "#f7768e"
-				ctx.strokeStyle = "#f7768e"
-				ctx.lineWidth = 1.5
-				poc.rr(ctx, 3, 3, width - 6, height - 6, 12)
+				ctx.strokeStyle = "#8f8f8f"   // N4
+				ctx.lineWidth = 1
 				ctx.stroke()
-				ctx.shadowBlur = 0
 			}
 		}
 
@@ -186,7 +121,7 @@ Item {
 			anchors.top: parent.top
 			anchors.topMargin: parent.height * 0.05
 			text: "SYSTEM ONLINE"
-			color: "#f7768e"
+			color: "#cfd3db"   // N5
 			font.pixelSize: Math.max(12, parent.height * 0.04)
 			font.family: "monospace"
 			font.bold: true
@@ -208,48 +143,55 @@ Item {
 			anchors.right: parent.right
 			anchors.bottom: parent.bottom
 			anchors.margins: parent.width * 0.06
+			renderTarget: Canvas.FramebufferObject
 
 			onPaint: {
 				var ctx = getContext("2d")
 				ctx.reset()
-				var fontSize = Math.max(9, Math.round(height * 0.055))
-				ctx.shadowBlur = 6
-				ctx.shadowColor = "#f7768e"
-				ctx.fillStyle = Qt.rgba(0.97, 0.46, 0.56, 0.7)
+
+				var lines = [
+					"CPU: " + Math.round(cpuData.usage * 100) + "% \u00B7 " + Math.round(cpuData.temp) + "\u00B0C",
+					"MEM: " + Math.round(memData.usage * 100) + "% \u00B7 " + memData.usedGB.toFixed(1) + "G/" + memData.totalGB.toFixed(1) + "G",
+					"GPU: " + Math.round(gpuData.usage * 100) + "% \u00B7 " + Math.round(gpuData.temp) + "\u00B0C",
+					"",
+					"Load: " + sysInfo.load1.toFixed(2) + "  " + sysInfo.load5.toFixed(2) + "  " + sysInfo.load15.toFixed(2),
+					"Uptime: " + sysInfo.uptime,
+					"Threads: " + sysInfo.threads,
+					"",
+					"Disk: " + diskData.usedGB.toFixed(0) + "G/" + diskData.totalGB.toFixed(0) + "G" + (diskData.readFormatted ? " \u00B7 R " + diskData.readFormatted : ""),
+					"",
+					"Net: \u2193 " + netData.downloadFormatted + "  \u2191 " + netData.uploadFormatted,
+					"Signal: " + signalData.strengthFormatted,
+					"",
+					weatherData.conditionText + " \u00B7 " + weatherData.tempFormatted,
+					weatherData.feelsLikeFormatted + " \u00B7 " + weatherData.windFormatted,
+					"Humidity: " + Math.round(weatherData.humidity) + "%"
+				]
+
+				// Adaptive font size: ensure all lines fit within canvas height
+				var lineSpacing = 1.6
+				var maxFontSize = Math.round(height * 0.055)
+				var fitFontSize = Math.floor((height - 8) / (lines.length * lineSpacing))
+				var fontSize = Math.max(8, Math.min(maxFontSize, fitFontSize))
+				var lineH = fontSize * lineSpacing
+
+				ctx.fillStyle = "#8f8f8f"   // N4
 				ctx.font = fontSize + "px monospace"
 				ctx.textAlign = "left"
 				ctx.textBaseline = "top"
 
-				var lines = [
-					"Speed: 130 MPH",
-					"Alt: -30M",
-					"Ext Temp: 57\u2109",
-					"Int Temp: 86\u2109",
-					"Status: Good",
-					"Uptime: 4d 7h",
-					"Load: 2.41",
-					"CPU: " + Math.round(poc.cpuValue * 100) + "%",
-					"MEM: " + Math.round(poc.memValue * 100) + "%",
-					"GPU: " + Math.round(poc.gpuValue * 100) + "%",
-					"Net: 142 Mb/s",
-					"Disk: 340G/2T",
-					"Procs: 387",
-					"Threads: 1249"
-				]
-				var lineH = fontSize * 1.7
 				for (var i = 0; i < lines.length; i++) {
 					ctx.fillText(lines[i], 4, 4 + i * lineH)
 				}
-				ctx.shadowBlur = 0
 			}
 
-			// Repaint when simulated values change
-			property real _t1: poc.cpuValue
-			property real _t2: poc.memValue
-			property real _t3: poc.gpuValue
-			on_T1Changed: requestPaint()
-			on_T2Changed: requestPaint()
-			on_T3Changed: requestPaint()
+			// Repaint status panel at 2s interval (driven by data service polling)
+			Timer {
+				interval: 2000
+				running: true
+				repeat: true
+				onTriggered: dataReadout.requestPaint()
+			}
 		}
 	}
 }

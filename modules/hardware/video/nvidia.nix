@@ -55,7 +55,7 @@ in
     nvidia = {
       # 5060 TI on station alpha requires open drivers
       open = true;
-      # nvidiaPersistenced = true;
+      nvidiaPersistenced = true;
       nvidiaSettings = false;
       powerManagement.enable = true; # Fixes sleep/suspend
       modesetting.enable = true; # Modesetting is required.

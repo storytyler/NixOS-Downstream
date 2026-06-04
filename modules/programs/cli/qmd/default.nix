@@ -1,6 +1,41 @@
-{ inputs, pkgs, ... }:
+{
+  inputs,
+  pkgs,
+  lib,
+  ...
+}:
 let
-  qmd = inputs.qmd.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  qmd-unwrapped = inputs.qmd.packages.${pkgs.stdenv.hostPlatform.system}.default;
+
+  # Re-wrap qmd with CUDA runtime libs in LD_LIBRARY_PATH. The qmd-mcp
+  # fork (PR #574) already adds sqlite + glibc + libstdc++ to the wrapper;
+  # we add cudart + cublas + libcuda + libggml-base so the CUDA prebuilt
+  # can load. These come from already-closed store paths (cudaSupport = true
+  # pulls them in transitively) — nothing new gets added to the system
+  # closure, only to qmd's wrapper.
+  # Patch the upstream qmd wrapper (PR #574) to add CUDA runtime libs
+  # to LD_LIBRARY_PATH. The upstream wrapper hardcodes sqlite+glibc+libstdc++
+  # via `export LD_LIBRARY_PATH=...`, which would replace any LD_LIBRARY_PATH
+  # we set from a higher-level wrapper. So we modify the upstream wrapper
+  # in-place to prepend our CUDA paths to its existing LD_LIBRARY_PATH value.
+  qmd =
+    pkgs.runCommand "qmd-cuda"
+      {
+        nativeBuildInputs = [ pkgs.bash ];
+      }
+      ''
+        mkdir -p $out/bin
+        cp ${qmd-unwrapped}/bin/qmd $out/bin/qmd
+        chmod +w $out/bin/qmd
+        substituteInPlace $out/bin/qmd \
+          --replace-fail "export LD_LIBRARY_PATH='" "export LD_LIBRARY_PATH='${
+            lib.makeLibraryPath [
+              pkgs.cudaPackages.cuda_cudart
+              pkgs.cudaPackages.libcublas
+            ]
+          }:/run/opengl-driver/lib:${qmd-unwrapped}/lib/qmd/node_modules/@node-llama-cpp/linux-x64-cuda/bins/linux-x64-cuda:"
+      '';
+
   inotify = pkgs.inotify-tools;
 
   # Watches all registered qmd collection directories for filesystem
@@ -55,6 +90,10 @@ in
           RestartSec = "5s";
           KillMode = "mixed";
           TimeoutStopSec = "30s";
+          # Force CUDA device (qmd's auto picks CPU when it can't load
+          # the CUDA prebuilt; with the wrapper's LD_LIBRARY_PATH fix,
+          # CUDA loads cleanly).
+          Environment = "QMD_LLAMA_GPU=cuda";
         };
         Install = {
           WantedBy = [ "default.target" ];
@@ -76,6 +115,9 @@ in
           ExecStart = "${qmd-watch}/bin/qmd-watch";
           Restart = "on-failure";
           RestartSec = "10s";
+          # Watch daemon calls `qmd update` which embeds new files —
+          # also needs the GPU backend.
+          Environment = "QMD_LLAMA_GPU=cuda";
         };
         Install = {
           WantedBy = [ "default.target" ];
