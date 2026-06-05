@@ -40,33 +40,58 @@ let
 
   # Watches all registered qmd collection directories for filesystem
   # changes and re-indexes on the fly.  Reads collection paths
-  # dynamically from `qmd collection list` so it adapts when the user
-  # adds or removes collections.
+  # from the YAML config (the only source of filesystem paths —
+  # `qmd collection list` prints qmd:// URIs, not filesystem paths).
+  # Adding a new collection requires restarting this service.
   qmd-watch = pkgs.writeShellScriptBin "qmd-watch" ''
-    set -euo pipefail
+        set -euo pipefail
 
-    QMD="${qmd}/bin/qmd"
-    INOTIFYWAIT="${inotify}/bin/inotifywait"
+        QMD="${qmd}/bin/qmd"
+        INOTIFYWAIT="${inotify}/bin/inotifywait"
+        CFG="''${XDG_CONFIG_HOME:-$HOME/.config}/qmd/index.yml"
 
-    # Collect paths from qmd; fall back to a harmless empty loop
-    mapfile -t DIRS < <($QMD collection list 2>/dev/null | grep -oP '(?<=→\s)/\S+' || true)
+        if [ ! -f "$CFG" ]; then
+          echo "qmd-watch: no $CFG, sleeping until next restart"
+          exec sleep infinity
+        fi
 
-    if [ ''${#DIRS[@]} -eq 0 ]; then
-      echo "qmd-watch: no collections registered, sleeping until next restart"
-      exec sleep infinity
-    fi
+    mapfile -t DIRS < <(awk -F': *' '
+      /^[[:space:]]*path:[[:space:]]*/ {
+        $1 = ""
+        sub(/^[[:space:]]+/, "", $0)
+        print
+      }
+    ' "$CFG")
 
-    echo "qmd-watch: watching ''${#DIRS[@]} collection directory(ies): ''${DIRS[*]}"
+        if [ ''${#DIRS[@]} -eq 0 ]; then
+          echo "qmd-watch: no collections registered, sleeping until next restart"
+          exec sleep infinity
+        fi
 
-    $INOTIFYWAIT -r -m -e modify -e create -e delete -e moved_to -e moved_from \
-      --format '%w' "''${DIRS[@]}" \
-    | while read -r _changed; do
-        # Debounce: wait a short window so batch writes produce one update
+        echo "qmd-watch: watching ''${#DIRS[@]} collection directory(ies): ''${DIRS[*]}"
+
+    $INOTIFYWAIT -r -m \
+      -e modify -e create -e delete -e moved_to -e moved_from -e close_write \
+      --format '%w%f|%e' "''${DIRS[@]}" \
+    | while IFS='|' read -r _path _event; do
+        case "$_event" in
+          DELETE* | MOVED_FROM*) needs_cleanup=1 ;;
+        esac
         sleep 2
-        # Only update if events are still arriving (read with timeout)
-        while read -r -t 1 _extra 2>/dev/null; do true; done
+        while IFS='|' read -r -t 1 _ep _ee 2>/dev/null; do
+          case "$_ee" in
+            DELETE* | MOVED_FROM*) needs_cleanup=1 ;;
+          esac
+        done
         echo "qmd-watch: reindexing ($QMD update) ..."
         $QMD update --quiet 2>/dev/null || true
+        echo "qmd-watch: embedding ($QMD embed) ..."
+        $QMD embed 2>/dev/null || true
+        if [ "''${needs_cleanup:-0}" = 1 ]; then
+          echo "qmd-watch: delete/move detected, cleaning orphan vectors ($QMD cleanup) ..."
+          $QMD cleanup 2>/dev/null || true
+          needs_cleanup=0
+        fi
       done
   '';
 in
@@ -101,9 +126,9 @@ in
       };
 
       # Watches collection directories via inotify and re-indexes on
-      # file changes.  Paths are read from `qmd collection list` at
-      # startup, so adding/removing collections takes effect on next
-      # service restart.
+      # file changes.  Paths are read from `~/.config/qmd/index.yml`
+      # at startup, so adding/removing collections takes effect on
+      # next service restart.
       systemd.user.services.qmd-watch = {
         Unit = {
           Description = "Watch qmd collections and reindex on file changes";

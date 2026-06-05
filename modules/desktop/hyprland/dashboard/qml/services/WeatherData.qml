@@ -19,6 +19,12 @@ Item {
 	property string windFormatted: "-- mph"
 	property string conditionText: "Loading..."
 
+	// Hourly forecast (next 24h from current time)
+	property var hourlyForecast: []   // [{hour, temp, precip, code, isDay}, ...]
+
+	// Daily forecast (10-day)
+	property var dailyForecast: []    // [{dayName, high, low, precip, code}, ...]
+
 	// Location (configurable, hardcoded for now)
 	property real latitude: 41.88
 	property real longitude: -87.63
@@ -57,13 +63,12 @@ Item {
 		onTriggered: forecastProc.running = true
 	}
 
+	// Initial fetch on startup
+	Component.onCompleted: forecastProc.running = true
+
 	Process {
 		id: forecastProc
-		command: ["curl", "-s",
-			"https://api.open-meteo.com/v1/forecast?latitude=" + weatherData.latitude + "&longitude=" + weatherData.longitude +
-			"&current=temperature_2m,apparent_temperature,wind_speed_10m,wind_direction_10m,weather_code,relative_humidity_2m,is_day" +
-			"&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto"
-		]
+		command: ["sh", "-c", "curl -s 'https://api.open-meteo.com/v1/forecast?latitude=" + weatherData.latitude + "&longitude=" + weatherData.longitude + "&current=temperature_2m,apparent_temperature,wind_speed_10m,wind_direction_10m,weather_code,relative_humidity_2m,is_day&hourly=temperature_2m,precipitation_probability,weather_code,is_day&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&forecast_days=10&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto'"]
 		stdout: StdioCollector {
 			onStreamFinished: {
 				try {
@@ -83,6 +88,51 @@ Item {
 					weatherData.feelsLikeFormatted = "Feels " + Math.round(weatherData.feelsLike) + "°F"
 					weatherData.windFormatted = Math.round(weatherData.windSpeed) + " mph " + weatherData._windDir(weatherData.windDirection)
 					weatherData.conditionText = weatherData._conditionText(weatherData.weatherCode)
+
+					// Parse hourly — find current hour index, slice next 24
+					var hourly = json.hourly
+					if (hourly && hourly.time) {
+						var now = new Date()
+						var startIdx = 0
+						for (var i = 0; i < hourly.time.length; i++) {
+							if (new Date(hourly.time[i]) > now) { startIdx = i; break }
+						}
+						var forecast = []
+						var count = Math.min(24, hourly.time.length - startIdx)
+						for (var j = 0; j < count; j++) {
+							var idx = startIdx + j
+							var t = new Date(hourly.time[idx])
+							var hrs = t.getHours()
+							var hh = hrs < 10 ? "0" + hrs : "" + hrs
+							var mm = t.getMinutes() < 10 ? "0" + t.getMinutes() : "" + t.getMinutes()
+							forecast.push({
+								hour: hh + ":" + mm,
+								temp: Math.round(hourly.temperature_2m[idx] || 0),
+								precip: Math.round(hourly.precipitation_probability[idx] || 0),
+								code: hourly.weather_code[idx] || 0,
+								isDay: hourly.is_day[idx] === 1
+							})
+						}
+						weatherData.hourlyForecast = forecast
+					}
+
+					// Parse daily — 10-day forecast
+					var daily = json.daily
+					if (daily && daily.time) {
+						var dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+						var days = []
+						for (var d = 0; d < daily.time.length; d++) {
+							var dt = new Date(daily.time[d] + "T12:00:00")
+							days.push({
+								dayName: dayNames[dt.getDay()],
+								high: Math.round(daily.temperature_2m_max[d] || 0),
+								low: Math.round(daily.temperature_2m_min[d] || 0),
+								precip: Math.round(daily.precipitation_probability_max[d] || 0),
+								code: daily.weather_code[d] || 0
+							})
+						}
+						weatherData.dailyForecast = days
+					}
 				} catch (e) {
 					weatherData.conditionText = "Fetch Error"
 				}
