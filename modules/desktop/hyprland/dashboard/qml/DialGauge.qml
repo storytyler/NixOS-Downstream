@@ -40,6 +40,10 @@ Item {
 	property color _activeColor: n3
 	onValueChanged: _activeColor = _lerp(n3, n5, value)
 
+	// Circle center (left-aligned, updated on paint)
+	property real _circleX: 0
+	property real _circleY: 0
+
 	function _lerp(c1, c2, t) {
 		return Qt.rgba(
 			c1.r + (c2.r - c1.r) * t,
@@ -83,8 +87,11 @@ Item {
 			var ctx = getContext("2d")
 			ctx.reset()
 			var w = width, h = height
-			var cx = w / 2, cy = h / 2
-			var size = Math.min(cx, cy)
+			var cy = h / 2
+			var size = Math.min(cy, w) - 8
+			var cx = size + 4
+			gauge._circleX = cx
+			gauge._circleY = cy
 			var v = gauge.value
 			var ac = gauge._activeColor   // lerp(n3, n5, value)
 
@@ -181,11 +188,11 @@ Item {
 		}
 	}
 
-	// Percentage text (scales dynamically with gauge)
+	// Percentage text (follows circle center, left-aligned)
 	Text {
 		id: percentText
-		anchors.centerIn: parent
-		anchors.verticalCenterOffset: 0
+		x: gauge._circleX - width / 2
+		y: gauge._circleY - height / 2
 		text: Math.round(gauge.value * 100) + "%"
 		color: gauge._activeColor
 		font.pixelSize: Math.max(10, Math.min(dialCanvas.height * 0.18, dialCanvas.width * 0.14))
@@ -195,10 +202,10 @@ Item {
 		styleColor: Qt.rgba(gauge._activeColor.r, gauge._activeColor.g, gauge._activeColor.b, 0.3)
 	}
 
-	// Label beneath percentage
+	// Label beneath percentage (follows circle center)
 	Text {
 		id: labelText
-		anchors.horizontalCenter: parent.horizontalCenter
+		x: gauge._circleX - width / 2
 		anchors.top: percentText.bottom
 		anchors.topMargin: font.pixelSize * 0.2
 		text: gauge.label

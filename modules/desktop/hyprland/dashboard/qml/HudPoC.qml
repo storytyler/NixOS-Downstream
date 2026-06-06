@@ -44,14 +44,18 @@ Item {
 	// ═══════════════════════════════════════════════
 	// TOP CENTER: Weather panel
 	// Layout: current conditions (top-left) | alert status (top-right)
-	//         hourly forecast (bottom, full width)
+	//         hourly forecast (middle, full width)
+	//         daily forecast (bottom, full width)
+	// All text via QML Text (GPU-composited, auto-updating via bindings)
 	// ═══════════════════════════════════════════════
 	Item {
 		id: weatherPanel
-		anchors.horizontalCenter: parent.horizontalCenter
+		anchors.left: leftColumn.right
+		anchors.leftMargin: 20
+		anchors.right: rightPanel.left
+		anchors.rightMargin: 20
 		anchors.top: parent.top
 		anchors.topMargin: 30
-		width: parent.width * 0.50
 		height: weatherContent.implicitHeight + 20
 
 		// Panel border (stroke only, no fill, double-stroke glow)
@@ -83,158 +87,144 @@ Item {
 			// ── Current conditions (left) + Alert status (right) ──
 			Item {
 				width: parent.width
-				height: 36
+				height: currentDetails.implicitHeight
 
-				Canvas {
-					id: currentReadout
+				Column {
+					id: currentDetails
 					anchors.left: parent.left
-					anchors.top: parent.top
-					anchors.bottom: parent.bottom
-					width: parent.width * 0.50
-					renderTarget: Canvas.FramebufferObject
+					anchors.verticalCenter: parent.verticalCenter
+					spacing: 3
 
-					onPaint: {
-						var ctx = getContext("2d")
-						ctx.reset()
+					Text {
+						text: weatherData.conditionText + "  " + weatherData.tempFormatted
+						color: "#cfd3db"
+						font.pixelSize: 18
+						font.family: "monospace"
+						font.bold: true
+						style: Text.Raised
+						styleColor: Qt.rgba(207/255, 211/255, 219/255, 0.3)
+					}
 
-						ctx.fillStyle = "#cfd3db"
-					ctx.font = "bold 14px monospace"
-					ctx.textAlign = "left"
-					ctx.textBaseline = "top"
-					ctx.fillText(weatherData.conditionText + "  " + weatherData.tempFormatted, 4, 2)
-
-					ctx.fillStyle = "#8f8f8f"
-					ctx.font = "11px monospace"
-						ctx.fillText(weatherData.feelsLikeFormatted + "  \u00B7  " + weatherData.windFormatted + "  \u00B7  " + Math.round(weatherData.humidity) + "%", 4, 18)
+					Text {
+						text: weatherData.feelsLikeFormatted + "  \u00B7  " + weatherData.windFormatted + "  \u00B7  " + Math.round(weatherData.humidity) + "%"
+						color: "#8f8f8f"
+						font.pixelSize: 13
+						font.family: "monospace"
+						style: Text.Raised
+						styleColor: Qt.rgba(143/255, 143/255, 143/255, 0.2)
 					}
 				}
 
-				Canvas {
-					id: alertReadout
-					anchors.left: currentReadout.right
+				Text {
 					anchors.right: parent.right
-					anchors.top: parent.top
-					anchors.bottom: parent.bottom
-					renderTarget: Canvas.FramebufferObject
-
-					onPaint: {
-						var ctx = getContext("2d")
-						ctx.reset()
-
-						ctx.fillStyle = "#cfd3db"
-					ctx.font = "11px monospace"
-					ctx.textAlign = "right"
-					ctx.textBaseline = "middle"
-					ctx.fillText("Weather Patterns Nominal", width - 4, height / 2)
-					}
+					anchors.verticalCenter: parent.verticalCenter
+					text: "Weather Patterns Nominal"
+					color: "#cfd3db"
+					font.pixelSize: 13
+					font.family: "monospace"
+					style: Text.Raised
+					styleColor: Qt.rgba(207/255, 211/255, 219/255, 0.2)
 				}
 			}
 
-			// ── Hourly forecast (full width) ──
-			Item {
+			// ── Hourly forecast (6 hours, room for icons later) ──
+			Row {
 				width: parent.width
-				height: 34
+				height: 56
+				spacing: 0
 
-				Canvas {
-					id: hourlyReadout
-					anchors.fill: parent
-					renderTarget: Canvas.FramebufferObject
+				Repeater {
+					model: Math.min(weatherData.hourlyForecast.length, 6)
 
-					onPaint: {
-						var ctx = getContext("2d")
-						ctx.reset()
-						var w = width
-						var forecast = weatherData.hourlyForecast
-						if (!forecast || forecast.length === 0) return
+					Column {
+						required property int index
+						width: parent.width / Math.min(weatherData.hourlyForecast.length, 6)
+						height: parent.height
+						spacing: 2
 
-						var showCount = Math.min(forecast.length, 12)
-						var slotW = w / showCount
-						var fontSize = Math.max(9, Math.min(slotW * 0.24, 12))
+						Text {
+							anchors.horizontalCenter: parent.horizontalCenter
+							text: weatherData.hourlyForecast[index] ? weatherData.hourlyForecast[index].hour : ""
+							color: "#6b6b6b"
+							font.pixelSize: 14
+							font.family: "monospace"
+						}
 
-						for (var i = 0; i < showCount; i++) {
-							var x = i * slotW + slotW / 2
-							var hour = forecast[i]
+						Text {
+							anchors.horizontalCenter: parent.horizontalCenter
+							text: weatherData.hourlyForecast[index] ? weatherData.hourlyForecast[index].temp + "\u00B0" : ""
+							color: "#cfd3db"
+							font.pixelSize: 16
+							font.family: "monospace"
+							font.bold: true
+							style: Text.Raised
+							styleColor: Qt.rgba(207/255, 211/255, 219/255, 0.2)
+						}
 
-							ctx.fillStyle = "#6b6b6b"
-							ctx.font = fontSize + "px monospace"
-							ctx.textAlign = "center"
-							ctx.textBaseline = "top"
-							ctx.fillText(hour.hour, x, 0)
-
-							ctx.fillStyle = "#cfd3db"
-							ctx.font = "bold " + fontSize + "px monospace"
-							ctx.fillText(hour.temp + "°", x, fontSize + 2)
-
-							if (hour.precip > 0) {
-								ctx.fillStyle = "#8f8f8f"
-								ctx.font = (fontSize - 1) + "px monospace"
-								ctx.fillText(hour.precip + "%", x, (fontSize + 2) * 2)
-							}
+						Text {
+							anchors.horizontalCenter: parent.horizontalCenter
+							visible: weatherData.hourlyForecast[index] && weatherData.hourlyForecast[index].precip > 0
+							text: weatherData.hourlyForecast[index] ? weatherData.hourlyForecast[index].precip + "%" : ""
+							color: "#8f8f8f"
+							font.pixelSize: 12
+							font.family: "monospace"
 						}
 					}
 				}
 			}
 
-			// ── Daily forecast (10-day, full width) ──
-			Item {
+			// ── Daily forecast (5 days, room for icons later) ──
+			Row {
 				width: parent.width
-				height: 38
+				height: 64
+				spacing: 0
 
-				Canvas {
-					id: dailyReadout
-					anchors.fill: parent
-					renderTarget: Canvas.FramebufferObject
+				Repeater {
+					model: Math.min(weatherData.dailyForecast.length, 5)
 
-					onPaint: {
-						var ctx = getContext("2d")
-						ctx.reset()
-						var w = width
-						var forecast = weatherData.dailyForecast
-						if (!forecast || forecast.length === 0) return
+					Column {
+						required property int index
+						width: Math.min(weatherData.dailyForecast.length, 5) > 0 ? parent.width / Math.min(weatherData.dailyForecast.length, 5) : 0
+						height: parent.height
+						spacing: 2
 
-						var showCount = forecast.length
-						var slotW = w / showCount
-						var fontSize = Math.max(8, Math.min(slotW * 0.26, 11))
+						Text {
+							anchors.horizontalCenter: parent.horizontalCenter
+							text: weatherData.dailyForecast[index] ? weatherData.dailyForecast[index].dayName : ""
+							color: index === 0 ? "#cfd3db" : "#6b6b6b"
+							font.pixelSize: 14
+							font.family: "monospace"
+						}
 
-						for (var i = 0; i < showCount; i++) {
-							var x = i * slotW + slotW / 2
-							var day = forecast[i]
+						Text {
+							anchors.horizontalCenter: parent.horizontalCenter
+							text: weatherData.dailyForecast[index] ? weatherData.dailyForecast[index].high + "\u00B0" : ""
+							color: "#cfd3db"
+							font.pixelSize: 15
+							font.family: "monospace"
+							font.bold: true
+							style: Text.Raised
+							styleColor: Qt.rgba(207/255, 211/255, 219/255, 0.2)
+						}
 
-							ctx.fillStyle = i === 0 ? "#cfd3db" : "#6b6b6b"
-							ctx.font = fontSize + "px monospace"
-							ctx.textAlign = "center"
-							ctx.textBaseline = "top"
-							ctx.fillText(day.dayName, x, 0)
+						Text {
+							anchors.horizontalCenter: parent.horizontalCenter
+							text: weatherData.dailyForecast[index] ? weatherData.dailyForecast[index].low + "\u00B0" : ""
+							color: "#8f8f8f"
+							font.pixelSize: 14
+							font.family: "monospace"
+						}
 
-							ctx.fillStyle = "#cfd3db"
-							ctx.font = "bold " + fontSize + "px monospace"
-							ctx.fillText(day.high + "°", x, fontSize + 2)
-
-							ctx.fillStyle = "#8f8f8f"
-							ctx.font = fontSize + "px monospace"
-							ctx.fillText(day.low + "°", x, (fontSize + 2) * 2 - 1)
-
-							if (day.precip > 0) {
-								ctx.fillStyle = "#6b6b6b"
-								ctx.font = (fontSize - 1) + "px monospace"
-								ctx.fillText(day.precip + "%", x, (fontSize + 2) * 3 - 2)
-							}
+						Text {
+							anchors.horizontalCenter: parent.horizontalCenter
+							visible: weatherData.dailyForecast[index] && weatherData.dailyForecast[index].precip > 0
+							text: weatherData.dailyForecast[index] ? weatherData.dailyForecast[index].precip + "%" : ""
+							color: "#6b6b6b"
+							font.pixelSize: 9
+							font.family: "monospace"
 						}
 					}
 				}
-			}
-		}
-
-		// Repaint all weather canvases at 15s interval
-		Timer {
-			interval: 15000
-			running: true
-			repeat: true
-			onTriggered: {
-				currentReadout.requestPaint()
-				alertReadout.requestPaint()
-				hourlyReadout.requestPaint()
-				dailyReadout.requestPaint()
 			}
 		}
 	}
@@ -248,7 +238,7 @@ Item {
 		anchors.top: parent.top
 		anchors.leftMargin: 0
 		anchors.topMargin: 0
-		width: parent.width * 0.32
+		width: (parent.height * 0.48 - spacing * 2) / 3 + 20
 		height: parent.height * 0.48
 		spacing: 6
 
