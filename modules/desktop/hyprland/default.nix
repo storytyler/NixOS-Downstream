@@ -56,8 +56,9 @@ in
     (_: {
       xdg.portal = {
         enable = true;
-        extraPortals = with pkgs; [
-          xdg-desktop-portal-gtk
+        extraPortals = [
+          pkgs.xdg-desktop-portal-gtk
+          config.programs.hyprland.portalPackage
         ];
         xdgOpenUsePortal = true;
         configPackages = [ config.programs.hyprland.package ];
@@ -66,6 +67,8 @@ in
             "hyprland"
             "gtk"
           ];
+          "org.freedesktop.impl.portal.ScreenCast" = "hyprland";
+          "org.freedesktop.impl.portal.Screenshot" = "hyprland";
           "org.freedesktop.impl.portal.OpenURI" = "gtk";
           "org.freedesktop.impl.portal.FileChooser" = "gtk";
           "org.freedesktop.impl.portal.Print" = "gtk";

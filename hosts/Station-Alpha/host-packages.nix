@@ -61,6 +61,9 @@
 
     # Visual Art
     gimp
+
+    # Streaming
+    pngtuber-plus
     # Disk Install Method for btrfs on SSD
     # disko
 
