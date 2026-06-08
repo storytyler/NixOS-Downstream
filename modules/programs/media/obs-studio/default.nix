@@ -21,6 +21,9 @@
           # Audio capture via PipeWire
           obs-pipewire-audio-capture
 
+          # Per-window capture via PipeWire portal
+          obs-window-capture
+
           # Smooth scene transitions
           obs-move-transition
 
