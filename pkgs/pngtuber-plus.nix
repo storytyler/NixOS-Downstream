@@ -12,12 +12,11 @@
   libXrandr,
   libXi,
   libXext,
-  libwayland,
+  wayland,
   libxkbcommon,
-  pipewire,
-  pulseaudio,
+  libpulseaudio,
   alsa-lib,
-  udev,
+  pipewire,
   makeDesktopItem,
   copyDesktopItems,
 }:
@@ -32,8 +31,23 @@ let
     desktopName = "PNGTuber Plus";
     comment = "PNGTuber avatar puppet program with mic-reactive sprites";
     categories = [ "Graphics" "AudioVideo" ];
-    icon = "pngtuber-plus";
   };
+
+  # Godot dlopens these at runtime — need them in LD_LIBRARY_PATH
+  runtimeLibs = [
+    libGL
+    libX11
+    libXcursor
+    libXinerama
+    libXrandr
+    libXi
+    libXext
+    wayland
+    libxkbcommon
+    libpulseaudio
+    alsa-lib
+    pipewire
+  ];
 
 in
 stdenv.mkDerivation rec {
@@ -42,40 +56,24 @@ stdenv.mkDerivation rec {
   src = requireFile rec {
     name = "PNGT+.zip";
     sha256 = "c1fac87fac268b42faf9a84a2a82ea9611a129572fd8855c89468309078ac0ba";
-    hash = "sha256-${sha256}";
     message = ''
       Download PNGTuber Plus Linux zip from https://kaiakairos.itch.io/pngtuber-plus
-      (Name your own price - $0 works) and place it at /home/player00/PNGT+.zip
+      (Name your own price - $0 works) and place it at ~/PNGT+.zip
 
       Then add it to the nix store:
-        nix-store --add-fixed sha256 /home/player00/PNGT+.zip
+        nix-store --add-fixed sha256 ~/PNGT+.zip
     '';
   };
 
   nativeBuildInputs = [
     unzip
     autoPatchelfHook
+    makeWrapper
     copyDesktopItems
   ];
 
   buildInputs = [
-    libGL
-    libX11
-    libXcursor
-    libXinerama
-    libXrandr
-    libXi
-    libXext
-    libwayland
-    libxkbcommon
-    pipewire
-    pulseaudio
-    alsa-lib
     stdenv.cc.cc.lib
-  ];
-
-  runtimeDependencies = [
-    udev.lib
   ];
 
   unpackPhase = ''
@@ -87,15 +85,15 @@ stdenv.mkDerivation rec {
   installPhase = ''
     runHook preInstall
 
-    mkdir -p $out/bin $out/lib/pngtuber-plus $out/share/pixmaps
+    mkdir -p $out/bin $out/lib/pngtuber-plus
 
-    # Install binary and assets
     install -Dm755 "PNGTUBER PLUS ${version} LINUX.x86_64" $out/lib/pngtuber-plus/
     install -Dm644 "PNGTUBER PLUS ${version} LINUX.pck" $out/lib/pngtuber-plus/
     install -Dm755 libgdexample.linux.template_release.x86_64.so $out/lib/pngtuber-plus/
 
-    # Wrapper script
-    makeWrapper $out/lib/pngtuber-plus/"PNGTUBER PLUS ${version} LINUX.x86_64" $out/bin/pngtuber-plus
+    # Godot dlopens runtime libs — wrap with LD_LIBRARY_PATH
+    makeWrapper $out/lib/pngtuber-plus/"PNGTUBER PLUS ${version} LINUX.x86_64" $out/bin/pngtuber-plus \
+      --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath runtimeLibs}"
 
     runHook postInstall
   '';
