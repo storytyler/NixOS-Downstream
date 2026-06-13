@@ -25,6 +25,7 @@
         useOSProber = true;
         gfxmodeEfi = "auto";
         gfxmodeBios = "auto";
+        configurationLimit = 5; # Limit boot entries (511MB /boot fits ~3 kernel versions)
         theme = pkgs.stdenv.mkDerivation {
           pname = "distro-grub-themes";
           version = "3.1";
