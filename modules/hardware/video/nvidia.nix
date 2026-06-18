@@ -19,6 +19,9 @@ let
         url = "https://github.com/CachyOS/CachyOS-PKGBUILDS/raw/d5629d64ac1f9e298c503e407225b528760ffd37/nvidia/nvidia-utils/kernel-6.19.patch";
         hash = "sha256-YuJjSUXE6jYSuZySYGnWSNG5sfVei7vvxDcHx3K+IN4=";
       })
+      # Kernel 7.1 removed linux/of_gpio.h — replace with linux/gpio/machine.h.
+      # Remove when NVIDIA ships a driver with kernel 7.1+ compat built-in.
+      ./patches/nvidia-open-7.1-of_gpio.patch
     ];
   };
 in

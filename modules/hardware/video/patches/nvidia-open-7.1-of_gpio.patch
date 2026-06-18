@@ -1,0 +1,11 @@
+--- a/kernel-open/common/inc/nv-linux.h
++++ b/kernel-open/common/inc/nv-linux.h
+@@ -1714,7 +1714,7 @@
+ #include <linux/sched/signal.h>
+ #endif
+ 
+-#include <linux/of_gpio.h>
++#include <linux/gpio/machine.h>
+ 
+ /*
+  * kallsyms_lookup_name() is no longer exported as of Linux 5.7+.
