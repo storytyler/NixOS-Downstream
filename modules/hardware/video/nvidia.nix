@@ -4,27 +4,7 @@
   config,
   ...
 }:
-let
-  # Pinned driver 590.48.01 with kernel 6.19+ compat patch.
-  # Required for Windrose (UE5, D3D12) — 595.x crashes during VKD3D PSO compilation on Blackwell GPUs.
-  nvidiaDriverChannel = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-    version = "590.48.01";
-    sha256_64bit = "sha256-ueL4BpN4FDHMh/TNKRCeEz3Oy1ClDWto1LO/LWlr1ok=";
-    sha256_aarch64 = "sha256-FOz7f6pW1NGM2f74kbP6LbNijxKj5ZtZ08bm0aC+/YA=";
-    openSha256 = "sha256-hECHfguzwduEfPo5pCDjWE/MjtRDhINVr4b1awFdP44=";
-    settingsSha256 = "sha256-NWsqUciPa4f1ZX6f0By3yScz3pqKJV1ei9GvOF8qIEE=";
-    persistencedSha256 = "sha256-wsNeuw7IaY6Qc/i/AzT/4N82lPjkwfrhxidKWUtcwW8=";
-    patchesOpen = [
-      (pkgs.fetchpatch {
-        url = "https://github.com/CachyOS/CachyOS-PKGBUILDS/raw/d5629d64ac1f9e298c503e407225b528760ffd37/nvidia/nvidia-utils/kernel-6.19.patch";
-        hash = "sha256-YuJjSUXE6jYSuZySYGnWSNG5sfVei7vvxDcHx3K+IN4=";
-      })
-      # Kernel 7.1 removed linux/of_gpio.h — replace with linux/gpio/machine.h.
-      # Remove when NVIDIA ships a driver with kernel 7.1+ compat built-in.
-      ./patches/nvidia-open-7.1-of_gpio.patch
-    ];
-  };
-in
+# See https://wiki.nixos.org/wiki/NVIDIA for official documentation.
 {
   environment.sessionVariables = lib.optionalAttrs config.programs.hyprland.enable {
     GBM_BACKEND = "nvidia-drm";
@@ -62,12 +42,9 @@ in
       nvidiaSettings = false;
       powerManagement.enable = true; # Fixes sleep/suspend
       modesetting.enable = true; # Modesetting is required.
-
-      package = nvidiaDriverChannel;
     };
     graphics = {
       enable = true;
-      # package = nvidiaDriverChannel;
       enable32Bit = true;
       extraPackages = with pkgs; [
         nvidia-vaapi-driver
