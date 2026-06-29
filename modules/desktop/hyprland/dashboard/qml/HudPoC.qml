@@ -66,8 +66,8 @@ Item {
 				var ctx = getContext("2d")
 				ctx.reset()
 				poc.rr(ctx, 3, 3, width - 6, height - 6, 12)
-				ctx.strokeStyle = Qt.rgba(143/255, 143/255, 143/255, 0.12)
-				ctx.lineWidth = 10
+				ctx.strokeStyle = Qt.rgba(143/255, 143/255, 143/255, 0.08)
+				ctx.lineWidth = 18
 				ctx.stroke()
 				poc.rr(ctx, 3, 3, width - 6, height - 6, 12)
 				ctx.strokeStyle = "#8f8f8f"
@@ -102,7 +102,7 @@ Item {
 						font.family: "monospace"
 						font.bold: true
 						style: Text.Raised
-						styleColor: Qt.rgba(207/255, 211/255, 219/255, 0.3)
+						styleColor: Qt.rgba(207/255, 211/255, 219/255, 0.5)
 					}
 
 					Text {
@@ -111,7 +111,7 @@ Item {
 						font.pixelSize: 13
 						font.family: "monospace"
 						style: Text.Raised
-						styleColor: Qt.rgba(143/255, 143/255, 143/255, 0.2)
+						styleColor: Qt.rgba(143/255, 143/255, 143/255, 0.4)
 					}
 				}
 
@@ -123,7 +123,7 @@ Item {
 					font.pixelSize: 13
 					font.family: "monospace"
 					style: Text.Raised
-					styleColor: Qt.rgba(207/255, 211/255, 219/255, 0.2)
+					styleColor: Qt.rgba(207/255, 211/255, 219/255, 0.4)
 				}
 			}
 
@@ -158,7 +158,7 @@ Item {
 							font.family: "monospace"
 							font.bold: true
 							style: Text.Raised
-							styleColor: Qt.rgba(207/255, 211/255, 219/255, 0.2)
+							styleColor: Qt.rgba(207/255, 211/255, 219/255, 0.4)
 						}
 
 						Text {
@@ -204,7 +204,7 @@ Item {
 							font.family: "monospace"
 							font.bold: true
 							style: Text.Raised
-							styleColor: Qt.rgba(207/255, 211/255, 219/255, 0.2)
+							styleColor: Qt.rgba(207/255, 211/255, 219/255, 0.4)
 						}
 
 						Text {
