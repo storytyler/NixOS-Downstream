@@ -2,6 +2,7 @@
 // DialGauge: neutral ramp (N1→N5), staggered collecting arcs, desynced patterns
 // Data: real system metrics via services/ (CpuData, MemData, GpuData, NetData, etc.)
 // Status panel: live metrics grouped — system, disk, net+signal
+pragma ComponentBehavior: Bound
 import QtQuick
 import "services"
 
@@ -129,23 +130,28 @@ Item {
 
 			// ── Hourly forecast (6 hours, room for icons later) ──
 			Row {
+				id: hourlyRow
 				width: parent.width
-				height: implicitHeight
+				height: 60
 				clip: true
 				spacing: 0
+				property var forecastItems: weatherData.hourlyForecast.slice(0, 6)
+				property int colCount: Math.max(1, forecastItems.length)
 
 				Repeater {
-					model: Math.min(weatherData.hourlyForecast.length, 6)
+					model: hourlyRow.forecastItems
 
 					Column {
+						id: hourlyCell
+						required property var modelData
 						required property int index
-						width: Math.min(weatherData.hourlyForecast.length, 6) > 0 ? parent.width / Math.min(weatherData.hourlyForecast.length, 6) : 0
+						width: parent.width / parent.colCount
 						height: parent.height
 						spacing: 2
 
 						Text {
 							anchors.horizontalCenter: parent.horizontalCenter
-							text: weatherData.hourlyForecast[index] ? weatherData.hourlyForecast[index].hour : ""
+							text: hourlyCell.modelData ? hourlyCell.modelData.hour : ""
 							color: "#6b6b6b"
 							font.pixelSize: 14
 							font.family: "monospace"
@@ -153,7 +159,7 @@ Item {
 
 						Text {
 							anchors.horizontalCenter: parent.horizontalCenter
-							text: weatherData.hourlyForecast[index] ? weatherData.hourlyForecast[index].temp + "\u00B0" : ""
+							text: hourlyCell.modelData ? hourlyCell.modelData.temp + "\u00B0" : ""
 							color: "#cfd3db"
 							font.pixelSize: 16
 							font.family: "monospace"
@@ -164,8 +170,8 @@ Item {
 
 						Text {
 							anchors.horizontalCenter: parent.horizontalCenter
-							visible: weatherData.hourlyForecast[index] && weatherData.hourlyForecast[index].precip > 0
-							text: weatherData.hourlyForecast[index] ? weatherData.hourlyForecast[index].precip + "%" : ""
+							visible: hourlyCell.modelData && hourlyCell.modelData.precip > 0
+							text: hourlyCell.modelData ? hourlyCell.modelData.precip + "%" : ""
 							color: "#8f8f8f"
 							font.pixelSize: 12
 							font.family: "monospace"
@@ -176,31 +182,36 @@ Item {
 
 			// ── Daily forecast (5 days, room for icons later) ──
 			Row {
+				id: dailyRow
 				width: parent.width
-				height: implicitHeight
+				height: 76
 				clip: true
 				spacing: 0
+				property var forecastItems: weatherData.dailyForecast.slice(0, 5)
+				property int colCount: Math.max(1, forecastItems.length)
 
 				Repeater {
-					model: Math.min(weatherData.dailyForecast.length, 5)
+					model: dailyRow.forecastItems
 
 					Column {
+						id: dailyCell
+						required property var modelData
 						required property int index
-						width: Math.min(weatherData.dailyForecast.length, 5) > 0 ? parent.width / Math.min(weatherData.dailyForecast.length, 5) : 0
+						width: parent.width / parent.colCount
 						height: parent.height
 						spacing: 2
 
 						Text {
 							anchors.horizontalCenter: parent.horizontalCenter
-							text: weatherData.dailyForecast[index] ? weatherData.dailyForecast[index].dayName : ""
-							color: index === 0 ? "#cfd3db" : "#6b6b6b"
+							text: dailyCell.modelData ? dailyCell.modelData.dayName : ""
+							color: dailyCell.index === 0 ? "#cfd3db" : "#6b6b6b"
 							font.pixelSize: 14
 							font.family: "monospace"
 						}
 
 						Text {
 							anchors.horizontalCenter: parent.horizontalCenter
-							text: weatherData.dailyForecast[index] ? weatherData.dailyForecast[index].high + "\u00B0" : ""
+							text: dailyCell.modelData ? dailyCell.modelData.high + "\u00B0" : ""
 							color: "#cfd3db"
 							font.pixelSize: 15
 							font.family: "monospace"
@@ -211,7 +222,7 @@ Item {
 
 						Text {
 							anchors.horizontalCenter: parent.horizontalCenter
-							text: weatherData.dailyForecast[index] ? weatherData.dailyForecast[index].low + "\u00B0" : ""
+							text: dailyCell.modelData ? dailyCell.modelData.low + "\u00B0" : ""
 							color: "#8f8f8f"
 							font.pixelSize: 14
 							font.family: "monospace"
@@ -219,8 +230,8 @@ Item {
 
 						Text {
 							anchors.horizontalCenter: parent.horizontalCenter
-							visible: weatherData.dailyForecast[index] && weatherData.dailyForecast[index].precip > 0
-							text: weatherData.dailyForecast[index] ? weatherData.dailyForecast[index].precip + "%" : ""
+							visible: dailyCell.modelData && dailyCell.modelData.precip > 0
+							text: dailyCell.modelData ? dailyCell.modelData.precip + "%" : ""
 							color: "#6b6b6b"
 							font.pixelSize: 9
 							font.family: "monospace"
