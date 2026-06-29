@@ -130,7 +130,8 @@ Item {
 			// ── Hourly forecast (6 hours, room for icons later) ──
 			Row {
 				width: parent.width
-				height: 56
+				height: implicitHeight
+				clip: true
 				spacing: 0
 
 				Repeater {
@@ -138,7 +139,7 @@ Item {
 
 					Column {
 						required property int index
-						width: parent.width / Math.min(weatherData.hourlyForecast.length, 6)
+						width: Math.min(weatherData.hourlyForecast.length, 6) > 0 ? parent.width / Math.min(weatherData.hourlyForecast.length, 6) : 0
 						height: parent.height
 						spacing: 2
 
@@ -176,7 +177,8 @@ Item {
 			// ── Daily forecast (5 days, room for icons later) ──
 			Row {
 				width: parent.width
-				height: 64
+				height: implicitHeight
+				clip: true
 				spacing: 0
 
 				Repeater {
