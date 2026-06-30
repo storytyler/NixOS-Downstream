@@ -18,6 +18,7 @@ Item {
 	property string feelsLikeFormatted: "Feels --°F"
 	property string windFormatted: "-- mph"
 	property string conditionText: "Loading..."
+	property string iconName: "not-available"
 
 	// Hourly forecast (next 24h from current time)
 	property var hourlyForecast: []   // [{hour, temp, precip, code, isDay}, ...]
@@ -46,6 +47,28 @@ Item {
 			case code === 95: return "Thunderstorm"
 			case code <= 99:  return "Thunderstorm + Hail"
 			default:          return "Unknown"
+		}
+	}
+
+	// WMO code + day/night → icon slug
+	function _iconName(code, isDay) {
+		var suffix = isDay ? "day" : "night"
+		switch (true) {
+			case code === 0:  return "clear-" + suffix
+			case code === 1:  return "mostly-clear-" + suffix
+			case code === 2:  return "partly-cloudy-" + suffix
+			case code === 3:  return "overcast-" + suffix
+			case code <= 48:  return "fog-" + suffix
+			case code <= 55:  return "overcast-" + suffix + "-drizzle"
+			case code <= 57:  return "overcast-" + suffix + "-sleet"
+			case code <= 65:  return "overcast-" + suffix + "-rain"
+			case code <= 67:  return "overcast-" + suffix + "-sleet"
+			case code <= 77:  return "overcast-" + suffix + "-snow"
+			case code <= 82:  return "overcast-" + suffix + "-rain"
+			case code <= 86:  return "overcast-" + suffix + "-snow"
+			case code === 95: return "thunderstorms-" + suffix
+			case code <= 99:  return "thunderstorms-" + suffix + "-hail"
+			default:          return "not-available"
 		}
 	}
 
@@ -88,6 +111,7 @@ Item {
 					weatherData.feelsLikeFormatted = "Feels " + Math.round(weatherData.feelsLike) + "°F"
 					weatherData.windFormatted = Math.round(weatherData.windSpeed) + " mph " + weatherData._windDir(weatherData.windDirection)
 					weatherData.conditionText = weatherData._conditionText(weatherData.weatherCode)
+					weatherData.iconName = weatherData._iconName(weatherData.weatherCode, weatherData.isDay)
 
 					// Parse hourly — find current hour index, slice next 24
 					var hourly = json.hourly
@@ -110,7 +134,8 @@ Item {
 								temp: Math.round(hourly.temperature_2m[idx] || 0),
 								precip: Math.round(hourly.precipitation_probability[idx] || 0),
 								code: hourly.weather_code[idx] || 0,
-								isDay: hourly.is_day[idx] === 1
+								isDay: hourly.is_day[idx] === 1,
+								icon: weatherData._iconName(hourly.weather_code[idx] || 0, hourly.is_day[idx] === 1)
 							})
 						}
 						weatherData.hourlyForecast = forecast
@@ -123,13 +148,14 @@ Item {
 						var days = []
 						for (var d = 0; d < daily.time.length; d++) {
 							var dt = new Date(daily.time[d] + "T12:00:00")
-							days.push({
-								dayName: dayNames[dt.getDay()],
-								high: Math.round(daily.temperature_2m_max[d] || 0),
-								low: Math.round(daily.temperature_2m_min[d] || 0),
-								precip: Math.round(daily.precipitation_probability_max[d] || 0),
-								code: daily.weather_code[d] || 0
-							})
+						days.push({
+							dayName: dayNames[dt.getDay()],
+							high: Math.round(daily.temperature_2m_max[d] || 0),
+							low: Math.round(daily.temperature_2m_min[d] || 0),
+							precip: Math.round(daily.precipitation_probability_max[d] || 0),
+							code: daily.weather_code[d] || 0,
+							icon: weatherData._iconName(daily.weather_code[d] || 0, true)
+						})
 						}
 						weatherData.dailyForecast = days
 					}

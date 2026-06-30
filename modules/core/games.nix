@@ -48,6 +48,7 @@
     # ryujinx
     # prismlauncher
 
+    protontricks
     steam-run
     wineWow64Packages.staging
   ];

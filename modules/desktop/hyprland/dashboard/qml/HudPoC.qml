@@ -88,11 +88,24 @@ Item {
 			// ── Current conditions (left) + Alert status (right) ──
 			Item {
 				width: parent.width
-				height: currentDetails.implicitHeight
+				height: Math.max(currentDetails.implicitHeight, weatherIcon.height)
+
+				Image {
+					id: weatherIcon
+					anchors.left: parent.left
+					anchors.verticalCenter: parent.verticalCenter
+					source: "icons/weather/" + weatherData.iconName + ".svg"
+					sourceSize.width: Math.max(32, poc.height * 0.045)
+					sourceSize.height: Math.max(32, poc.height * 0.045)
+					width: sourceSize.width
+					height: sourceSize.height
+					fillMode: Image.PreserveAspectFit
+				}
 
 				Column {
 					id: currentDetails
-					anchors.left: parent.left
+					anchors.left: weatherIcon.right
+					anchors.leftMargin: 8
 					anchors.verticalCenter: parent.verticalCenter
 					spacing: 3
 
@@ -132,7 +145,7 @@ Item {
 			Row {
 				id: hourlyRow
 				width: parent.width
-				height: 60
+				height: 80
 				clip: true
 				spacing: 0
 				property var forecastItems: weatherData.hourlyForecast.slice(0, 6)
@@ -149,11 +162,21 @@ Item {
 						height: parent.height
 						spacing: 2
 
+						Image {
+							anchors.horizontalCenter: parent.horizontalCenter
+							source: hourlyCell.modelData ? "icons/weather/" + hourlyCell.modelData.icon + ".svg" : ""
+							sourceSize.width: 20
+							sourceSize.height: 20
+							width: 20
+							height: 20
+							fillMode: Image.PreserveAspectFit
+						}
+
 						Text {
 							anchors.horizontalCenter: parent.horizontalCenter
-						text: hourlyCell.modelData ? hourlyCell.modelData.hour : ""
+							text: hourlyCell.modelData ? hourlyCell.modelData.hour : ""
 						color: "#6b6b6b"
-						font.pixelSize: Math.max(10, hourlyCell.height * 0.22)
+						font.pixelSize: Math.max(10, hourlyCell.height * 0.15)
 							font.family: "monospace"
 						}
 
@@ -161,7 +184,7 @@ Item {
 							anchors.horizontalCenter: parent.horizontalCenter
 							text: hourlyCell.modelData ? hourlyCell.modelData.temp + "\u00B0" : ""
 							color: "#cfd3db"
-							font.pixelSize: Math.max(12, hourlyCell.height * 0.27)
+							font.pixelSize: Math.max(12, hourlyCell.height * 0.2)
 							font.family: "monospace"
 							font.bold: true
 							style: Text.Raised
@@ -173,7 +196,7 @@ Item {
 							visible: hourlyCell.modelData && hourlyCell.modelData.precip > 0
 							text: hourlyCell.modelData ? hourlyCell.modelData.precip + "%" : ""
 							color: "#8f8f8f"
-							font.pixelSize: Math.max(10, hourlyCell.height * 0.2)
+							font.pixelSize: Math.max(10, hourlyCell.height * 0.13)
 							font.family: "monospace"
 						}
 					}
@@ -184,7 +207,7 @@ Item {
 			Row {
 				id: dailyRow
 				width: parent.width
-				height: 60
+				height: 80
 				clip: true
 				spacing: 0
 				property var forecastItems: weatherData.dailyForecast.slice(0, 5)
@@ -201,11 +224,21 @@ Item {
 						height: parent.height
 						spacing: 2
 
+						Image {
+							anchors.horizontalCenter: parent.horizontalCenter
+							source: dailyCell.modelData ? "icons/weather/" + dailyCell.modelData.icon + ".svg" : ""
+							sourceSize.width: 20
+							sourceSize.height: 20
+							width: 20
+							height: 20
+							fillMode: Image.PreserveAspectFit
+						}
+
 						Text {
 							anchors.horizontalCenter: parent.horizontalCenter
-							text: dailyCell.modelData ? dailyCell.modelData.dayName : ""
-							color: dailyCell.index === 0 ? "#cfd3db" : "#6b6b6b"
-							font.pixelSize: Math.max(10, dailyCell.height * 0.22)
+						text: dailyCell.modelData ? dailyCell.modelData.dayName : ""
+						color: dailyCell.index === 0 ? "#cfd3db" : "#6b6b6b"
+						font.pixelSize: Math.max(10, dailyCell.height * 0.15)
 							font.family: "monospace"
 						}
 
@@ -216,7 +249,7 @@ Item {
 							Text {
 								text: dailyCell.modelData ? dailyCell.modelData.low + "\u00B0" : ""
 								color: "#8f8f8f"
-								font.pixelSize: Math.max(10, dailyCell.height * 0.22)
+								font.pixelSize: Math.max(10, dailyCell.height * 0.2)
 								font.family: "monospace"
 								height: parent.height
 								verticalAlignment: Text.AlignVCenter
@@ -225,7 +258,7 @@ Item {
 							Text {
 								text: dailyCell.modelData ? dailyCell.modelData.high + "\u00B0" : ""
 								color: "#cfd3db"
-								font.pixelSize: Math.max(10, dailyCell.height * 0.22)
+								font.pixelSize: Math.max(10, dailyCell.height * 0.2)
 								font.family: "monospace"
 								style: Text.Raised
 								styleColor: Qt.rgba(207/255, 211/255, 219/255, 0.4)
@@ -234,10 +267,10 @@ Item {
 
 						Text {
 							anchors.horizontalCenter: parent.horizontalCenter
-							visible: dailyCell.modelData && dailyCell.modelData.precip > 0
-							text: dailyCell.modelData ? dailyCell.modelData.precip + "%" : ""
-							color: "#6b6b6b"
-							font.pixelSize: Math.max(10, dailyCell.height * 0.2)
+						visible: dailyCell.modelData && dailyCell.modelData.precip > 0
+						text: dailyCell.modelData ? dailyCell.modelData.precip + "%" : ""
+						color: "#6b6b6b"
+						font.pixelSize: Math.max(10, dailyCell.height * 0.13)
 							font.family: "monospace"
 						}
 					}
