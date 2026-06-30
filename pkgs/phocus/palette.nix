@@ -1,43 +1,43 @@
 { }:
 rec {
   # Surface (backgrounds)
-  foreground = "e0dce4";
-  background = "312d3d";
-  darker = "241f2b";
-  mbg = "312d3d";
+  foreground = "cfd3db";
+  background = "1f1f1f";
+  darker = "1f1f1f";
+  mbg = "323232";
 
-  cursorColor = "e0dce4";
-  comment = "72702e";
+  cursorColor = "5aa0c1";
+  comment = "6b6b6b";
 
   # ANSI base colors
-  color0 = "241f2b";
-  color8 = "312d3d";
+  color0 = "1f1f1f";
+  color8 = "323232";
 
   # Accent hues (dim / bright pairs)
-  color1 = "a0152c";
-  color9 = "fa1d42";
+  color1 = "a05045";
+  color9 = "c31700";
 
-  color2 = "9ab81f";
-  color10 = "d9ff3b";
+  color2 = "5d7849";
+  color10 = "6da050";
 
-  color3 = "8e3025";
-  color11 = "ff4a35";
+  color3 = "c38c00";
+  color11 = "ffc42d";
 
-  color4 = "066678";
-  color12 = "0091cb";
+  color4 = "3c728c";
+  color12 = "5aa0c1";
 
-  color5 = "74147e";
-  color13 = "a11bae";
+  color5 = "6a5a66";
+  color13 = "887280";
 
-  color6 = "066678";
-  color14 = "0091cb";
+  color6 = "4a6666";
+  color14 = "688880";
 
-  color7 = "f0ecf4";
-  color15 = "df699c";
+  color7 = "cfd3db";
+  color15 = "8f8f8f";
 
   # Accent aliases (used by phocus @primary@ / @secondary@)
-  accent-primary = "a11bae";
-  accent-secondary = "d9ff3b";
+  accent-primary = "5aa0c1";
+  accent-secondary = "6da050";
 
-  name = "acid-hud";
+  name = "holographic";
 }
