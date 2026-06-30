@@ -99,7 +99,7 @@ Item {
 					Text {
 						text: weatherData.conditionText + "  " + weatherData.tempFormatted
 						color: "#cfd3db"
-						font.pixelSize: 18
+						font.pixelSize: Math.max(14, poc.height * 0.018)
 						font.family: "monospace"
 						font.bold: true
 						style: Text.Raised
@@ -109,7 +109,7 @@ Item {
 					Text {
 						text: weatherData.feelsLikeFormatted + "  \u00B7  " + weatherData.windFormatted + "  \u00B7  " + Math.round(weatherData.humidity) + "%"
 						color: "#8f8f8f"
-						font.pixelSize: 13
+						font.pixelSize: Math.max(10, poc.height * 0.013)
 						font.family: "monospace"
 						style: Text.Raised
 						styleColor: Qt.rgba(143/255, 143/255, 143/255, 0.4)
@@ -121,7 +121,7 @@ Item {
 					anchors.verticalCenter: parent.verticalCenter
 					text: "Weather Patterns Nominal"
 					color: "#cfd3db"
-					font.pixelSize: 13
+					font.pixelSize: Math.max(10, poc.height * 0.013)
 					font.family: "monospace"
 					style: Text.Raised
 					styleColor: Qt.rgba(207/255, 211/255, 219/255, 0.4)
@@ -151,9 +151,9 @@ Item {
 
 						Text {
 							anchors.horizontalCenter: parent.horizontalCenter
-							text: hourlyCell.modelData ? hourlyCell.modelData.hour : ""
-							color: "#6b6b6b"
-							font.pixelSize: 14
+						text: hourlyCell.modelData ? hourlyCell.modelData.hour : ""
+						color: "#6b6b6b"
+						font.pixelSize: Math.max(10, hourlyCell.height * 0.22)
 							font.family: "monospace"
 						}
 
@@ -161,7 +161,7 @@ Item {
 							anchors.horizontalCenter: parent.horizontalCenter
 							text: hourlyCell.modelData ? hourlyCell.modelData.temp + "\u00B0" : ""
 							color: "#cfd3db"
-							font.pixelSize: 16
+							font.pixelSize: Math.max(12, hourlyCell.height * 0.27)
 							font.family: "monospace"
 							font.bold: true
 							style: Text.Raised
@@ -173,7 +173,7 @@ Item {
 							visible: hourlyCell.modelData && hourlyCell.modelData.precip > 0
 							text: hourlyCell.modelData ? hourlyCell.modelData.precip + "%" : ""
 							color: "#8f8f8f"
-							font.pixelSize: 12
+							font.pixelSize: Math.max(10, hourlyCell.height * 0.2)
 							font.family: "monospace"
 						}
 					}
@@ -205,7 +205,7 @@ Item {
 							anchors.horizontalCenter: parent.horizontalCenter
 							text: dailyCell.modelData ? dailyCell.modelData.dayName : ""
 							color: dailyCell.index === 0 ? "#cfd3db" : "#6b6b6b"
-							font.pixelSize: 14
+							font.pixelSize: Math.max(10, dailyCell.height * 0.18)
 							font.family: "monospace"
 						}
 
@@ -213,7 +213,7 @@ Item {
 							anchors.horizontalCenter: parent.horizontalCenter
 							text: dailyCell.modelData ? dailyCell.modelData.high + "\u00B0" : ""
 							color: "#cfd3db"
-							font.pixelSize: 15
+							font.pixelSize: Math.max(12, dailyCell.height * 0.2)
 							font.family: "monospace"
 							font.bold: true
 							style: Text.Raised
@@ -224,7 +224,7 @@ Item {
 							anchors.horizontalCenter: parent.horizontalCenter
 							text: dailyCell.modelData ? dailyCell.modelData.low + "\u00B0" : ""
 							color: "#8f8f8f"
-							font.pixelSize: 14
+							font.pixelSize: Math.max(10, dailyCell.height * 0.18)
 							font.family: "monospace"
 						}
 
@@ -233,7 +233,7 @@ Item {
 							visible: dailyCell.modelData && dailyCell.modelData.precip > 0
 							text: dailyCell.modelData ? dailyCell.modelData.precip + "%" : ""
 							color: "#6b6b6b"
-							font.pixelSize: 9
+							font.pixelSize: Math.max(10, dailyCell.height * 0.13)
 							font.family: "monospace"
 						}
 					}
