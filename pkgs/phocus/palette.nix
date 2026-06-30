@@ -3,8 +3,8 @@ rec {
   # Surface (backgrounds)
   foreground = "cfd3db";
   background = "1f1f1f";
-  darker = "323232";
-  mbg = "8f8f8f";
+  darker = "1f1f1f";
+  mbg = "323232";
 
   cursorColor = "5aa0c1";
   comment = "6b6b6b";
