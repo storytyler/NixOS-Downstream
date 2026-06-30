@@ -184,7 +184,7 @@ Item {
 			Row {
 				id: dailyRow
 				width: parent.width
-				height: 76
+				height: 60
 				clip: true
 				spacing: 0
 				property var forecastItems: weatherData.dailyForecast.slice(0, 5)
@@ -205,27 +205,32 @@ Item {
 							anchors.horizontalCenter: parent.horizontalCenter
 							text: dailyCell.modelData ? dailyCell.modelData.dayName : ""
 							color: dailyCell.index === 0 ? "#cfd3db" : "#6b6b6b"
-							font.pixelSize: Math.max(10, dailyCell.height * 0.18)
+							font.pixelSize: Math.max(10, dailyCell.height * 0.22)
 							font.family: "monospace"
 						}
 
-						Text {
+						Row {
 							anchors.horizontalCenter: parent.horizontalCenter
-							text: dailyCell.modelData ? dailyCell.modelData.high + "\u00B0" : ""
-							color: "#cfd3db"
-							font.pixelSize: Math.max(12, dailyCell.height * 0.2)
-							font.family: "monospace"
-							font.bold: true
-							style: Text.Raised
-							styleColor: Qt.rgba(207/255, 211/255, 219/255, 0.4)
-						}
+							spacing: 4
 
-						Text {
-							anchors.horizontalCenter: parent.horizontalCenter
-							text: dailyCell.modelData ? dailyCell.modelData.low + "\u00B0" : ""
-							color: "#8f8f8f"
-							font.pixelSize: Math.max(10, dailyCell.height * 0.18)
-							font.family: "monospace"
+							Text {
+								text: dailyCell.modelData ? dailyCell.modelData.high + "\u00B0" : ""
+								color: "#cfd3db"
+								font.pixelSize: Math.max(12, dailyCell.height * 0.27)
+								font.family: "monospace"
+								font.bold: true
+								style: Text.Raised
+								styleColor: Qt.rgba(207/255, 211/255, 219/255, 0.4)
+							}
+
+							Text {
+								text: dailyCell.modelData ? dailyCell.modelData.low + "\u00B0" : ""
+								color: "#8f8f8f"
+								font.pixelSize: Math.max(10, dailyCell.height * 0.22)
+								font.family: "monospace"
+								height: parent.height
+								verticalAlignment: Text.AlignVCenter
+							}
 						}
 
 						Text {
@@ -233,7 +238,7 @@ Item {
 							visible: dailyCell.modelData && dailyCell.modelData.precip > 0
 							text: dailyCell.modelData ? dailyCell.modelData.precip + "%" : ""
 							color: "#6b6b6b"
-							font.pixelSize: Math.max(10, dailyCell.height * 0.13)
+							font.pixelSize: Math.max(10, dailyCell.height * 0.2)
 							font.family: "monospace"
 						}
 					}
