@@ -11,7 +11,7 @@
     nvidia-container-toolkit
 
     # LLM Platforms
-    lmstudio
+    # lmstudio
 
     # Speech-to-Text
     # whisper-cpp
@@ -56,7 +56,7 @@
 
     microsoft-edge
     # Packages added for openclaw skills
-    gogcli
+    # gogcli
     python3
 
     # Visual Art
