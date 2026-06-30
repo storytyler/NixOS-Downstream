@@ -214,22 +214,21 @@ Item {
 							spacing: 4
 
 							Text {
-								text: dailyCell.modelData ? dailyCell.modelData.high + "\u00B0" : ""
-								color: "#cfd3db"
-								font.pixelSize: Math.max(12, dailyCell.height * 0.27)
-								font.family: "monospace"
-								font.bold: true
-								style: Text.Raised
-								styleColor: Qt.rgba(207/255, 211/255, 219/255, 0.4)
-							}
-
-							Text {
 								text: dailyCell.modelData ? dailyCell.modelData.low + "\u00B0" : ""
 								color: "#8f8f8f"
 								font.pixelSize: Math.max(10, dailyCell.height * 0.22)
 								font.family: "monospace"
 								height: parent.height
 								verticalAlignment: Text.AlignVCenter
+							}
+
+							Text {
+								text: dailyCell.modelData ? dailyCell.modelData.high + "\u00B0" : ""
+								color: "#cfd3db"
+								font.pixelSize: Math.max(10, dailyCell.height * 0.22)
+								font.family: "monospace"
+								style: Text.Raised
+								styleColor: Qt.rgba(207/255, 211/255, 219/255, 0.4)
 							}
 						}
 
