@@ -6,7 +6,7 @@ hl.monitor({
 	scale = 1,
 })
 
--- Station-Alpha monitors
+-- Hekate monitors
 hl.monitor({
 	output = "desc:LG Electronics LG TV SSCR2 0x01010101",
 	mode = "preferred",

@@ -3,8 +3,8 @@ rec {
   # Surface (backgrounds)
   foreground = "cfd3db";
   background = "1f1f1f";
-  darker = "1f1f1f";
-  mbg = "323232";
+  darker = "323232";
+  mbg = "8f8f8f";
 
   cursorColor = "5aa0c1";
   comment = "6b6b6b";
@@ -36,7 +36,7 @@ rec {
   color15 = "8f8f8f";
 
   # Accent aliases (used by phocus @primary@ / @secondary@)
-  accent-primary = "5aa0c1";
+  accent-primary = "6b6b6b";
   accent-secondary = "6da050";
 
   name = "holographic";

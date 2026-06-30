@@ -99,10 +99,10 @@
       templates = import ./dev-shells;
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
       nixosConfigurations = {
-        Default = mkHost "Default";
-        Subrelay-01 = mkHost "Subrelay-01";
-        Scout-02 = mkHost "Scout-02";
-        Station-Alpha = mkHost "Station-Alpha";
+        Hekate = mkHost "Hekate";
+        Janus = mkHost "Janus";
+        Medea = mkHost "Medea";
+        Somnus = mkHost "Somnus";
       };
     };
 }

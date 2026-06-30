@@ -21,7 +21,7 @@ cd ~/NixOS
 ```
 
 ### First Configuration
-Edit `hosts/Default/variables.nix` to match your system:
+Edit `hosts/Janus/variables.nix` to match your system:
 - Set `videoDriver` to your GPU (nvidia, amdgpu, intel)
 - Configure user preferences (desktop, terminal, editor, browser)
 - Adjust localization settings
@@ -34,7 +34,7 @@ rebuild  # Custom script that handles username sync and hardware detection
 ## System Architecture
 
 ### Variables-Driven Design
-The system uses `hosts/Default/variables.nix` as the central configuration hub:
+The system uses `hosts/Janus/variables.nix` as the central configuration hub:
 
 ```nix
 {
@@ -83,21 +83,21 @@ modules/
 rebuild                              # Auto-updates username and hardware config
 
 # Alternative methods
-sudo nixos-rebuild switch --flake ".#Default"
-nh os switch --hostname Default
+sudo nixos-rebuild switch --flake ".#Janus"
+nh os switch --hostname Janus
 
 # Test without applying
-sudo nixos-rebuild test --flake ".#Default"
+sudo nixos-rebuild test --flake ".#Janus"
 
 # Build for next boot only
-sudo nixos-rebuild boot --flake ".#Default"
+sudo nixos-rebuild boot --flake ".#Janus"
 ```
 
 ### Configuration Files
-- `hosts/Default/variables.nix` - Central configuration variables
-- `hosts/Default/configuration.nix` - Module imports and system settings
-- `hosts/Default/hardware-configuration.nix` - Auto-generated hardware config
-- `hosts/Default/host-packages.nix` - Host-specific packages
+- `hosts/Janus/variables.nix` - Central configuration variables
+- `hosts/Janus/configuration.nix` - Module imports and system settings
+- `hosts/Janus/hardware-configuration.nix` - Auto-generated hardware config
+- `hosts/Janus/host-packages.nix` - Host-specific packages
 
 ### Custom Scripts
 Located in `modules/scripts/`:
@@ -111,17 +111,17 @@ Located in `modules/scripts/`:
 ### Adding New Hosts
 1. Copy existing host:
    ```bash
-   cp -r hosts/Default hosts/NewHost
+   cp -r hosts/Janus hosts/NewHost
    ```
 
 2. Edit `hosts/NewHost/variables.nix` for host-specific settings
 
 3. Add to `flake.nix`:
    ```nix
-   nixosConfigurations = {
-     Default = mkHost "Default";
-     NewHost = mkHost "NewHost";
-   };
+nixosConfigurations = {
+      Janus = mkHost "Janus";
+      NewHost = mkHost "NewHost";
+    };
    ```
 
 4. Rebuild with new host:
@@ -162,7 +162,7 @@ nix develop                  # Enter development shell
 ## Common Tasks
 
 ### Changing Desktop Environment
-1. Edit `hosts/Default/variables.nix`:
+1. Edit `hosts/Janus/variables.nix`:
    ```nix
    desktop = "gnome";  # Change from hyprland to gnome
    ```
@@ -184,7 +184,7 @@ nix develop                  # Enter development shell
 
 ### Adding Packages
 - For modular packages: Add to appropriate `modules/programs/` module
-- For host-specific: Add to `hosts/Default/host-packages.nix`
+- For host-specific: Add to `hosts/Janus/host-packages.nix`
 - For testing: Add directly to `configuration.nix`
 
 ### System Rollback

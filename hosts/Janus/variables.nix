@@ -6,7 +6,7 @@
   waybarTheme = "stylish"; # Options: stylish, minimal (only applies when bar = "waybar")
   terminal = "alacritty"; # Options: kitty, alacritty, ghostty, wezterm
   editor = "vscode"; # Options: vscode, helix
-  browser = "chromium"; # Options: firefox, floorp, zen
+  browser = "firefox"; # Options: firefox, floorp, zen
   tuiFileManager = "yazi"; # Options: yazi, lf
   sddmTheme = "black_hole"; # Options: astronaut, black_hole, purple_leaves, jake_the_dog, hyprland_kath
   defaultWallpaper = "kurzgesagt.webp"; # to change wallpaper: SUPER + SHIFT + W
@@ -17,12 +17,12 @@
 
   # Hardware Configuration
   videoDriver = "intel"; # CRITICAL: Choose your GPU driver (nvidia, amdgpu, intel)
-  hostname = "Subrelay-01"; # Your system hostname
+  hostname = "Janus"; # Your system hostname
 
   # Localization
   clock24h = true; # 24H or 12H clock in waybar
   locale = "en_GB.UTF-8"; # System locale
-  timezone = "Chicago/US"; # Your timezone
+  timezone = "America/Chicago"; # Your timezone
   kbdLayout = "us"; # Keyboard layout
   kbdVariant = ""; # Keyboard variant (can be empty)
   consoleKeymap = "us"; # TTY keymap

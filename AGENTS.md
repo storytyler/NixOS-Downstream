@@ -17,7 +17,7 @@ NixOS configuration using flakes with variables-driven architecture for flexible
 │   ├── programs/   # Applications by category (browser, cli, editor, media, terminal)
 │   ├── scripts/    # Custom utilities (rebuild, rollback, tmux-sessionizer)
 │   └── themes/     # Catppuccin, Dracula, rose-pine + wallpapers
-├── hosts/          # 4 hosts: Default, Scout-02, Station-Alpha, Subrelay-01
+├── hosts/          # 4 hosts: Hekate, Janus, Medea, Somnus
 ├── dev-shells/    # 46 language templates + python/ (full project)
 ├── overlays/       # Custom package overlays (pokego, portainer-mcp)
 ├── pkgs/           # Custom Nix package definitions
@@ -31,7 +31,7 @@ NixOS configuration using flakes with variables-driven architecture for flexible
 | Rebuild system | `rebuild` script | Auto-updates username + hardware detection |
 | Python dev | `dev-shells/python/` | hindsight-mcp (Python 3.13 dev shell) |
 | Add program | `modules/programs/{category}/` | Use `lib.mkIf (config.variables.X == "Y")` |
-| Add host | Copy `hosts/Default/` → add to `flake.nix` | Register in `nixosConfigurations` |
+| Add host | Copy `hosts/Janus/` → add to `flake.nix` | Register in `nixosConfigurations` |
 | GPU issues | `modules/hardware/video/${vars.videoDriver}.nix` | CRITICAL for boot |
 | Custom package | `pkgs/{name}.nix` + register in `pkgs/default.nix` | Auto-overlayed into nixpkgs |
 | Dev shell template | `dev-shells/{lang}/flake.nix` | Register in `dev-shells/default.nix` |
@@ -107,8 +107,7 @@ nix develop -t .#<lang>    # Enter any of 46 language dev shells
 - DON'T push to upstream directly — always go through fork PRs
 
 ## NOTES
-- **KNOWN BUG**: `hosts/Default/configuration.nix` line 63 has inverted games logic (`vars.games == false` should be `== true`)
-- **TIMEZONE BUG**: Default, Scout-02, Subrelay-01 use invalid `"Chicago/US"` (should be `"America/Chicago"`)
+- **KNOWN BUG**: `hosts/Janus/configuration.nix` line 63 has inverted games logic (`vars.games == false` should be `== true`)
 - `videoDriver` is CRITICAL - wrong value causes boot failure
 - `rebuild` supports both `$HOME/NixOS` and `/etc/nixos` locations
 - `modules/core/default.nix` exists but is unused — hosts import core modules individually

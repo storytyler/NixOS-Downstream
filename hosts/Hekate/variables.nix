@@ -19,7 +19,7 @@
 
   # Hardware Configuration
   videoDriver = "nvidia"; # CRITICAL: Choose your GPU driver (nvidia, amdgpu, intel)
-  hostname = "Station-Alpha"; # Your system hostname
+  hostname = "Hekate"; # Your system hostname
 
   # Localization
   clock24h = true; # 24H or 12H clock in waybar

@@ -16,10 +16,10 @@ Essential system services and configuration. 34 modules (35 files including AGEN
 | Display manager | `sddm.nix` | SDDM, reads `sddmTheme` from host variables |
 | Shell config | `bash.nix` / `zsh.nix` | Shell environment, selected via `variables.shell` |
 | Prompt theme | `starship.nix` | Cross-shell prompt (works with both bash and zsh) |
-| VPN | `tailscale.nix` | Tailscale VPN (Station-Alpha only) |
-| Smart home | `home-assistant.nix` | Home Assistant (Station-Alpha only) |
+| VPN | `tailscale.nix` | Tailscale VPN (Hekate only) |
+| Smart home | `home-assistant.nix` | Home Assistant (Hekate only) |
 | Gaming | `games.nix` | Conditionally loaded via `lib.optional vars.games` |
-| AI services | `model-runner.nix`, `chunkhound.nix` | AI model runner, code search (Station-Alpha) |
+| AI services | `model-runner.nix`, `chunkhound.nix` | AI model runner, code search (Hekate) |
 | Media sharing | `sunshine.nix`, `dlna.nix` | Remote game streaming, DLNA media server |
 | System tools | `nix-ld.nix`, `optnix.nix`, `nixos-facter.nix` | Dynamic linker, Nix optimizer, hardware facts |
 | Virtualisation | `virtualisation.nix` | VM/libvirt support |
@@ -29,7 +29,7 @@ Essential system services and configuration. 34 modules (35 files including AGEN
 | Flatpak | `flatpak.nix` | Flatpak support |
 | Hardware | `hardware.nix` | Base hardware detection, firmware |
 | Syncthing | `syncthing.nix` | File sync service |
-| RGB lighting | `openrgb.nix` | OpenRGB (Station-Alpha) |
+| RGB lighting | `openrgb.nix` | OpenRGB (Hekate) |
 | Backup | `backup.nix` | System backup utility |
 | Display helper | `nh.nix` | nh (Nix helper) |
 
