@@ -95,8 +95,8 @@ Item {
 					anchors.left: parent.left
 					anchors.verticalCenter: parent.verticalCenter
 					source: "icons/weather/" + weatherData.iconName + ".svg"
-					sourceSize.width: Math.max(32, poc.height * 0.045)
-					sourceSize.height: Math.max(32, poc.height * 0.045)
+					sourceSize.width: Math.max(48, poc.height * 0.07)
+					sourceSize.height: Math.max(48, poc.height * 0.07)
 					width: sourceSize.width
 					height: sourceSize.height
 					fillMode: Image.PreserveAspectFit
@@ -145,136 +145,212 @@ Item {
 			Row {
 				id: hourlyRow
 				width: parent.width
-				height: 80
+				height: 100
 				clip: true
 				spacing: 0
 				property var forecastItems: weatherData.hourlyForecast.slice(0, 6)
 				property int colCount: Math.max(1, forecastItems.length)
 
-				Repeater {
-					model: hourlyRow.forecastItems
+			Repeater {
+				model: hourlyRow.forecastItems
 
-					Column {
-						id: hourlyCell
-						required property var modelData
-						required property int index
-						width: parent.width / parent.colCount
-						height: parent.height
-						spacing: 2
+				Item {
+					id: hourlyCell
+					required property var modelData
+					required property int index
+					width: parent.width / parent.colCount
+					height: parent.height
+
+					MouseArea {
+						id: hourlyHover
+						anchors.fill: parent
+						hoverEnabled: true
+					}
+
+					Row {
+						anchors.fill: parent
+						leftPadding: 4
+						spacing: 6
 
 						Image {
-							anchors.horizontalCenter: parent.horizontalCenter
+							id: hourlyIcon
 							source: hourlyCell.modelData ? "icons/weather/" + hourlyCell.modelData.icon + ".svg" : ""
-							sourceSize.width: 20
-							sourceSize.height: 20
-							width: 20
-							height: 20
+							sourceSize.width: Math.max(32, hourlyCell.height * 0.8)
+							sourceSize.height: Math.max(32, hourlyCell.height * 0.8)
+							width: hourlyCell.height * 0.8
+							height: hourlyCell.height * 0.8
 							fillMode: Image.PreserveAspectFit
+							anchors.verticalCenter: parent.verticalCenter
 						}
 
-						Text {
-							anchors.horizontalCenter: parent.horizontalCenter
-							text: hourlyCell.modelData ? hourlyCell.modelData.hour : ""
-						color: "#6b6b6b"
-						font.pixelSize: Math.max(10, hourlyCell.height * 0.15)
-							font.family: "monospace"
-						}
+						Item {
+							id: hourlyRight
+							anchors.top: parent.top
+							anchors.bottom: parent.bottom
+							width: hourlyCell.width - hourlyIcon.width - parent.leftPadding - parent.spacing - 4
+							clip: true
 
-						Text {
-							anchors.horizontalCenter: parent.horizontalCenter
-							text: hourlyCell.modelData ? hourlyCell.modelData.temp + "\u00B0" : ""
-							color: "#cfd3db"
-							font.pixelSize: Math.max(12, hourlyCell.height * 0.2)
-							font.family: "monospace"
-							font.bold: true
-							style: Text.Raised
-							styleColor: Qt.rgba(207/255, 211/255, 219/255, 0.4)
-						}
+							Column {
+								anchors.left: parent.left
+								anchors.verticalCenter: parent.verticalCenter
+								spacing: 2
+								opacity: hourlyHover.containsMouse ? 0 : 1
+								Behavior on opacity { NumberAnimation { duration: 150 } }
 
-						Text {
-							anchors.horizontalCenter: parent.horizontalCenter
-							visible: hourlyCell.modelData && hourlyCell.modelData.precip > 0
-							text: hourlyCell.modelData ? hourlyCell.modelData.precip + "%" : ""
-							color: "#8f8f8f"
-							font.pixelSize: Math.max(10, hourlyCell.height * 0.13)
-							font.family: "monospace"
+								Text {
+									text: hourlyCell.modelData ? hourlyCell.modelData.hour : ""
+									color: "#6b6b6b"
+									font.pixelSize: Math.max(10, hourlyCell.height * 0.15)
+									font.family: "monospace"
+								}
+
+								Text {
+									text: hourlyCell.modelData ? hourlyCell.modelData.temp + "\u00B0" : ""
+									color: "#cfd3db"
+									font.pixelSize: Math.max(12, hourlyCell.height * 0.2)
+									font.family: "monospace"
+									font.bold: true
+									style: Text.Raised
+									styleColor: Qt.rgba(207/255, 211/255, 219/255, 0.4)
+								}
+							}
+
+							Column {
+								anchors.left: parent.left
+								anchors.verticalCenter: parent.verticalCenter
+								spacing: 2
+								opacity: hourlyHover.containsMouse ? 1 : 0
+								Behavior on opacity { NumberAnimation { duration: 150 } }
+
+								Text {
+									text: hourlyCell.modelData ? hourlyCell.modelData.precip + "%" : ""
+									color: "#8f8f8f"
+									font.pixelSize: Math.max(10, hourlyCell.height * 0.15)
+									font.family: "monospace"
+								}
+
+								Text {
+									text: hourlyCell.modelData ? hourlyCell.modelData.windFormatted : ""
+									color: "#6b6b6b"
+									font.pixelSize: Math.max(10, hourlyCell.height * 0.13)
+									font.family: "monospace"
+								}
+							}
 						}
 					}
 				}
+			}
 			}
 
 			// ── Daily forecast (5 days, room for icons later) ──
 			Row {
 				id: dailyRow
 				width: parent.width
-				height: 80
+				height: 100
 				clip: true
 				spacing: 0
 				property var forecastItems: weatherData.dailyForecast.slice(0, 5)
 				property int colCount: Math.max(1, forecastItems.length)
 
-				Repeater {
-					model: dailyRow.forecastItems
+			Repeater {
+				model: dailyRow.forecastItems
 
-					Column {
-						id: dailyCell
-						required property var modelData
-						required property int index
-						width: parent.width / parent.colCount
-						height: parent.height
-						spacing: 2
+				Item {
+					id: dailyCell
+					required property var modelData
+					required property int index
+					width: parent.width / parent.colCount
+					height: parent.height
+
+					MouseArea {
+						id: dailyHover
+						anchors.fill: parent
+						hoverEnabled: true
+					}
+
+					Row {
+						anchors.fill: parent
+						leftPadding: 4
+						spacing: 6
 
 						Image {
-							anchors.horizontalCenter: parent.horizontalCenter
+							id: dailyIcon
 							source: dailyCell.modelData ? "icons/weather/" + dailyCell.modelData.icon + ".svg" : ""
-							sourceSize.width: 20
-							sourceSize.height: 20
-							width: 20
-							height: 20
+							sourceSize.width: Math.max(32, dailyCell.height * 0.8)
+							sourceSize.height: Math.max(32, dailyCell.height * 0.8)
+							width: dailyCell.height * 0.8
+							height: dailyCell.height * 0.8
 							fillMode: Image.PreserveAspectFit
+							anchors.verticalCenter: parent.verticalCenter
 						}
 
-						Text {
-							anchors.horizontalCenter: parent.horizontalCenter
-						text: dailyCell.modelData ? dailyCell.modelData.dayName : ""
-						color: dailyCell.index === 0 ? "#cfd3db" : "#6b6b6b"
-						font.pixelSize: Math.max(10, dailyCell.height * 0.15)
-							font.family: "monospace"
-						}
+						Item {
+							id: dailyRight
+							anchors.top: parent.top
+							anchors.bottom: parent.bottom
+							width: dailyCell.width - dailyIcon.width - parent.leftPadding - parent.spacing - 4
+							clip: true
 
-						Row {
-							anchors.horizontalCenter: parent.horizontalCenter
-							spacing: 4
+							Column {
+								anchors.left: parent.left
+								anchors.verticalCenter: parent.verticalCenter
+								spacing: 2
+								opacity: dailyHover.containsMouse ? 0 : 1
+								Behavior on opacity { NumberAnimation { duration: 150 } }
 
-							Text {
-								text: dailyCell.modelData ? dailyCell.modelData.low + "\u00B0" : ""
-								color: "#8f8f8f"
-								font.pixelSize: Math.max(10, dailyCell.height * 0.2)
-								font.family: "monospace"
-								height: parent.height
-								verticalAlignment: Text.AlignVCenter
+								Text {
+									text: dailyCell.modelData ? dailyCell.modelData.dayName : ""
+									color: dailyCell.index === 0 ? "#cfd3db" : "#6b6b6b"
+									font.pixelSize: Math.max(10, dailyCell.height * 0.15)
+									font.family: "monospace"
+								}
+
+								Row {
+									spacing: 4
+
+									Text {
+										text: dailyCell.modelData ? dailyCell.modelData.low + "\u00B0" : ""
+										color: "#8f8f8f"
+										font.pixelSize: Math.max(10, dailyCell.height * 0.2)
+										font.family: "monospace"
+									}
+
+									Text {
+										text: dailyCell.modelData ? dailyCell.modelData.high + "\u00B0" : ""
+										color: "#cfd3db"
+										font.pixelSize: Math.max(10, dailyCell.height * 0.2)
+										font.family: "monospace"
+										style: Text.Raised
+										styleColor: Qt.rgba(207/255, 211/255, 219/255, 0.4)
+									}
+								}
 							}
 
-							Text {
-								text: dailyCell.modelData ? dailyCell.modelData.high + "\u00B0" : ""
-								color: "#cfd3db"
-								font.pixelSize: Math.max(10, dailyCell.height * 0.2)
-								font.family: "monospace"
-								style: Text.Raised
-								styleColor: Qt.rgba(207/255, 211/255, 219/255, 0.4)
-							}
-						}
+							Column {
+								anchors.left: parent.left
+								anchors.verticalCenter: parent.verticalCenter
+								spacing: 2
+								opacity: dailyHover.containsMouse ? 1 : 0
+								Behavior on opacity { NumberAnimation { duration: 150 } }
 
-						Text {
-							anchors.horizontalCenter: parent.horizontalCenter
-						visible: dailyCell.modelData && dailyCell.modelData.precip > 0
-						text: dailyCell.modelData ? dailyCell.modelData.precip + "%" : ""
-						color: "#6b6b6b"
-						font.pixelSize: Math.max(10, dailyCell.height * 0.13)
-							font.family: "monospace"
+								Text {
+									text: dailyCell.modelData ? dailyCell.modelData.precip + "%" : ""
+									color: "#8f8f8f"
+									font.pixelSize: Math.max(10, dailyCell.height * 0.15)
+									font.family: "monospace"
+								}
+
+								Text {
+									text: dailyCell.modelData ? dailyCell.modelData.windFormatted : ""
+									color: "#6b6b6b"
+									font.pixelSize: Math.max(10, dailyCell.height * 0.13)
+									font.family: "monospace"
+								}
+							}
 						}
 					}
 				}
+			}
 			}
 		}
 	}

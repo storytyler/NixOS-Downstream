@@ -22,6 +22,7 @@
       xdg.configFile."quickshell/dashboard/services/SysInfo.qml".source = ./qml/services/SysInfo.qml;
       xdg.configFile."quickshell/dashboard/services/SignalData.qml".source = ./qml/services/SignalData.qml;
       xdg.configFile."quickshell/dashboard/services/WeatherData.qml".source = ./qml/services/WeatherData.qml;
+      xdg.configFile."quickshell/dashboard/icons/weather".source = ./qml/icons/weather;
     })
   ];
 }

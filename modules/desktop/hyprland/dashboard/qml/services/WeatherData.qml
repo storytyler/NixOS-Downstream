@@ -91,7 +91,7 @@ Item {
 
 	Process {
 		id: forecastProc
-		command: ["sh", "-c", "curl -s 'https://api.open-meteo.com/v1/forecast?latitude=" + weatherData.latitude + "&longitude=" + weatherData.longitude + "&current=temperature_2m,apparent_temperature,wind_speed_10m,wind_direction_10m,weather_code,relative_humidity_2m,is_day&hourly=temperature_2m,precipitation_probability,weather_code,is_day&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&forecast_days=10&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto'"]
+		command: ["sh", "-c", "curl -s 'https://api.open-meteo.com/v1/forecast?latitude=" + weatherData.latitude + "&longitude=" + weatherData.longitude + "&current=temperature_2m,apparent_temperature,wind_speed_10m,wind_direction_10m,weather_code,relative_humidity_2m,is_day&hourly=temperature_2m,precipitation_probability,weather_code,is_day,wind_speed_10m,wind_direction_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max,wind_direction_10m_dominant&forecast_days=10&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto'"]
 		stdout: StdioCollector {
 			onStreamFinished: {
 				try {
@@ -129,14 +129,17 @@ Item {
 							var hrs = t.getHours()
 							var hh = hrs < 10 ? "0" + hrs : "" + hrs
 							var mm = t.getMinutes() < 10 ? "0" + t.getMinutes() : "" + t.getMinutes()
-							forecast.push({
-								hour: hh + ":" + mm,
-								temp: Math.round(hourly.temperature_2m[idx] || 0),
-								precip: Math.round(hourly.precipitation_probability[idx] || 0),
-								code: hourly.weather_code[idx] || 0,
-								isDay: hourly.is_day[idx] === 1,
-								icon: weatherData._iconName(hourly.weather_code[idx] || 0, hourly.is_day[idx] === 1)
-							})
+						forecast.push({
+							hour: hh + ":" + mm,
+							temp: Math.round(hourly.temperature_2m[idx] || 0),
+							precip: Math.round(hourly.precipitation_probability[idx] || 0),
+							code: hourly.weather_code[idx] || 0,
+							isDay: hourly.is_day[idx] === 1,
+							icon: weatherData._iconName(hourly.weather_code[idx] || 0, hourly.is_day[idx] === 1),
+							windSpeed: Math.round(hourly.wind_speed_10m[idx] || 0),
+							windDir: hourly.wind_direction_10m[idx] || 0,
+							windFormatted: Math.round(hourly.wind_speed_10m[idx] || 0) + " mph " + weatherData._windDir(hourly.wind_direction_10m[idx] || 0)
+						})
 						}
 						weatherData.hourlyForecast = forecast
 					}
@@ -148,14 +151,17 @@ Item {
 						var days = []
 						for (var d = 0; d < daily.time.length; d++) {
 							var dt = new Date(daily.time[d] + "T12:00:00")
-						days.push({
-							dayName: dayNames[dt.getDay()],
-							high: Math.round(daily.temperature_2m_max[d] || 0),
-							low: Math.round(daily.temperature_2m_min[d] || 0),
-							precip: Math.round(daily.precipitation_probability_max[d] || 0),
-							code: daily.weather_code[d] || 0,
-							icon: weatherData._iconName(daily.weather_code[d] || 0, true)
-						})
+					days.push({
+						dayName: dayNames[dt.getDay()],
+						high: Math.round(daily.temperature_2m_max[d] || 0),
+						low: Math.round(daily.temperature_2m_min[d] || 0),
+						precip: Math.round(daily.precipitation_probability_max[d] || 0),
+						code: daily.weather_code[d] || 0,
+						icon: weatherData._iconName(daily.weather_code[d] || 0, true),
+						windSpeed: Math.round(daily.wind_speed_10m_max[d] || 0),
+						windDir: daily.wind_direction_10m_dominant[d] || 0,
+						windFormatted: Math.round(daily.wind_speed_10m_max[d] || 0) + " mph " + weatherData._windDir(daily.wind_direction_10m_dominant[d] || 0)
+					})
 						}
 						weatherData.dailyForecast = days
 					}
