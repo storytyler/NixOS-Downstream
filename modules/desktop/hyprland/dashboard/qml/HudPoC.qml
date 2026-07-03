@@ -148,7 +148,7 @@ Item {
 				height: 100
 				clip: true
 				spacing: 0
-				property var forecastItems: weatherData.hourlyForecast.slice(0, 6)
+				property var forecastItems: weatherData.hourlyForecast.slice(0, 7)
 				property int colCount: Math.max(1, forecastItems.length)
 
 			Repeater {
@@ -249,7 +249,7 @@ Item {
 				height: 100
 				clip: true
 				spacing: 0
-				property var forecastItems: weatherData.dailyForecast.slice(0, 5)
+				property var forecastItems: weatherData.dailyForecast.slice(0, 7)
 				property int colCount: Math.max(1, forecastItems.length)
 
 			Repeater {

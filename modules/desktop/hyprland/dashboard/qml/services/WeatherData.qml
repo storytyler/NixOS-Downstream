@@ -27,8 +27,9 @@ Item {
 	property var dailyForecast: []    // [{dayName, high, low, precip, code}, ...]
 
 	// Location (configurable, hardcoded for now)
-	property real latitude: 41.88
-	property real longitude: -87.63
+	// Marion, Iowa
+	property real latitude: 42.057752
+	property real longitude: -91.574525
 
 	// WMO code → condition text
 	function _conditionText(code) {
