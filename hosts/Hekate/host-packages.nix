@@ -23,6 +23,7 @@
     # Coding Agents
     # gemini-cli
     pkgs.opencode
+    pkgs.rtk
 
     # LSP Servers
     qt6.qtdeclarative
