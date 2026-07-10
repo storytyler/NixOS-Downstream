@@ -28,9 +28,4 @@
   kbdLayout = "us"; # Keyboard layout
   kbdVariant = ""; # Keyboard variant (can be empty)
   consoleKeymap = "us"; # TTY keymap
-
-  # Home Assistant location (used by met weather integration)
-  latitude = 42.057856;
-  longitude = -91.574895;
-  elevation = 265;
 }
