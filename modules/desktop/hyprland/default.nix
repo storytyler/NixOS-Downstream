@@ -8,7 +8,9 @@
 }:
 let
   inherit (lib) optional;
-  inherit (import ../../../hosts/${host}/variables.nix) bar wallpaperPicker;
+  hostVars = import ../../../hosts/${host}/variables.nix;
+  inherit (hostVars) bar;
+  wallpaperPicker = hostVars.wallpaperPicker or "rofi";
 in
 {
   imports = [

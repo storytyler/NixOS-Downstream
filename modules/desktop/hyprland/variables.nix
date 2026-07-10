@@ -6,16 +6,9 @@
 }:
 let
   inherit (lib) getExe;
-  inherit (import ../../../hosts/${host}/variables.nix)
-    bar
-    browser
-    terminal
-    tuiFileManager
-    kbdLayout
-    kbdVariant
-    defaultWallpaper
-    wallpaperPicker
-    ;
+  hostVars = import ../../../hosts/${host}/variables.nix;
+  inherit (hostVars) bar browser terminal tuiFileManager kbdLayout kbdVariant defaultWallpaper;
+  wallpaperPicker = hostVars.wallpaperPicker or "rofi";
 
   autoclicker = pkgs.callPackage ./scripts/autoclicker.nix { };
   batterynotify = pkgs.callPackage ./scripts/batterynotify.nix { };
