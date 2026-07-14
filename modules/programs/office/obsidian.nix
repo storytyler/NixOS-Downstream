@@ -35,6 +35,24 @@ let
     url = "${hearthRelease}/styles.css";
     hash = "sha256-tr34vTL53KONw4mpGg1DEpLInb5lGeyYsqLHxfVLHl0=";
   };
+
+  styleSettingsVersion = "1.0.9";
+  styleSettingsRelease = "https://github.com/obsidian-community/obsidian-style-settings/releases/download/${styleSettingsVersion}";
+
+  styleSettingsMainJs = pkgs.fetchurl {
+    url = "${styleSettingsRelease}/main.js";
+    hash = "sha256-GCirqs2rTFV4twWmJcWFswUS+O+tTHz8WhjnDMNVdGg=";
+  };
+
+  styleSettingsManifest = pkgs.fetchurl {
+    url = "${styleSettingsRelease}/manifest.json";
+    hash = "sha256-nP/cIM8qoTVIIOAFC2lLD5tXZEbj1dRKNq6LAYflv7g==";
+  };
+
+  styleSettingsStyles = pkgs.fetchurl {
+    url = "${styleSettingsRelease}/styles.css";
+    hash = "sha256-7nk30r5QZTqJzLMK5fBXKyNQfVt/EyjQBScaNjB1v9g=";
+  };
 in
 {
   home-manager.sharedModules = [
@@ -46,6 +64,7 @@ in
         obs = "${vault}/.obsidian";
         livesyncPlugin = "${obs}/plugins/obsidian-livesync";
         hearthPlugin = "${obs}/plugins/hearth";
+        styleSettingsPlugin = "${obs}/plugins/obsidian-style-settings";
 
         mkObsidianLink = name: {
           "${obs}/${name}".source = config.lib.file.mkOutOfStoreSymlink "${configDir}/${name}";
@@ -82,6 +101,11 @@ in
             "${hearthPlugin}/main.js".source = hearthMainJs;
             "${hearthPlugin}/manifest.json".source = hearthManifest;
             "${hearthPlugin}/styles.css".source = hearthStyles;
+
+            # Style Settings plugin files (immutable — from Nix store)
+            "${styleSettingsPlugin}/main.js".source = styleSettingsMainJs;
+            "${styleSettingsPlugin}/manifest.json".source = styleSettingsManifest;
+            "${styleSettingsPlugin}/styles.css".source = styleSettingsStyles;
           };
       }
     )
