@@ -1,8 +1,7 @@
 { pkgs, ... }:
 let
   livesyncVersion = "0.25.70";
-  livesyncRelease =
-    "https://github.com/vrtmrz/obsidian-livesync/releases/download/${livesyncVersion}";
+  livesyncRelease = "https://github.com/vrtmrz/obsidian-livesync/releases/download/${livesyncVersion}";
 
   livesyncMainJs = pkgs.fetchurl {
     url = "${livesyncRelease}/main.js";
@@ -18,21 +17,38 @@ let
     url = "${livesyncRelease}/styles.css";
     hash = "sha256-t4Vv6AsekgOcvc6ikut5jTMM+BcWBgNEqlPXL0pozaw=";
   };
+
+  hearthVersion = "1.10.0";
+  hearthRelease = "https://github.com/ondreu/Hearth/releases/download/${hearthVersion}";
+
+  hearthMainJs = pkgs.fetchurl {
+    url = "${hearthRelease}/main.js";
+    hash = "sha256-AUw5vSJ6edVodVcLc4zPnUGNUTahOu3C/fRb1sVotjo=";
+  };
+
+  hearthManifest = pkgs.fetchurl {
+    url = "${hearthRelease}/manifest.json";
+    hash = "sha256-u/0ygcKIaRDLUh7t7RM1qbX+9m0aQBEyPFClUfoIgv0=";
+  };
+
+  hearthStyles = pkgs.fetchurl {
+    url = "${hearthRelease}/styles.css";
+    hash = "sha256-tr34vTL53KONw4mpGg1DEpLInb5lGeyYsqLHxfVLHl0=";
+  };
 in
 {
   home-manager.sharedModules = [
     (
       { config, ... }:
       let
-        configDir =
-          "${config.home.homeDirectory}/NixOS/modules/programs/office/json";
+        configDir = "${config.home.homeDirectory}/NixOS/modules/programs/office/json";
         vault = "Workspace/writing";
         obs = "${vault}/.obsidian";
-        plugin = "${obs}/plugins/obsidian-livesync";
+        livesyncPlugin = "${obs}/plugins/obsidian-livesync";
+        hearthPlugin = "${obs}/plugins/hearth";
 
         mkObsidianLink = name: {
-          "${obs}/${name}".source =
-            config.lib.file.mkOutOfStoreSymlink "${configDir}/${name}";
+          "${obs}/${name}".source = config.lib.file.mkOutOfStoreSymlink "${configDir}/${name}";
         };
       in
       {
@@ -54,12 +70,18 @@ in
             (mkObsidianLink "core-plugins.json")
             (mkObsidianLink "community-plugins.json")
 
-          {}])
+            { }
+          ])
           // {
             # LiveSync plugin files (immutable — from Nix store)
-            "${plugin}/main.js".source = livesyncMainJs;
-            "${plugin}/manifest.json".source = livesyncManifest;
-            "${plugin}/styles.css".source = livesyncStyles;
+            "${livesyncPlugin}/main.js".source = livesyncMainJs;
+            "${livesyncPlugin}/manifest.json".source = livesyncManifest;
+            "${livesyncPlugin}/styles.css".source = livesyncStyles;
+
+            # Hearth plugin files (immutable — from Nix store)
+            "${hearthPlugin}/main.js".source = hearthMainJs;
+            "${hearthPlugin}/manifest.json".source = hearthManifest;
+            "${hearthPlugin}/styles.css".source = hearthStyles;
           };
       }
     )
