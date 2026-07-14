@@ -5,5 +5,6 @@
   "showLineNumber": false,
   "readableLineLength": false,
   "strictLineBreaks": false,
-  "showUnsupportedFiles": false
+  "showUnsupportedFiles": false,
+  "alwaysUpdateLinks": true
 }
