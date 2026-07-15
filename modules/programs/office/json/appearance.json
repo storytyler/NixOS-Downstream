@@ -1,6 +1,9 @@
 {
   "baseFontSize": 24,
-  "cssTheme": "",
-  "enabledCssSnippets": [],
-  "baseFontSizeAction": true
+  "cssTheme": "Encore",
+  "enabledCssSnippets": [
+    "holographic-palette"
+  ],
+  "baseFontSizeAction": true,
+  "accentColor": "#00a7fa"
 }
