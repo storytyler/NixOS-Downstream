@@ -129,16 +129,66 @@ Item {
 					}
 				}
 
+// ── Alert icon (between current conditions and ticker) ──
+			Item {
+				id: alertSlot
+				anchors.right: tickerClip.left
+				anchors.rightMargin: 12
+				anchors.verticalCenter: parent.verticalCenter
+				width: 40
+				height: 40
+				visible: weatherData.alertCount > 0
+
+				Image {
+					anchors.fill: parent
+					source: "icons/weather/" + weatherData.alertIcon + ".svg"
+					sourceSize.width: 40
+					sourceSize.height: 40
+					fillMode: Image.PreserveAspectFit
+				}
+			}
+
+			// ── Ticker (scrolls when alert active, static when nominal) ──
+			Item {
+				id: tickerClip
+				anchors.right: parent.right
+				anchors.verticalCenter: parent.verticalCenter
+				width: parent.width - weatherIcon.width - currentDetails.implicitWidth - (weatherData.alertCount > 0 ? alertSlot.width + 24 : 16)
+				height: Math.max(20, poc.height * 0.018)
+				clip: true
+
 				Text {
-					anchors.right: parent.right
-					anchors.verticalCenter: parent.verticalCenter
-					text: "Weather Patterns Nominal"
-					color: "#cfd3db"
+					id: tickerText
+					text: weatherData.alertTickerText
+					color: weatherData.alertColor
 					font.pixelSize: Math.max(10, poc.height * 0.013)
 					font.family: "monospace"
 					style: Text.Raised
-					styleColor: Qt.rgba(207/255, 211/255, 219/255, 0.4)
+					styleColor: Qt.rgba(143/255, 143/255, 143/255, 0.4)
+
+					// No anchor on x — animation owns it
+					x: weatherData.alertCount === 0 ? tickerClip.width - contentWidth : tickerClip.width
+
+					onTextChanged: {
+						if (weatherData.alertCount === 0) {
+							tickerAnim.stop()
+							x = tickerClip.width - tickerText.contentWidth
+						} else {
+							x = tickerClip.width
+							tickerAnim.restart()
+						}
+					}
+
+					NumberAnimation on x {
+						id: tickerAnim
+						from: tickerClip.width
+						to: -tickerText.contentWidth
+						duration: Math.max(15000, tickerText.contentWidth * 30)
+						loops: Animation.Infinite
+						running: weatherData.alertCount > 0
+					}
 				}
+			}
 			}
 
 			// ── Hourly forecast (6 hours, room for icons later) ──

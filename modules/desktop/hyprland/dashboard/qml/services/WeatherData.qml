@@ -31,6 +31,15 @@ Item {
 	property real latitude: 42.057752
 	property real longitude: -91.574525
 
+	// ── NWS Active Alerts ──
+	property var activeAlerts: []             // array of parsed alert objects
+	property int alertCount: 0
+	property string maxSeverity: "None"       // "None" | "Minor" | "Moderate" | "Severe" | "Extreme"
+	property color alertColor: "#cfd3db"      // severity ramp color
+	property string alertIcon: "weather-alert" // Meteocons slug for highest-severity event
+	property string alertTickerText: "Weather Patterns Nominal"
+	property string alertExpiresText: ""      // human-readable "expires HH:MM AM/PM"
+
 	// WMO code → condition text
 	function _conditionText(code) {
 		switch (true) {
@@ -80,6 +89,132 @@ Item {
 		return dirs[Math.round(deg / 22.5) % 16]
 	}
 
+	// ── NWS alert helpers ──
+
+	// Severity enum → numeric rank (higher = more severe)
+	function _severityRank(sev) {
+		switch (sev) {
+			case "Extreme":  return 4
+			case "Severe":   return 3
+			case "Moderate": return 2
+			case "Minor":    return 1
+			default:         return 0  // "Unknown" or "None"
+		}
+	}
+
+	// Severity → color (ramp locked by user)
+	function _severityColor(sev) {
+		switch (sev) {
+			case "Extreme":  return "#c31700"
+			case "Severe":   return "#ff211b"
+			case "Moderate": return "#ffc42d"
+			case "Minor":    return "#74e91c"
+			default:         return "#cfd3db"  // Unknown / no alert
+		}
+	}
+
+	// NWS event string → Meteocons icon slug
+	function _alertIcon(event) {
+		var e = (event || "").toLowerCase()
+		if (e.includes("tornado"))                            return "tornado-alert"
+		if (e.includes("thunderstorm"))                       return e.includes("warning") ? "thunderstorms-extreme" : "thunderstorms"
+		if (e.includes("flash flood") || e.includes("flood")) return "water-alert"
+		if (e.includes("hurricane") || e.includes("typhoon")) return "hurricane-alert"
+		if (e.includes("tropical storm"))                     return "cyclone-alert"
+		if (e.includes("blizzard"))                           return "wind-snow"
+		if (e.includes("winter storm"))                      return "extreme-snow"
+		if (e.includes("ice storm"))                          return "extreme-hail"
+		if (e.includes("extreme heat") || e.includes("excessive heat")) return "thermometer-alert"
+		if (e.includes("heat"))                              return e.includes("warning") ? "thermometer-alert" : "thermometer-warmer"
+		if (e.includes("extreme cold") || e.includes("wind chill")) return "thermometer-colder"
+		if (e.includes("freeze") || e.includes("frost"))     return "snowflake"
+		if (e.includes("high wind"))                         return "wind-alert"
+		if (e.includes("wind advisory"))                     return "wind"
+		if (e.includes("red flag") || e.includes("fire weather") || e.includes("fire warning")) return "fire-alert"
+		if (e.includes("dense fog") || e.includes("fog"))    return "fog"
+		if (e.includes("dense smoke") || e.includes("smoke")) return "smoke"
+		if (e.includes("air quality"))                       return "haze"
+		if (e.includes("dust storm") || e.includes("blowing dust")) return "dust"
+		if (e.includes("avalanche"))                         return "avalanche-danger-alert"
+		if (e.includes("tsunami"))                           return "water-alert"
+		if (e.includes("storm surge"))                       return "water-alert"
+		if (e.includes("snow squall"))                        return "wind-snow"
+		if (e.includes("rip current") || e.includes("beach")) return "water"
+		return "weather-alert"  // generic fallback
+	}
+
+	// Strip the "issued ... by NWS ..." boilerplate, keep action + time
+	function _shortHeadline(headline) {
+		if (!headline) return ""
+		// "Extreme Heat Warning issued July 1 at 9:56AM CDT until July 3 at 12:00AM CDT by NWS Chicago IL"
+		// → "Extreme Heat Warning until July 3 at 12:00AM CDT"
+		var m = headline.match(/^(.+?) issued .+? until (.+?) by NWS .+$/i)
+		if (m) return m[1] + " until " + m[2]
+		// Fallback: trim at "by NWS"
+		var idx = headline.indexOf(" by NWS")
+		if (idx > 0) return headline.substring(0, idx)
+		return headline
+	}
+
+	// Format ISO 8601 expiry → "expires HH:MM AM/PM"
+	function _formatExpiry(iso) {
+		if (!iso) return ""
+		var d = new Date(iso)
+		if (isNaN(d.getTime())) return ""
+		var h = d.getHours()
+		var ampm = h >= 12 ? "PM" : "AM"
+		var h12 = h % 12 || 12
+		var m = d.getMinutes()
+		var mm = m < 10 ? "0" + m : "" + m
+		return "expires " + h12 + ":" + mm + " " + ampm
+	}
+
+	// Process alerts array → set all alert* properties on weatherData
+	function _processAlerts(alerts) {
+		// Defensive filter: only currently-active alerts
+		var now = new Date()
+		var live = []
+		for (var i = 0; i < alerts.length; i++) {
+			var a = alerts[i]
+			if (a.expires) {
+				var exp = new Date(a.expires)
+				if (!isNaN(exp.getTime()) && exp <= now) continue
+			}
+			live.push(a)
+		}
+
+		// Sort by severity rank desc (most severe first)
+		live.sort(function (x, y) {
+			return weatherData._severityRank(y.severity) - weatherData._severityRank(x.severity)
+		})
+
+		weatherData.activeAlerts = live
+		weatherData.alertCount = live.length
+
+		if (live.length === 0) {
+			weatherData.maxSeverity = "None"
+			weatherData.alertColor = weatherData._severityColor("None")
+			weatherData.alertIcon = "weather-alert"
+			weatherData.alertTickerText = "Weather Patterns Nominal"
+			weatherData.alertExpiresText = ""
+			return
+		}
+
+		// Primary alert = highest severity (first after sort)
+		var primary = live[0]
+		weatherData.maxSeverity = primary.severity
+		weatherData.alertColor = weatherData._severityColor(primary.severity)
+		weatherData.alertIcon = weatherData._alertIcon(primary.event)
+
+		// Build ticker text: join each event + short headline with " · "
+		var parts = []
+		for (var k = 0; k < live.length; k++) {
+			parts.push(live[k].event + " — " + weatherData._shortHeadline(live[k].headline))
+		}
+		weatherData.alertTickerText = parts.join("  ·  ")
+		weatherData.alertExpiresText = weatherData._formatExpiry(primary.expires)
+	}
+
 	Timer {
 		interval: 900000  // 15 min
 		running: true
@@ -87,8 +222,19 @@ Item {
 		onTriggered: forecastProc.running = true
 	}
 
+	// 5-minute alert poll (separate cadence from forecast)
+	Timer {
+		interval: 300000  // 5 min
+		running: true
+		repeat: true
+		onTriggered: alertsProc.running = true
+	}
+
 	// Initial fetch on startup
-	Component.onCompleted: forecastProc.running = true
+	Component.onCompleted: {
+		forecastProc.running = true
+		alertsProc.running = true
+	}
 
 	Process {
 		id: forecastProc
@@ -164,10 +310,46 @@ Item {
 						windFormatted: Math.round(daily.wind_speed_10m_max[d] || 0) + " mph " + weatherData._windDir(daily.wind_direction_10m_dominant[d] || 0)
 					})
 						}
-						weatherData.dailyForecast = days
+weatherData.dailyForecast = days
 					}
 				} catch (e) {
 					weatherData.conditionText = "Fetch Error"
+				}
+			}
+		}
+	}
+
+	// ── NWS Active Alerts Process ──
+	// Polls api.weather.gov every 5 min (driven by separate Timer).
+	// Requires User-Agent header (NWS enforces it). Silent fail: keeps last known state.
+	Process {
+		id: alertsProc
+		command: ["sh", "-c", "curl -s -H 'User-Agent: (quickshell-dashboard, tmoneyrolling@gmail.com)' -H 'Accept: application/geo+json' 'https://api.weather.gov/alerts/active?point=" + weatherData.latitude + "," + weatherData.longitude + "'"]
+		stdout: StdioCollector {
+			onStreamFinished: {
+				try {
+					var json = JSON.parse(this.text)
+					var features = json.features || []
+					var alerts = []
+					for (var i = 0; i < features.length; i++) {
+						var p = features[i].properties
+						if (!p) continue
+						if (p.status && p.status !== "Actual") continue
+						if (p.messageType === "Cancel") continue
+						alerts.push({
+							event:      p.event || "Unknown Event",
+							headline:   p.headline || "",
+							severity:   p.severity || "Unknown",
+							urgency:    p.urgency || "Unknown",
+							certainty:  p.certainty || "Unknown",
+							expires:    p.expires || "",
+							ends:       p.ends || "",
+							areaDesc:   p.areaDesc || ""
+						})
+					}
+					weatherData._processAlerts(alerts)
+				} catch (e) {
+					// Silent fail — keep last known alerts, don't nuke UI on transient error
 				}
 			}
 		}
