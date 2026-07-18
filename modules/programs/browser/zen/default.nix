@@ -25,8 +25,10 @@
             settings = import ./settings.nix;
             bookmarks = import ./bookmarks.nix;
             search = import ./search.nix { inherit pkgs; };
-            userChrome = builtins.readFile ./userChrome.css;
-            userContent = builtins.readFile ./userContent.css;
+            # Holographic palette overrides loaded AFTER base CSS (cascade wins, same specificity).
+            # Source: ~/Workspace/holographic-palette.md — follows obsidian.nix convention.
+            userChrome = builtins.readFile ./userChrome.css + builtins.readFile ./holographic-palette.css;
+            userContent = builtins.readFile ./userContent.css + builtins.readFile ./holographic-palette.css;
             extraConfig = ''
               ${builtins.readFile "${inputs.betterfox}/Fastfox.js"}
               ${builtins.readFile "${inputs.betterfox}/Peskyfox.js"}

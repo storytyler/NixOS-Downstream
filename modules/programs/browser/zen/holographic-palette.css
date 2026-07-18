@@ -1,0 +1,294 @@
+/* ═══════════════════════════════════════════════════════
+   Holographic Palette — Zen Browser override
+   Source: ~/Workspace/holographic-palette.md
+   Convention: follows obsidian.nix holographic-palette.css pattern.
+   Loaded AFTER userChrome.css + userContent.css via default.nix
+   concatenation. Same selectors, equal specificity, cascade wins.
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Color Map ──
+   ctp-base     #1e1e2e → N1 #1f1f1f
+   ctp-crust    #11111b →    #1a1a1a (slightly deeper)
+   ctp-surface0 #313244 → N2 #323232
+   ctp-surface1 #45475a →    #3d3d3d
+   ctp-mantle   #181825 → N1 #1f1f1f
+   ctp-text     #cdd6f4 → N5 #cfd3db
+   ctp-mauve    #cba6f7 → A2 #5aa0c1 (accent: soft blue = status quo)
+   ctp-blue     #89b4fa → A1 #3c728c
+   ctp-green    #a6e3a1 → G2 #6da050
+   ctp-yellow   #f9e2af → Y2 #ffc42d
+   ctp-red      #f38ba8 →    #c31700 (R1_alert)
+   ctp-teal     #94e2d5 → C2 #688880
+   ctp-lavender #b4befe → M2 #887280
+   mauve hover  rgb(204,190,246) → rgb(90,160,193) (A2)
+   mauve hover2 rgb(217,191,249) → rgb(106,207,255) (A3)
+   surface1 rgb rgb(81,83,105)   → rgb(50,50,50)   (N2)
+   ────────────────────────────────────────────────── */
+
+/* ═══════════════════════════════════════════════════════
+   SECTION 1: userChrome.css overrides
+   ═══════════════════════════════════════════════════════ */
+
+@media (prefers-color-scheme: dark) {
+  /* ── :root CSS variables ── */
+  :root {
+    --zen-colors-primary: #323232 !important;        /* N2 */
+    --zen-primary-color: #5aa0c1 !important;         /* A2 */
+    --zen-colors-secondary: #323232 !important;      /* N2 */
+    --zen-colors-tertiary: #1f1f1f !important;       /* N1 */
+    --zen-colors-border: #5aa0c1 !important;          /* A2 */
+    --toolbarbutton-icon-fill: #5aa0c1 !important;    /* A2 */
+    --lwt-text-color: #cfd3db !important;             /* N5 */
+    --toolbar-field-color: #cfd3db !important;         /* N5 */
+    --tab-selected-textcolor: #6acfff !important;      /* A3 */
+    --toolbar-field-focus-color: #cfd3db !important;   /* N5 */
+    --toolbar-color: #cfd3db !important;               /* N5 */
+    --newtab-text-primary-color: #cfd3db !important;   /* N5 */
+    --arrowpanel-color: #cfd3db !important;            /* N5 */
+    --arrowpanel-background: #1f1f1f !important;       /* N1 */
+    --sidebar-text-color: #cfd3db !important;          /* N5 */
+    --lwt-sidebar-text-color: #cfd3db !important;      /* N5 */
+    --lwt-sidebar-background-color: #1f1f1f !important;/* N1 */
+    --toolbar-bgcolor: #323232 !important;             /* N2 */
+    --newtab-background-color: #1f1f1f !important;     /* N1 */
+    --zen-themed-toolbar-bg: #1f1f1f !important;       /* N1 */
+    --zen-main-browser-background: #1f1f1f !important; /* N1 */
+    --toolbox-bgcolor-inactive: #1f1f1f !important;    /* N1 */
+  }
+
+  /* ── Hardcoded color rules (same selectors, cascade wins) ── */
+
+  #permissions-granted-icon {
+    color: #1f1f1f !important; /* N1 */
+  }
+
+  .sidebar-placesTree {
+    background-color: #1f1f1f !important; /* N1 */
+  }
+
+  #zen-workspaces-button {
+    background-color: #1f1f1f !important; /* N1 */
+  }
+
+  #TabsToolbar {
+    background-color: #1f1f1f !important; /* N1 */
+  }
+
+  #urlbar-background {
+    background-color: #1f1f1f !important; /* N1 */
+  }
+
+  .content-shortcuts {
+    background-color: #1f1f1f !important; /* N1 */
+    border-color: #5aa0c1 !important;      /* A2 */
+  }
+
+  .urlbarView-url {
+    color: #5aa0c1 !important; /* A2 */
+  }
+
+  #zenEditBookmarkPanelFaviconContainer {
+    background: #1f1f1f !important; /* N1 */
+  }
+
+  #zen-media-controls-toolbar {
+    & #zen-media-progress-bar {
+      &::-moz-range-track {
+        background: #323232 !important; /* N2 */
+      }
+    }
+  }
+
+  /* Toolbar button checked/open state — icon fill */
+  toolbar .toolbarbutton-1 {
+    &:not([disabled]) {
+      &:is([open], [checked])
+        > :is(
+          .toolbarbutton-icon,
+          .toolbarbutton-text,
+          .toolbarbutton-badge-stack
+        ) {
+        fill: #1f1f1f; /* N1 — on-accent background */
+      }
+    }
+  }
+
+  /* ── Container identity colors ── */
+  .identity-color-blue {
+    --identity-tab-color: #5aa0c1 !important;  /* A2 */
+    --identity-icon-color: #5aa0c1 !important; /* A2 */
+  }
+  .identity-color-turquoise {
+    --identity-tab-color: #688880 !important;  /* C2 */
+    --identity-icon-color: #688880 !important; /* C2 */
+  }
+  .identity-color-green {
+    --identity-tab-color: #6da050 !important;  /* G2 */
+    --identity-icon-color: #6da050 !important; /* G2 */
+  }
+  .identity-color-yellow {
+    --identity-tab-color: #ffc42d !important;  /* Y2 */
+    --identity-icon-color: #ffc42d !important; /* Y2 */
+  }
+  .identity-color-orange {
+    --identity-tab-color: #c38c00 !important;  /* Y1 */
+    --identity-icon-color: #c38c00 !important; /* Y1 */
+  }
+  .identity-color-red {
+    --identity-tab-color: #c31700 !important;  /* R1_alert */
+    --identity-icon-color: #c31700 !important; /* R1_alert */
+  }
+  .identity-color-pink {
+    --identity-tab-color: #887280 !important;  /* M2 */
+    --identity-icon-color: #887280 !important; /* M2 */
+  }
+  .identity-color-purple {
+    --identity-tab-color: #6a5a66 !important;  /* M1 */
+    --identity-icon-color: #6a5a66 !important; /* M1 */
+  }
+
+  /* ── Titlebar / navbar chrome ── */
+  hbox#titlebar {
+    background-color: #1f1f1f !important; /* N1 */
+  }
+
+  #zen-appcontent-navbar-container {
+    background-color: #1f1f1f !important; /* N1 */
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   SECTION 2: userContent.css overrides
+   ═══════════════════════════════════════════════════════ */
+
+@media (prefers-color-scheme: dark) {
+
+  /* ── about:* common variables ── */
+  @-moz-document url-prefix("about:") {
+    :root {
+      --in-content-page-color: #cfd3db !important;               /* N5 */
+      --color-accent-primary: #5aa0c1 !important;                /* A2 */
+      --color-accent-primary-hover: #6acfff !important;           /* A3 */
+      --color-accent-primary-active: #6acfff !important;          /* A3 */
+      background-color: #1f1f1f !important;                       /* N1 */
+      --in-content-page-background: #1f1f1f !important;           /* N1 */
+    }
+  }
+
+  /* ── about:newtab / about:home ── */
+  @-moz-document url("about:newtab"), url("about:home") {
+    :root {
+      --newtab-background-color: #1f1f1f !important;              /* N1 */
+      --newtab-background-color-secondary: #323232 !important;    /* N2 */
+      --newtab-element-hover-color: #323232 !important;           /* N2 */
+      --newtab-text-primary-color: #cfd3db !important;            /* N5 */
+      --newtab-wordmark-color: #cfd3db !important;                /* N5 */
+      --newtab-primary-action-background: #5aa0c1 !important;     /* A2 */
+    }
+
+    .icon {
+      color: #5aa0c1 !important; /* A2 */
+    }
+
+    .card-outer:is(:hover, :focus, .active):not(.placeholder) .card-title {
+      color: #5aa0c1 !important; /* A2 */
+    }
+
+    .top-site-outer .search-topsite {
+      background-color: #5aa0c1 !important; /* A2 */
+    }
+
+    .compact-cards .card-outer .card-context .card-context-icon.icon-download {
+      fill: #6da050 !important; /* G2 */
+    }
+  }
+
+  /* ── about:preferences ── */
+  @-moz-document url-prefix("about:preferences") {
+    :root {
+      --zen-colors-tertiary: #1f1f1f !important;       /* N1 */
+      --in-content-text-color: #cfd3db !important;      /* N5 */
+      --link-color: #5aa0c1 !important;                /* A2 */
+      --link-color-hover: #6acfff !important;           /* A3 */
+      --zen-colors-primary: #323232 !important;         /* N2 */
+      --in-content-box-background: #323232 !important;  /* N2 */
+      --zen-primary-color: #5aa0c1 !important;          /* A2 */
+    }
+
+    groupbox, moz-card {
+      background: #1f1f1f !important; /* N1 */
+    }
+
+    button,
+    groupbox menulist {
+      background: #323232 !important;  /* N2 */
+      color: #cfd3db !important;       /* N5 */
+    }
+
+    .main-content {
+      background-color: #1f1f1f !important; /* N1 */
+    }
+
+    /* Preferences container identity colors */
+    .identity-color-blue {
+      --identity-tab-color: #5aa0c1 !important;  /* A2 */
+      --identity-icon-color: #5aa0c1 !important; /* A2 */
+    }
+    .identity-color-turquoise {
+      --identity-tab-color: #688880 !important;  /* C2 */
+      --identity-icon-color: #688880 !important; /* C2 */
+    }
+    .identity-color-green {
+      --identity-tab-color: #6da050 !important;  /* G2 */
+      --identity-icon-color: #6da050 !important; /* G2 */
+    }
+    .identity-color-yellow {
+      --identity-tab-color: #ffc42d !important;  /* Y2 */
+      --identity-icon-color: #ffc42d !important; /* Y2 */
+    }
+    .identity-color-orange {
+      --identity-tab-color: #c38c00 !important;  /* Y1 */
+      --identity-icon-color: #c38c00 !important; /* Y1 */
+    }
+    .identity-color-red {
+      --identity-tab-color: #c31700 !important;  /* R1_alert */
+      --identity-icon-color: #c31700 !important; /* R1_alert */
+    }
+    .identity-color-pink {
+      --identity-tab-color: #887280 !important;  /* M2 */
+      --identity-icon-color: #887280 !important; /* M2 */
+    }
+    .identity-color-purple {
+      --identity-tab-color: #6a5a66 !important;  /* M1 */
+      --identity-icon-color: #6a5a66 !important; /* M1 */
+    }
+  }
+
+  /* ── about:addons ── */
+  @-moz-document url-prefix("about:addons") {
+    :root {
+      --zen-dark-color-mix-base: #1f1f1f !important;        /* N1 */
+      --background-color-box: #1f1f1f !important;            /* N1 */
+    }
+  }
+
+  /* ── about:protections ── */
+  @-moz-document url-prefix("about:protections") {
+    :root {
+      --zen-primary-color: #1f1f1f !important;              /* N1 */
+      --social-color: #5aa0c1 !important;                   /* A2 */
+      --coockie-color: #688880 !important;                   /* C2 — teal near-neutral */
+      --fingerprinter-color: #ffc42d !important;              /* Y2 */
+      --cryptominer-color: #887280 !important;               /* M2 */
+      --tracker-color: #6da050 !important;                   /* G2 */
+      --in-content-primary-button-background-hover: rgb(50,50,50) !important;        /* N2 */
+      --in-content-primary-button-text-color-hover: #cfd3db !important;              /* N5 */
+      --in-content-primary-button-background: #323232 !important;                    /* N2 */
+      --in-content-primary-button-text-color: #cfd3db !important;                    /* N5 */
+    }
+
+    .card {
+      background-color: #323232 !important; /* N2 */
+    }
+  }
+}
