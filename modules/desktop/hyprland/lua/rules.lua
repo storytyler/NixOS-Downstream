@@ -267,6 +267,7 @@ hl.window_rule({
 	content = "game",
 	sync_fullscreen = true,
 	fullscreen = true,
+	decorate = false,
 	border_size = 0,
 	no_shadow = true,
 	no_blur = true,
@@ -301,6 +302,7 @@ hl.window_rule({
 hl.window_rule({
 	match = { class = "^(org.quickshell)$" },
 	fullscreen = true,
+	decorate = false,
 	border_size = 0,
 	no_shadow = true,
 	no_anim = true,

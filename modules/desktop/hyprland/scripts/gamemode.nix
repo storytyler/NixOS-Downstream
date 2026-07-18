@@ -6,6 +6,7 @@ pkgs.writeShellScriptBin "gamemode" ''
     hyprctl -q --batch "\
           keyword animations:enabled 0;\
           keyword decoration:shadow:enabled 0;\
+          keyword decoration:glow:enabled 0;\
           keyword decoration:drop_shadow 0;\
           keyword decoration:blur:enabled 0;\
           keyword decoration:blur:xray 1;\

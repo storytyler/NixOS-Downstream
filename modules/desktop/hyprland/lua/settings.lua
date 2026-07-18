@@ -96,6 +96,15 @@ hl.config({
 			ignore_opacity = true,
 			xray = false,
 		},
+		glow = {
+			enabled = true,
+			range = 10,
+			render_power = 3,
+			color = {
+				colors = { "rgba(106,207,255,0.9)", "rgba(90,160,193,0.3)" },
+				angle = 45,
+			},
+		},
 	},
 	group = {
 		col = {
