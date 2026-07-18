@@ -134,11 +134,11 @@ hl.window_rule({
 })
 hl.window_rule({
 	match = { class = "^(VSCodium|codium-url-handler)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.70 0.50",
 })
 hl.window_rule({
 	match = { class = "^(code|code-url-handler)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.70 0.50",
 })
 hl.window_rule({
 	match = { class = "^(fileManager)$" },
