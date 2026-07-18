@@ -79,9 +79,11 @@ hl.config({
 	decoration = {
 		shadow = {
 			enabled = true,
-			range = 0,
-			render_power = 1,
-			color = "rgba(00000000)",
+			range = 6,
+			render_power = 3,
+			color = "rgba(1a1a1a80)",
+			color_inactive = "rgba(00000000)",
+			offset = { 2, 3 },
 		},
 		rounding = 10,
 		dim_special = 0.3,
