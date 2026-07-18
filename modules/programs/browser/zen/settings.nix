@@ -22,6 +22,15 @@ in
   "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
   "svg.context-properties.content.enabled" = true;
   "layout.css.color-mix.enabled" = true;
+
+  # Required for Hyprland window-rule opacity to affect Zen content.
+  # Firefox derivatives set wl_surface opaque region on Wayland, which
+  # tells the compositor to skip alpha blending on window content.
+  # See: https://bugzilla.mozilla.org/show_bug.cgi?id=1578464
+  "widget.wayland.opaque-region.enabled" = false;
+  "widget.transparent_windows" = true;
+  "browser.tabs.allow_transparent_browser" = true;
+  "zen.widget.linux.transparency" = true;
   "browser.tabs.delayHidingAudioPlayingIconMS" = 0;
   "layout.css.backdrop-filter.enabled" = true;
   "browser.newtabpage.activity-stream.improvesearch.handoffToAwesomebar" = false;

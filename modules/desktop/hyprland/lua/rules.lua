@@ -45,7 +45,7 @@ hl.window_rule({
 })
 hl.window_rule({
 	match = { class = "^([Zz]en(-beta|-browser)?)$" },
-	opacity = "0.80 0.40",
+	opacity = "0.80 override 0.40 override",
 })
 hl.window_rule({
 	match = { class = "^([Ff]loorp)$" },
