@@ -78,7 +78,6 @@ in
       };
 
       home.packages = with pkgs; [
-        awww
         hyprpicker
         hyprsunset
         cliphist
@@ -96,9 +95,10 @@ in
         wl-clipboard
         xdotool
         yad
-      ] ++ optional (wallpaperPicker == "skwd-wall") inputs.skwd-wall.packages.${pkgs.stdenv.hostPlatform.system}.default;
+      ] ++ optional (wallpaperPicker == "skwd-wall") inputs.skwd-wall.packages.${pkgs.stdenv.hostPlatform.system}.default
+        ++ optional (wallpaperPicker != "skwd-wall") pkgs.awww;
 
-      services.awww.enable = true;
+      services.awww.enable = wallpaperPicker != "skwd-wall";
 
       xdg.configFile = {
         "hypr/hyprland.lua".source = ./lua/hyprland.lua;

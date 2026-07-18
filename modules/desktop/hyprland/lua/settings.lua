@@ -21,7 +21,9 @@ hl.env("XCURSOR_SIZE", "24")
 
 hl.on("hyprland.start", function()
 	hl.exec_cmd("cava-osd")
-	hl.exec_cmd(wallpaper)
+	if wallpaperPicker ~= "skwd-wall" then
+		hl.exec_cmd(wallpaper)
+	end
 	hl.exec_cmd(bar)
 	hl.exec_cmd(dashboard)
 	hl.exec_cmd("swaync")
