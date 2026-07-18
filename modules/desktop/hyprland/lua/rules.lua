@@ -41,96 +41,96 @@ hl.layer_rule({
 
 hl.window_rule({
 	match = { class = "^([Ff]irefox)$" },
-	opacity = "1.00 1.00",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { class = "^([Zz]en(-beta|-browser)?)$" },
-	opacity = "1.00 1.00",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { class = "^([Ff]loorp)$" },
-	opacity = "1.00 1.00",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { class = "^([Bb]rave-browser(-beta|-dev|-unstable)?)$" },
-	opacity = "1.00 1.00",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { class = "^(Emacs)$" },
-	opacity = "0.90 0.80",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { class = "^(gcr-prompter)$" },
-	opacity = "0.90 0.80",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { title = "^(Hyprland Polkit Agent)$" },
-	opacity = "0.90 0.80",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { class = "^(obsidian)$" },
-	opacity = "0.90 0.80",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { class = "^(proton.vpn.app.gtk)$" },
-	opacity = "0.90 0.80",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { class = "^(heroic)$" },
-	opacity = "0.90 0.80",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { class = "^([Ll]utris|net.lutris.Lutris)$" },
-	opacity = "0.90 0.80",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { class = "^([Dd]iscord|[Ww]ebCord|[Vv]esktop)$" },
-	opacity = "0.90 0.80",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { class = "^(com.github.rafostar.Clapper)$" },
-	opacity = "0.90 0.80",
+	opacity = "0.80 0.40",
 	float = true,
 })
 hl.window_rule({
 	match = { class = "^(kitty|[Aa]lacritty|org.wezfurlong.wezterm)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { class = "^(nvim-wrapper)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { class = "^(gnome-disks)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { class = "^(org.gnome.Nautilus|[Tt]hunar|pcmanfm)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { class = "^(thunar-volman-settings)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { class = "^(file-roller|org.gnome.FileRoller)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { class = "^(io.github.ilya_zlobintsev.LACT)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { class = "^([Ss]team|steamwebhelper)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { class = "^([Ss]potify|com.github.th_ch.youtube_music)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { title = "^(Kvantum Manager)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { class = "^(VSCodium|codium-url-handler)$" },
@@ -142,25 +142,25 @@ hl.window_rule({
 })
 hl.window_rule({
 	match = { class = "^(fileManager)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { class = "^(org.kde.dolphin)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { class = "^(org.kde.ark)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 	float = true,
 })
 hl.window_rule({
 	match = { class = "^(nwg-look)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 	float = true,
 })
 hl.window_rule({
 	match = { class = "^(qt5ct|qt6ct)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { class = "^(qt5ct)$" },
@@ -168,52 +168,52 @@ hl.window_rule({
 })
 hl.window_rule({
 	match = { class = "^(yad)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 	float = true,
 })
 hl.window_rule({
 	match = { class = "^(gjs)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { class = "^(com.github.tchx84.Flatseal)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { class = "^(hu.kramo.Cartridges)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { class = "^(com.obsproject.Studio)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { class = "^(gnome-boxes)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { class = "^(app.drey.Warp)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 	float = true,
 })
 hl.window_rule({
 	match = { class = "^(net.davidotek.pupgui2)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 	float = true,
 })
 hl.window_rule({
 	match = { class = "^(Signal)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 	float = true,
 })
 hl.window_rule({
 	match = { class = "^(io.gitlab.theevilskeleton.Upscaler)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 	float = true,
 })
 hl.window_rule({
 	match = { class = "^(pavucontrol|org.pulseaudio.pavucontrol)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { class = "^(pavucontrol)$" },
@@ -221,7 +221,7 @@ hl.window_rule({
 })
 hl.window_rule({
 	match = { class = "^(blueman-manager|.blueman-manager-wrapped)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 })
 hl.window_rule({
 	match = { class = "^(blueman-manager)$" },
@@ -233,22 +233,22 @@ hl.window_rule({
 })
 hl.window_rule({
 	match = { class = "^(nm-applet)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 	float = true,
 })
 hl.window_rule({
 	match = { class = "^(nm-connection-editor)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 	float = true,
 })
 hl.window_rule({
 	match = { class = "^(org.kde.polkit-kde-authentication-agent-1)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 	float = true,
 })
 hl.window_rule({
 	match = { class = "^(xdg-desktop-portal-gtk|xdg-desktop-portal-kde)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 })
 
 -- Float Picture-in-Picture window for browsers
@@ -333,7 +333,7 @@ hl.window_rule({
 
 hl.window_rule({
 	match = { class = "^(microfetch)$" },
-	opacity = "0.80 0.70",
+	opacity = "0.80 0.40",
 	float = true,
 	center = true,
 	size = "802 261",
