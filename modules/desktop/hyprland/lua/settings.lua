@@ -101,7 +101,7 @@ hl.config({
 			range = 10,
 			render_power = 3,
 			color = {
-				colors = { "rgba(106,207,255,0.9)", "rgba(90,160,193,0.3)" },
+				colors = { "rgba(cfd3dbe5)", "rgba(8f8f8f4d)" },
 				angle = 45,
 			},
 		},
